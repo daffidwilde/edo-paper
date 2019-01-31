@@ -1,0 +1,238 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=1in, includefoot, footskip=30pt]{geometry}
+
+
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{tikz}
+    \usetikzlibrary{%
+        decorations.pathreplacing,
+        patterns,
+        shapes.arrows,
+        shapes.geometric
+    }
+
+\captionsetup{font=doublespacing}
+\doublespacing%
+
+\newlength{\imgwidth}
+\setlength{\imgwidth}{0.8\textwidth}
+
+\newcommand{\inputtikz}[3][\imgwidth]{%
+    \begin{figure}[htbp]
+        \centering
+        \resizebox{#1}{!}{%
+            \input{#2}
+        }
+        \caption{#3}
+    \end{figure}
+}
+
+
+\newcommand{\balg}{\begin{algorithm}[H]\singlespacing\DontPrintSemicolon}
+\newcommand{\ealg}{\end{algorithm}\doublespacing}
+
+
+\tikzset{%
+    column/.pic={code{%
+    \draw[line width=1pt]
+        (0, 0) -- ++(0, 4cm) -- ++(-2cm, 0) -- ++(0, -4cm);
+    \foreach \val in {0, ..., #1}{%
+        \draw[rotate=90] ([xshift=-\val*10pt] 4cm, 2cm) -- ++(0, -2cm);
+    };
+    \node at (-1cm, 0.5) {$\vdots$};
+    }}
+}
+
+\tikzset{%
+    fullcolumn/.pic={code{%
+    \draw[line width=1pt]
+        (0, 0) -- ++(0, #1*10pt) -- ++(-2cm, 0) -- ++(0, -#1*10pt);
+    \foreach \val in {0, ..., #1}{%
+        \draw[rotate=90] ([xshift=-\val*10pt] #1*10pt, 2cm) -- ++(0, -2cm);
+    };
+    }}
+}
+
+
+\title{Understanding algorithm quality through genetic evolution}
+\author{Henry Wilde and supervisors}
+\date{}
+
+\begin{document}
+
+\maketitle%
+
+\begin{abstract}
+    When faced with a problem involving data, it is almost certainly the case
+    that the data is fixed and in order to do something with that data, a
+    researcher must select an algorithm that is appropriate for the problem
+    domain whilst performing well on their data. The value prescribed to an
+    algorithm is often found through a process of surveying the current
+    literature to create a shortlist, then running various trials with the
+    shortlisted algorithms. The winning algorithm is then chosen based on some
+    common objective value. The issue with this process is that it does not
+    necessarily allow (or require) the researcher to consider why certain
+    algorithms perform better on particular datasets and not others, and which
+    characteristics make data ``good'' for their chosen algorithm.
+
+    This paper introduces a novel method for generating artificial data through
+    genetic evolution, the purpose of which is to create populations of datasets
+    for which a particular algorithm performs well. This is done by passing an
+    algorithm's objective function to an evolutionary algorithm. Therein, each
+    individual is a particular dataset defined by its dimensions, entries, and
+    the approximate statistical shape of each of its attributes. In this way,
+    detailed information about each individual is retained throughout the
+    algorithm. Hence, they may be manipulated in a meaningful way during the
+    run, and studied once the algorithm has terminated.
+
+    Following this, a number of examples are given to show the performance of
+    the method. These examples are created using a Python implementation of the
+    process which is built to be highly customisable, interpretable and
+    reproducible.
+\end{abstract}
+
+\newpage%
+%=================================================
+\section{Introduction}\label{section:introduction}
+
+\inputtikz{tex/flowchart.tex}{%
+    A general schematic for an evolutionary algorithm.
+}
+
+\begin{itemize}
+    \item What is the motivation?
+    \item What is the problem?
+    \item What is the solution?
+\end{itemize}
+
+%-----------------------------
+\subsection{Literature review}
+
+\begin{itemize}
+    \item How is artificial data made?
+    \item Why hasn't this been done before?
+    \item Genetic algorithms used to train algorithms for data
+    \item Diagram 
+\end{itemize}
+
+
+%============================================================
+\section{The evolutionary algorithm}\label{section:algorithm}
+
+%---------------------
+\subsection{Structure}
+
+\balg%
+\KwData{%
+    \begin{tabular}{l}
+    Fitness function, \(f: X \to \mathbb{R}\);
+    population size, \(N\);
+    row limits, \(R = [r_l, r_u]\);
+    column limits, \(C = [c_l, c_u]\);\\
+
+    Column distributions, \(P\);
+    relative weights for \(P\), \(w \in {[0, 1]}^{|P|}\) s.t.\ \(\sum w = 1\);
+    maximum iterations, \(M\);\\
+
+    Best proportion, \(\delta\);
+    lucky proportion, \(\epsilon\);
+    mutation probability, \(\mu\);
+    compaction ratio, \(s\).
+    \end{tabular}
+}
+\KwResult{A full history of the population and their fitnesses.}
+
+\Begin{%
+    initialisation\;
+    \(PopulationHistory \longleftarrow \emptyset\)\;
+    \(Population \longleftarrow CreateInitialPopulation(N,R,C,P,w)\)\;
+    \(Fitness \longleftarrow GetPopulationFitness(Population,f)\)\;
+    \(PopulationHistory \longleftarrow (Population, Fitness)\)\;
+
+    \(iteration \longleftarrow 0\)\;
+    \While{\(iteration < M\) and not \textbf{STOP}}{%
+        select parent individuals\;
+        \(%
+            Parents \longleftarrow Selection(Population,Fitness,\delta,\epsilon)
+        \)\;
+        create new population\;
+        \(NewPopulation \longleftarrow Parents\)\;
+        \While{\(|NewPopulation| < N\)}{%
+            Sample two parents, \(ParentOne, ParentTwo\), from \(Parents\)\;
+            \(Offspring \longleftarrow Crossover(ParentOne,ParentTwo,C,P,)\)\;
+            \(Mutant \longleftarrow Mutation(Offspring,\mu,R,C,P,w)\)\;
+            \(NewPopulation \longleftarrow NewPopulation \cup \{Mutant\}\)\;
+        }
+        \(Population \longleftarrow NewPopulation\)\;
+        \(Fitness \longleftarrow GetPopulationFitness(Population,f)\)\;
+        \(PopulationHistory \longleftarrow (Population, Fitness)\)\;
+        adjust parameters\;
+        \If{\textbf{DWINDLE}}{%
+            \(\mu \longleftarrow \textbf{DWINDLE}(\mu, m)\)\;
+        }\;
+        \(ReduceMutationSpace(Parents,P,m,M,s)\)\;
+        \(iteration \longleftarrow iteration + 1\)\;
+    }
+}
+\caption{The evolutionary dataset optimisation algorithm}
+\ealg%
+
+\balg%
+\caption{\(CreateInitialPopulation\)}
+\ealg%
+
+%------------------------------------------------------------
+\subsection{Internal mechanisms}\label{subsection:mechanisms}
+
+\subsubsection{Individuals}
+
+\inputtikz{tex/individual.tex}{%
+    An example of how an individual is first created.
+}
+
+\subsubsection{Selection}
+
+\inputtikz{tex/selection.tex}{%
+    An example of the selection process with the inclusion of some lucky
+    individuals.
+}
+
+\subsubsection{Crossover}
+
+\inputtikz{tex/crossover.tex}{An example of the crossover process.}
+
+\subsubsection{Mutation}
+
+%-----------------------------------------------------------
+\subsection{Implementation}\label{subsection:implementation}
+
+\begin{itemize}
+    \item Documentation: \url{https://edo.readthedocs.io}
+    \item Repo: \url{https://github.com/daffidwilde/edo}
+\end{itemize}
+
+
+%===================================================
+\section{Numerical examples}\label{section:examples}
+
+\begin{itemize}
+    \item The \(x^2\) example from the docs is a nice easy one to illustrate
+        things
+    \item Something stochastic
+    \item Make use of the moving parts (linear focus of the mutation space,
+        dwindling mutation probability, stopping conditions)
+    \item If not the \(k\)-modes initialisation example, then another clustering
+        one. Maybe \(k\)-means versus DBSCAN to show DBSCAN works better on
+        non-convex clusters.
+\end{itemize}
+
+\end{document}
