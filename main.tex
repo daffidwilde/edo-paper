@@ -34,7 +34,7 @@
 \newcommand{\ealg}{\end{algorithm}\doublespacing}
 
 
-% TikZ styles and settings
+% TikZ styles, commands and settings
 \tikzstyle{every picture} += [remember picture]
 \tikzstyle{na} = [baseline=-.5ex]
 
@@ -63,7 +63,7 @@
     \begin{figure}[htbp]
         \centering
         \resizebox{#1}{!}{%
-            \input{#2}
+            \input{tex/#2}
         }
         \caption{#3}
     \end{figure}
@@ -71,8 +71,12 @@
 
 
 % Document
-\title{Understanding algorithm quality through genetic evolution}
-\author{Henry Wilde and supervisors}
+\title{%
+    Evolutionary Dataset Optimisation:
+    learning algorithm quality through genetic evolution
+}
+\author{Henry Wilde, Vincent Knight, Jonathan Gillard}
+% TO DO: Finalise order and preferred name
 \date{}
 
 \begin{document}
@@ -112,7 +116,7 @@
 %=================================================
 \section{Introduction}\label{section:introduction}
 
-\inputtikz{tex/flowchart.tex}{%
+\inputtikz{flowchart.tex}{%
     A general schematic for an evolutionary algorithm.
 }
 
@@ -317,20 +321,20 @@ condition or \(\mu\)-adjustment to be any function. Some examples include:
 
 \subsubsection{Individuals}
 
-\inputtikz{tex/individual.tex}{%
+\inputtikz{individual.tex}{%
     An example of how an individual is first created.
 }
 
 \subsubsection{Selection}
 
-\inputtikz{tex/selection.tex}{%
+\inputtikz{selection.tex}{%
     An example of the selection process with the inclusion of some lucky
     individuals.
 }
 
 \subsubsection{Crossover}
 
-\inputtikz{tex/crossover.tex}{An example of the crossover process.}
+\inputtikz{crossover.tex}{An example of the crossover process.}
 
 \subsubsection{Mutation}
 
