@@ -1,0 +1,364 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=1in, includefoot, footskip=30pt]{geometry}
+
+
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{tikz}
+    \usetikzlibrary{%
+        decorations.pathreplacing,
+        patterns,
+        shapes.arrows,
+        shapes.geometric
+    }
+
+
+% Page setup and lengths
+\captionsetup{font=doublespacing}
+\doublespacing%
+
+\newlength{\imgwidth}
+\setlength{\imgwidth}{0.8\textwidth}
+
+
+% Algorithms
+\newcommand{\balg}{\begin{algorithm}[htbp]\singlespacing\DontPrintSemicolon}
+\newcommand{\ealg}{\end{algorithm}\doublespacing}
+
+
+% TikZ styles, commands and settings
+\tikzstyle{every picture} += [remember picture]
+\tikzstyle{na} = [baseline=-.5ex]
+
+\tikzset{%
+    column/.pic={code{%
+    \draw[line width=1pt]
+        (0, 0) -- ++(0, 4cm) -- ++(-2cm, 0) -- ++(0, -4cm);
+    \foreach \val in {0, ..., #1}{%
+        \draw[rotate=90] ([xshift=-\val*10pt] 4cm, 2cm) -- ++(0, -2cm);
+    };
+    \node at (-1cm, 0.5) {$\vdots$};
+    }}
+}
+
+\tikzset{%
+    fullcolumn/.pic={code{%
+    \draw[line width=1pt]
+        (0, 0) -- ++(0, #1*10pt) -- ++(-2cm, 0) -- ++(0, -#1*10pt);
+    \foreach \val in {0, ..., #1}{%
+        \draw[rotate=90] ([xshift=-\val*10pt] #1*10pt, 2cm) -- ++(0, -2cm);
+    };
+    }}
+}
+
+\newcommand{\inputtikz}[3][\imgwidth]{%
+    \begin{figure}[htbp]
+        \centering
+        \resizebox{#1}{!}{%
+            \input{tex/#2}
+        }
+        \caption{#3}
+    \end{figure}
+}
+
+
+% Document
+\title{%
+    Evolutionary Dataset Optimisation:
+    learning algorithm quality through genetic evolution
+}
+\author{Henry Wilde, Vincent Knight, Jonathan Gillard}
+% TO DO: Finalise order and preferred name
+\date{}
+
+\begin{document}
+
+\maketitle%
+\bigskip%
+\begin{abstract}
+    When faced with a problem involving data, it is almost certainly the case
+    that the data is fixed and in order to do something with that data, a
+    researcher must select an algorithm that is appropriate for the problem
+    domain whilst performing well on their data. The value prescribed to an
+    algorithm is often found through a process of surveying the current
+    literature to create a shortlist, then running various trials with the
+    shortlisted algorithms. The winning algorithm is then chosen based on some
+    common objective value. The issue with this process is that it does not
+    necessarily allow (or require) the researcher to consider why certain
+    algorithms perform better on particular datasets and not others, and which
+    characteristics make data ``good'' for their chosen algorithm.
+
+    This paper introduces a novel method for generating artificial data through
+    genetic evolution, the purpose of which is to create populations of datasets
+    for which a particular algorithm performs well. This is done by passing an
+    algorithm's objective function to an evolutionary algorithm. Therein, each
+    individual is a particular dataset defined by its dimensions, entries, and
+    the approximate statistical shape of each of its attributes. In this way,
+    detailed information about each individual is retained throughout the
+    algorithm. Hence, they may be manipulated in a meaningful way during the
+    run, and studied once the algorithm has terminated.
+
+    Following this, a number of examples are given to show the performance of
+    the method. These examples are created using a Python implementation of the
+    process which is built to be highly customisable, interpretable and
+    reproducible.
+\end{abstract}
+
+\newpage%
+%=================================================
+\section{Introduction}\label{section:introduction}
+
+\inputtikz{flowchart.tex}{%
+    A general schematic for an evolutionary algorithm.
+}
+
+\begin{itemize}
+    \item What is the motivation?
+    \item What is the problem?
+    \item What is the solution?
+\end{itemize}
+
+%-----------------------------
+\subsection{Literature review}
+
+\begin{itemize}
+    \item How is artificial data made?
+    \item Why hasn't this been done before?
+    \item Genetic algorithms used to train algorithms for data
+    \item Diagram showing that this is the ``reverse'' problem
+\end{itemize}
+
+
+%============================================================
+\section{The evolutionary algorithm}\label{section:algorithm}
+
+%---------------------
+\subsection{Structure}
+
+\begin{itemize}
+    \item Algorithm statement with components
+    \item Discussion on the choice to include custom stopping/dwindling
+        conditions, compacting the search space, etc.
+    \item Operators and detailed mechanisms to come later.
+\end{itemize}
+
+\balg%
+\KwData{%
+    \begin{tabular}{l}
+    Fitness function, \(f: X \to \mathbb{R}\);
+    population size, \(N\);
+    row limits, \(R = [r_l, r_u]\);
+    column limits, \(C = [c_l, c_u]\);\\
+
+    Column distributions, \(P\);
+    relative weights for \(P\), \(w \in {[0, 1]}^{|P|}\) s.t.\ \(\sum w = 1\);
+    maximum iterations, \(M\);\\
+
+    Best proportion, \(\delta\);
+    lucky proportion, \(\epsilon\);
+    mutation probability, \(\mu\);
+    compaction ratio, \(s\).
+    \end{tabular}
+}
+\KwResult{A full history of the populations and their fitnesses.}\;
+
+\textcolor{blue}{initialisation}\;
+\(population \longleftarrow CreateInitialPopulation(N,R,C,P,w)\)\;
+\(populationFitness \longleftarrow GetPopulationFitness(population,f)\)\;
+\(%
+    populationHistory \longleftarrow%
+    \left\{(population, populationFitness)\right\}
+\)\;
+\(i \longleftarrow 0\)\;\;
+
+\textcolor{blue}{begin iterative step}\;
+\While{\(iteration < M\) and not \textbf{STOP}}{%
+    \textcolor{blue}{select parent individuals}\;
+    \(%
+        parents \longleftarrow%
+        Selection(population,populationFitness,\delta,\epsilon)
+    \)\;
+
+    \textcolor{blue}{create new population}\;
+    \(population \longleftarrow CreateNewPopulation(parents,N,R,C,P,w,\mu)\)\;
+
+    \textcolor{blue}{update fitness and history}\;
+    \(populationFitness \longleftarrow GetPopulationFitness(population,f)\)\;
+    \(%
+        populationHistory \longleftarrow%
+        populationHistory \cup \left\{(population,populationFitness)\right\}
+    \)\;
+
+    \textcolor{blue}{adjust parameters}\;
+    \(i \longleftarrow i + 1\)\;
+    \(P \longleftarrow ReduceMutationSpace(parents,P,i,M,s)\)\;
+    \(\mu, \textbf{STOP} \longleftarrow UpdateParameters\)\;
+}
+\caption{The evolutionary dataset optimisation algorithm}
+\ealg%
+
+
+\balg%
+\KwData{\(N,R,C,P,w\)}
+\KwResult{A random population of datasets of size \(N\), \(population\)}\;
+
+\(population \longleftarrow \emptyset\)\;
+\For{\(i\leftarrow 1 \ \KwTo \ N\)}{%
+    \(%
+        population \longleftarrow%
+        population \cup \left\{CreateIndividual(R,C,P,w)\right\}
+    \)\;
+}
+\caption{\(CreateInitialPopulation\)}
+\ealg%
+
+\balg%
+\KwData{\(population,f\)}
+\KwResult{Fitness of each individual in the population, \(populationFitness\)}\;
+
+\(populationFitness \longleftarrow \emptyset\)\;
+\For{\(individual \in population\)}{%
+    \(%
+        populationFitness \longleftarrow%
+        populationFitness \cup \left\{f(individual)\right\}
+    \)\;
+}
+\caption{\(GetPopulationFitness\)}
+\ealg%
+
+\balg%
+\KwData{\(parents,N,R,C,P,w,\mu\)}
+\KwResult{A new population of size \(N\), \(newPopulation\)}\;
+
+\(newPopulation \longleftarrow parents\)\;
+\While{\(|newPopulation| < N\)}{%
+    Sample two parents, \(parentOne, parentTwo\), from \(parents\)\;
+    \(offspring \longleftarrow Crossover(parentOne,parentTwo,C,P,)\)\;
+    \(mutant \longleftarrow Mutation(offspring,\mu,R,C,P,w)\)\;
+    \(newPopulation \longleftarrow newPopulation \cup \{mutant\}\)\;
+}
+\caption{\(CreateNewPopulation\)}
+\ealg%
+
+\balg%
+\KwData{}
+\KwResult{}\;
+
+\textcolor{blue}{initialisation}\;
+\(S \longleftarrow 1 - \frac{i}{s M}\)\;
+\(currentParameters \longleftarrow GetCurrentParameters(parents, P)\)\;\;
+
+\textcolor{blue}{compute new bounds on distribution parameters}\;
+\For{\(parameters \in currentParameters\)}{%
+    \For{\(parameter, parameterValues \in parameters\)}{%
+        \(m \longleftarrow Mean(parameterValues)\)\;
+        \(%
+            \Delta \longleftarrow%
+            \frac{S}{2} \times (\max parameterValues - \min parameterValues)
+        \)
+        \(%
+            L \longleftarrow%
+            \max\{parameterLimits[0], \min\{m - \Delta, m + \Delta\}\}
+        \)\;
+        \(%
+            U \longleftarrow%
+            \min\{parameterLimits[1], \max\{m - \Delta, m + \Delta\}\}
+        \)\;
+        \(parameterLimits \longleftarrow [L, U]\)\;
+    }
+}
+\caption{\(ReduceMutationSpace\)}
+\ealg%
+
+\balg%
+\(%
+    currentParameters \longleftarrow%
+    \left(p: \left(\emptyset, \ldots, \emptyset\right) | \ p \in P\right)
+\)\;
+\For{\(parent \in parents\)}{%
+    \For{each column in \(parent\)}{%
+        \(p \longleftarrow\) distribution class of column\;
+        \If{no entry for \(p\) in \(currentParameters\)}{%
+            \(currentParameters[p] \longleftarrow \emptyset\)
+        }
+        \For{\((parameter, parameterValue) \in p\)}{%
+            \(%
+                currentParameters[p] \longleftarrow%
+                currentParameters[p] \cup%
+                \left\{(parameter, parameterValue)\right\}
+            \)\;
+        }
+    }
+}
+\caption{\(GetCurrentParameters\)}
+\ealg%
+
+Additional algorithms for the individual creation and operator processes are
+given in Section~\ref{subsection:mechanisms}. However, there is no defined
+process for how to stop the algorithm or adjust the mutation probability,
+\(\mu\). This is deliberate as such conditions are specific to the problem
+domain. As such, in the Python implementation, a user may define their stopping
+condition or \(\mu\)-adjustment to be any function. Some examples include:
+
+\begin{itemize}
+    \item These should be real-world examples used in other EA with references.
+    \item Stopping when the difference in the variance of the current and last
+        population fitnesses is below some tolerance.
+    \item Halving the mutation probability every 100 iterations.
+\end{itemize}
+        
+
+%------------------------------------------------------------
+\subsection{Internal mechanisms}\label{subsection:mechanisms}
+
+\subsubsection{Individuals}
+
+\inputtikz{individual.tex}{%
+    An example of how an individual is first created.
+}
+
+\subsubsection{Selection}
+
+\inputtikz{selection.tex}{%
+    An example of the selection process with the inclusion of some lucky
+    individuals.
+}
+
+\subsubsection{Crossover}
+
+\inputtikz{crossover.tex}{An example of the crossover process.}
+
+\subsubsection{Mutation}
+
+%-----------------------------------------------------------
+\subsection{Implementation}\label{subsection:implementation}
+
+\begin{itemize}
+    \item Documentation: \url{https://edo.readthedocs.io}
+    \item Repo: \url{https://github.com/daffidwilde/edo}
+\end{itemize}
+
+
+%===================================================
+\section{Numerical examples}\label{section:examples}
+
+\begin{itemize}
+    \item The \(x^2\) example from the docs is a nice easy one to illustrate
+        things
+    \item Something stochastic
+    \item Make use of the moving parts (linear focus of the mutation space,
+        dwindling mutation probability, stopping conditions)
+    \item If not the \(k\)-modes initialisation example, then another clustering
+        one. Maybe \(k\)-means versus DBSCAN to show DBSCAN works better on
+        non-convex clusters.
+\end{itemize}
+
+\end{document}
