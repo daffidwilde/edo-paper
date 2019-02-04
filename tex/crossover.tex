@@ -1,29 +1,32 @@
 \begin{tikzpicture}
 
+    % First individual
     \path (-2, 1.5) pic {fullcolumn=7}
-          (0, 1.5) pic {fullcolumn=7}
+          (0, 1.5) pic {fullcolumn=7};
 
-          (8, 2.25) pic {fullcolumn=5}
+    \node (parent1) at (-2, 1.5) {};
+    \node[fill=cyan!15, minimum width=4cm, rounded corners] (info1) at (-2, 4.5)
+        {\(N(0, 1) \qquad Po(3.6)\)};
+
+    \draw[decorate, decoration={brace, amplitude=10pt}] (-5, 1.5) -- (-5, 4.75)
+        node[midway, left=20pt] {First parent};
+
+    % Second individual
+    \path (8, 2.25) pic {fullcolumn=5}
           (10, 2.25) pic {fullcolumn=5}
           (12, 2.25) pic {fullcolumn=5};
 
-    \node (parent1) at (-2, 1.5) {};
     \node (parent2) at (10, 1.5) {};
+    \node[fill=cyan!15, minimum width=6cm, rounded corners] (info2) at (9, 4.5)
+        {\(U(3, 5) \qquad N(2, 2) \qquad Po(2.5)\)};
 
-    \fill[cyan!15, rounded corners] (-4, 4.25) rectangle (0, 5);
-    \node (info1) at (-2, 4.5) {\scriptsize $N(0, 1) \ \ \ Po(3.6)$};
+    \draw[decorate, decoration={brace, amplitude=10pt}] (13, 4.75) -- (13, 2.25)
+        node[midway, right=20pt] {Second parent};
 
-    \fill[cyan!15, rounded corners] (6, 4.25) rectangle (12, 5);
-    \node (info2) at (9, 4.5)
-        {\scriptsize $U(3, 5) \ \ \ N(2, 2) \ \ \ Po(2.5)$};
 
-    \draw[decorate, decoration={brace, amplitude=10pt}] (-5, 1.5) -- (-5, 5)
-        node[midway, left=20pt] {\scriptsize First parent};
-    \draw[decorate, decoration={brace, amplitude=10pt}] (13, 5) -- (13, 2.25)
-        node[midway, right=20pt] {\scriptsize Second parent};
-
+    % Pools
     \node[ellipse, fill=magenta!15] (dims) at (-1, -2) {%
-        \scriptsize
+        
         \begin{tabular}{c}
             Parent\\
             dimensions
@@ -31,49 +34,53 @@
     };
 
     \node[ellipse, fill=orange!15] (cols) at (9, -1.5) {%
-        \scriptsize
+        
         \begin{tabular}{c}
             Parent columns\\
             (and their metadata)
         \end{tabular}
     };
 
-    \draw[->, dashed, blue, thick]
-        ([xshift=30pt, yshift=-5pt] parent1.south east)
-        to [out=300, in=120]
-        ([xshift=-5pt, yshift=5pt] cols.north);
-    \draw[->, dashed, blue, thick]
-        ([yshift=20pt, yshift=-5pt] parent2.south east)
-        to [out=270, in=80]
-        ([xshift=5pt, yshift=5pt] cols.north)%
-        node[right=30pt, yshift=20pt]
-        {\scriptsize Pool columns};
 
-    \draw[->, dashed, magenta, thick]
-        ([yshift=-5pt] parent1.south)
-        to [out=270, in=90]
-        ([xshift=-10pt, yshift=5pt] dims.north)
-        node[left=20pt, yshift=20pt]
-        {\scriptsize Pool dimensions};
+    % Connecting parents to pools
+    \draw[->, dashed, orange, thick]%
+        ([xshift=30pt, yshift=-5pt] parent1.south east)
+        to [out=300, in=120] ([xshift=-5pt, yshift=5pt] cols.north);
+
+    \draw[->, dashed, orange, thick]
+        ([yshift=20pt, yshift=-5pt] parent2.south east)
+        to [out=270, in=80] ([xshift=5pt, yshift=5pt] cols.north)%
+        node[right=30pt, yshift=20pt] {Pool columns};
+
     \draw[->, dashed, magenta, thick]
         ([xshift=-60pt, yshift=15pt] parent2.south west)
         to [out=200, in=40]
         ([xshift=10pt, yshift=5pt] dims.north);
+    \draw[->, dashed, magenta, thick]
+        ([yshift=-5pt] parent1.south)
+        to [out=270, in=90] ([xshift=-10pt, yshift=5pt] dims.north)
+        node[left=20pt, yshift=20pt] {Pool dimensions};
 
+
+    % The new individual
     \path (3, -9) pic {fullcolumn=7}
           (5, -9) pic {fullcolumn=7}
           (7, -9) pic {fullcolumn=7};
 
-    \fill[cyan!15, rounded corners] (1, -6.25) rectangle (7, -5.5);
-    \node (info3) at (4, -6)
-        {\scriptsize $N(0, 1) \ \ \ Po(2.5) \ \ \ U(3, 5)$};
+    \node[fill=cyan!15, minimum width=6cm, rounded corners] at (4, -6)
+        {\(N(0, 1) \qquad Po(2.5) \qquad U(3, 5)\)};
 
+    \draw[decorate, decoration={brace, amplitude=10pt}] (8, -5.75) -- (8, -9)
+        node[midway, right=20pt] {A new individual};
+
+
+    % Connecting up
     \draw[->, black, thick]
         ([yshift=-5pt] dims.south)
         to [out=290, in=140]
         (0.5, -7)
         node[left=50pt, yshift=30pt] {%
-            \scriptsize
+            
             \begin{tabular}{ll}
                 1. & Sample number of\\
                 {} & rows and columns
@@ -85,14 +92,11 @@
         to [out=235, in=80]
         (4, -5)
         node[right=50pt, yshift=30pt] {%
-            \scriptsize
+            
             \begin{tabular}{ll}
                 2. & Sample columns and\\
-                {} & fill/trim as needed
+                {} & fill/trim values as needed
             \end{tabular}
         };
-
-    \draw[decorate, decoration={brace, amplitude=10pt}] (8, -5.5) -- (8, -9)
-        node[midway, right=20pt] {\scriptsize A new individual};
 
 \end{tikzpicture}
