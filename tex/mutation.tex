@@ -1,0 +1,149 @@
+\documentclass[standalone]
+
+\usepackage{tikz}
+    \usetikzlibrary{%
+        arrows.meta,
+        decorations.text,
+    }
+
+\begin{document}
+
+\begin{tikzpicture}
+
+    % Individual
+    \path (0, 1.5) pic {fullcolumn=4}
+          (2, 1.5) pic {fullcolumn=4}
+          (4, 1.5) pic {fullcolumn=4};
+
+    \node (individual) at (1, 1.5) {};
+    \node[fill=cyan!15, minimum width=6cm, rounded corners] at (1, 3.5)
+        {\(U(1.1, 3.2) \qquad U(0.2, 1.5) \qquad N(0.5, 1.2)\)};
+
+
+    %%% Adjust length
+    \fill[black!5, rounded corners] (6, -3) rectangle (25, 2);
+    \draw[->, black, thick]
+        ([yshift=-5pt] individual.south)
+        to [out=290, in=180] node[left=50pt, below=10pt, pos=0.25] {\large%
+            \begin{tabular}{c}
+                Adjust number of rows\\
+                by adding and/or removing one\\
+                each with probability \(\mu\)
+            \end{tabular}
+        } (5.9, -0.5);
+
+    % Row addition
+    \path (9, -1) pic {fullcolumn=4}
+          (11, -1) pic {fullcolumn=4}
+          (13, -1) pic {fullcolumn=4};
+ 
+    \node[fill=cyan!15, minimum width=6cm, rounded corners] (r-info) at (10, 1)
+        {\(U(1.1, 3.2) \qquad U(0.2, 1.5) \qquad N(0.5, 1.2)\)};
+
+    \path (9, -2.25) pic {fullcolumn=1}
+          (11, -2.25) pic {fullcolumn=1}
+          (13, -2.25) pic {fullcolumn=1};
+
+    \node (new-row) at (13, -2) {};
+    \node (row-plus) at (10, -1.5) {\huge\(+\)};
+
+    \draw[->, cyan, thick]
+        ([xshift=5pt] r-info.east)
+        to [bend left=30] node[right, pos=0.1] {\small%
+            \begin{tabular}{c}
+                Sample from\\
+                metadata
+            \end{tabular}
+        } ([xshift=5pt] new-row.east);
+
+    % AND/OR/NOR
+    \node at (16, -1) {\textbf{%
+        \begin{tabular}{c}
+            AND\\\hline
+            OR\\\hline
+            NOR
+        \end{tabular}
+    }};
+
+    % Row deletion
+    \path (20, -1.75) pic {fullcolumn=4}
+          (22, -1.75) pic {fullcolumn=4}
+          (24, -1.75) pic {fullcolumn=4};
+
+    \node[fill=cyan!15, minimum width=6cm, rounded corners] at (21, 0.25)
+    {\(U(1.1, 3.2) \qquad U(0.2, 1.5) \qquad N(0.5, 1.2)\)};
+
+    \fill[pattern=north west lines, pattern color=magenta]
+        (18, -1.4) -- ++ (6, 0) -- ++ (0, 10pt) -- ++ (-6, 0) -- cycle {}
+        node[right=5.9cm, midway] (row-remove) {};
+
+    \node (delete-row) at (22, -2.25) {\color{magenta} Chosen at random};
+
+    \draw[->, magenta, thick]
+        (delete-row.east) to [out=0, bend right=70] (row-remove);
+
+
+    %%% Adjust width
+    \fill[black!5, rounded corners] (-5, -12) rectangle (16, -4);
+    \draw[->, black, thick]
+        (20, -3.1) to [out=270, in=20]
+        node[right=30pt, pos=0.75] {\large%
+            \begin{tabular}{c}
+                Adjust number of columns\\
+                by sampling and/or removing one\\
+                each with probability \(\mu\)
+            \end{tabular}
+        } (16.1, -7);
+
+    % Column addition
+    \node[ellipse, fill=orange!50] (dists) at (-1, -6) {\Large%
+        \begin{tabular}{c}
+            Families of\\
+            distributions
+        \end{tabular}
+    };
+
+    \path (-2, -10) pic {fullcolumn=4}
+          (0, -10) pic {fullcolumn=4}
+          (2, -10) pic {fullcolumn=4};
+ 
+    \node[fill=cyan!15, minimum width=6cm, rounded corners] at (-1, -8)
+        {\(U(1.1, 3.2) \qquad U(0.2, 1.5) \qquad N(0.5, 1.2)\)};
+
+    \node (col-plus) at (2.5, -9) {\huge\(+\)};
+
+    \path (5, -10) pic {fullcolumn=4};
+    \node[fill=cyan!15, minimum width=2cm, rounded corners] (c-info) at (4, -8)
+        {\(Po(9.3)\)};
+
+    \draw[->, orange, thick]
+        ([xshift=5pt] dists.east)
+        to [bend left=30] node[right=20pt, pos=0.1] {\small%
+            \begin{tabular}{c}
+                Sample distribution\\
+                and its parameters
+            \end{tabular}
+        } ([yshift=5pt] c-info.north);
+
+    \draw[->, cyan, thick]
+        ([xshift=5pt] c-info.east)
+        to [bend left=30] node[right=20pt] {\small%
+            \begin{tabular}{c}
+                Sample values\\
+                from distribution
+            \end{tabular}
+        } (5.1, -9);
+
+    % AND/OR/NOR
+    \node at (8, -8) {\textbf{%
+        \begin{tabular}{c}
+            AND\\\hline
+            OR\\\hline
+            NOR
+        \end{tabular}
+    }};
+
+
+\end{tikzpicture}
+
+\end{document}
