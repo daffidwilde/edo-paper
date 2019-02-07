@@ -12,9 +12,12 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{setspace}
+\usepackage{standalone}
 \usepackage{tikz}
     \usetikzlibrary{%
+        arrows.meta,
         decorations.pathreplacing,
+        decorations.text,
         patterns,
         shapes.arrows,
         shapes.geometric
@@ -26,7 +29,9 @@
 \doublespacing%
 
 \newlength{\imgwidth}
-\setlength{\imgwidth}{0.8\textwidth}
+\setlength{\imgwidth}{0.9\textwidth}
+
+\definecolor{magenta}{RGB}{226, 62, 138}
 
 
 % Algorithms
@@ -52,7 +57,7 @@
 \tikzset{%
     fullcolumn/.pic={code{%
     \draw[line width=1pt]
-        (0, 0) -- ++(0, #1*10pt) -- ++(-2cm, 0) -- ++(0, -#1*10pt);
+    (0, 0) -- ++(0, #1*10pt) -- ++(-2cm, 0) -- ++(0, -#1*10pt) -- (0, 0);
     \foreach \val in {0, ..., #1}{%
         \draw[rotate=90] ([xshift=-\val*10pt] #1*10pt, 2cm) -- ++(0, -2cm);
     };
@@ -337,6 +342,12 @@ condition or \(\mu\)-adjustment to be any function. Some examples include:
 \inputtikz{crossover.tex}{An example of the crossover process.}
 
 \subsubsection{Mutation}
+
+\inputtikz{mutation.tex}{An example of the mutation process.}
+
+\subsubsection{Shrinking}
+
+\inputtikz{shrinking.tex}{An diagram of the shrinking process.}
 
 %-----------------------------------------------------------
 \subsection{Implementation}\label{subsection:implementation}
