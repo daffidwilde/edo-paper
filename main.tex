@@ -44,24 +44,29 @@
 \tikzstyle{na} = [baseline=-.5ex]
 
 \tikzset{%
-    column/.pic={code{%
-    \draw[line width=1pt]
-        (0, 0) -- ++(0, 4cm) -- ++(-2cm, 0) -- ++(0, -4cm);
-    \foreach \val in {0, ..., #1}{%
-        \draw[rotate=90] ([xshift=-\val*10pt] 4cm, 2cm) -- ++(0, -2cm);
-    };
-    \node at (-1cm, 0.5) {$\vdots$};
-    }}
+    column/.pic={%
+        code{%
+            \draw[line width=1pt] (0, 0) rectangle (-2cm, 4cm);
+            \foreach \val in {0, ..., #1}{%
+                \draw[rotate=90] ([xshift=-\val*10pt] 4cm, 2cm) -- ++(0, -2cm);
+            };
+            \node at (-1cm, 1.25) {$\vdots$};
+            \foreach \val in {1, 2}{%
+                \draw (0, \val * 10pt) -- ++(-2cm, 0);
+            };
+        }
+    }
 }
 
 \tikzset{%
-    fullcolumn/.pic={code{%
-    \draw[line width=1pt]
-    (0, 0) -- ++(0, #1*10pt) -- ++(-2cm, 0) -- ++(0, -#1*10pt) -- (0, 0);
-    \foreach \val in {0, ..., #1}{%
-        \draw[rotate=90] ([xshift=-\val*10pt] #1*10pt, 2cm) -- ++(0, -2cm);
-    };
-    }}
+    fullcolumn/.pic={%
+        code{%
+            \draw[line width=1pt] (0, 0) rectangle (-2cm, #1*10pt);
+            \foreach \val in {0, ..., #1}{%
+                \draw[rotate=90] ([xshift=-\val*10pt] #1*10pt, 2cm) -- ++(0, -2cm);
+            };
+        }
+    }
 }
 
 \newcommand{\inputtikz}[3][\imgwidth]{%
