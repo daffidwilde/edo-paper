@@ -24,13 +24,13 @@
         {};
 
     \foreach \val in {-5.5, -4, -3.2} {%
-        \fill[pattern=north east lines, pattern color=magenta!85]
+        \fill[pattern=north west lines, pattern color=magenta!85]
             (0, \val) rectangle (3, \val+0.1);
         \draw[->, dashed, magenta!85, thick]
             (3.25, \val) to [out=0, in=180] (5.75, -2.15);
     };
 
-    \fill[pattern=north east lines, pattern color=magenta!85]
+    \fill[pattern=north west lines, pattern color=magenta!85]
         (6, -2.3) rectangle (9, -2);
 
     \draw[decorate, decoration={brace, amplitude=10pt}] (-0.5, -2) -- (-0.5, 0)
