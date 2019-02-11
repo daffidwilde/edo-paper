@@ -1,9 +1,12 @@
 \begin{tikzpicture}
 
     % Columns
-    \path (-2.7, -10) pic {column=7}
+    \path (-2.75, -10) pic {column=7}
           (1, -10) pic {column=7}
-          (4.7, -10) pic {column=7};
+          (4.75, -10) pic {column=7};
+
+    \node at (-1.85, -7.75) {\huge \(+\)};
+    \node at (1.85, -7.75) {\huge \(+\)};
 
     \draw[decorate, decoration={brace, amplitude=10pt}] (-6, -10) -- (-6, -6)
     node[midway, left=20pt] {%
