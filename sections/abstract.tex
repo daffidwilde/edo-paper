@@ -1,0 +1,28 @@
+\begin{abstract}
+    When faced with a problem involving data, it is almost certainly the case
+    that the data is fixed and in order to do something with that data, a
+    researcher must select an algorithm that is appropriate for the problem
+    domain whilst performing well on their data. The value prescribed to an
+    algorithm is often found through a process of surveying the current
+    literature to create a shortlist, then running various trials with the
+    shortlisted algorithms. The winning algorithm is then chosen based on some
+    common objective value. The issue with this process is that it does not
+    necessarily allow (or require) the researcher to consider why certain
+    algorithms perform better on particular datasets and not others, and which
+    characteristics make data ``good'' for their chosen algorithm.
+
+    This paper introduces a novel method for generating artificial data through
+    genetic evolution, the purpose of which is to create populations of datasets
+    for which a particular algorithm performs well. This is done by passing an
+    algorithm's objective function to an evolutionary algorithm. Therein, each
+    individual is a particular dataset defined by its dimensions, entries, and
+    the approximate statistical shape of each of its attributes. In this way,
+    detailed information about each individual is retained throughout the
+    algorithm. Hence, they may be manipulated in a meaningful way during the
+    run, and studied once the algorithm has terminated.
+
+    Following this, a number of examples are given to show the performance of
+    the method. These examples are created using a Python implementation of the
+    process which is built to be highly customisable, interpretable and
+    reproducible.
+\end{abstract}
