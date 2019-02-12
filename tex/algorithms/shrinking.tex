@@ -1,0 +1,30 @@
+\balg%
+\KwData{}
+\KwResult{}\;
+
+\textcolor{blue}{initialisation}\;
+\(S \longleftarrow 1 - \frac{i}{s M}\)\;
+\(currentParameters \longleftarrow GetCurrentParameters(parents, P)\)\;\;
+
+\textcolor{blue}{compute new bounds on distribution parameters}\;
+\For{\(parameters \in currentParameters\)}{%
+    \For{\(parameter, parameterValues \in parameters\)}{%
+        \(m \longleftarrow Mean(parameterValues)\)\;
+        \(%
+            \Delta \longleftarrow%
+            \frac{S}{2} \times (\max parameterValues - \min parameterValues)
+        \)
+        \(%
+            L \longleftarrow%
+            \max\{parameterLimits[0], \min\{m - \Delta, m + \Delta\}\}
+        \)\;
+        \(%
+            U \longleftarrow%
+            \min\{parameterLimits[1], \max\{m - \Delta, m + \Delta\}\}
+        \)\;
+        \(parameterLimits \longleftarrow [L, U]\)\;
+    }
+}
+\caption{\(ReduceMutationSpace\)}
+\ealg%
+

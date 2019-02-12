@@ -1,0 +1,23 @@
+\balg%
+\(%
+    currentParameters \longleftarrow%
+    \left(p: \left(\emptyset, \ldots, \emptyset\right) | \ p \in P\right)
+\)\;
+\For{\(parent \in parents\)}{%
+    \For{each column in \(parent\)}{%
+        \(p \longleftarrow\) distribution class of column\;
+        \If{no entry for \(p\) in \(currentParameters\)}{%
+            \(currentParameters[p] \longleftarrow \emptyset\)
+        }
+        \For{\((parameter, parameterValue) \in p\)}{%
+            \(%
+                currentParameters[p] \longleftarrow%
+                currentParameters[p] \cup%
+                \left\{(parameter, parameterValue)\right\}
+            \)\;
+        }
+    }
+}
+\caption{\(GetCurrentParameters\)}
+\ealg%
+

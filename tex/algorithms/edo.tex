@@ -1,0 +1,54 @@
+\balg%
+\KwData{%
+    \begin{tabular}{l}
+    Fitness function, \(f: X \to \mathbb{R}\);
+    population size, \(N\);
+    row limits, \(R = [r_l, r_u]\);
+    column limits, \(C = [c_l, c_u]\);\\
+
+    Column distributions, \(P\);
+    relative weights for \(P\), \(w \in {[0, 1]}^{|P|}\) s.t.\ \(\sum w = 1\);
+    maximum iterations, \(M\);\\
+
+    Best proportion, \(\delta\);
+    lucky proportion, \(\epsilon\);
+    mutation probability, \(\mu\);
+    compaction ratio, \(s\).
+    \end{tabular}
+}
+\KwResult{A full history of the populations and their fitnesses.}\;
+
+\textcolor{blue}{initialisation}\;
+\(population \longleftarrow CreateInitialPopulation(N,R,C,P,w)\)\;
+\(populationFitness \longleftarrow GetPopulationFitness(population,f)\)\;
+\(%
+    populationHistory \longleftarrow%
+    \left\{(population, populationFitness)\right\}
+\)\;
+\(i \longleftarrow 0\)\;\;
+
+\textcolor{blue}{begin iterative step}\;
+\While{\(iteration < M\) and not \textbf{STOP}}{%
+    \textcolor{blue}{select parent individuals}\;
+    \(%
+        parents \longleftarrow%
+        Selection(population,populationFitness,\delta,\epsilon)
+    \)\;
+
+    \textcolor{blue}{create new population}\;
+    \(population \longleftarrow CreateNewPopulation(parents,N,R,C,P,w,\mu)\)\;
+
+    \textcolor{blue}{update fitness and history}\;
+    \(populationFitness \longleftarrow GetPopulationFitness(population,f)\)\;
+    \(%
+        populationHistory \longleftarrow%
+        populationHistory \cup \left\{(population,populationFitness)\right\}
+    \)\;
+
+    \textcolor{blue}{adjust parameters}\;
+    \(i \longleftarrow i + 1\)\;
+    \(P \longleftarrow ReduceMutationSpace(parents,P,i,M,s)\)\;
+    \(\mu, \textbf{STOP} \longleftarrow UpdateParameters\)\;
+}
+\caption{The evolutionary dataset optimisation algorithm}
+\ealg%

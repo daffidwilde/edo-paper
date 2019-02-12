@@ -1,0 +1,13 @@
+\balg%
+\KwData{\(parents,N,R,C,P,w,\mu\)}
+\KwResult{A new population of size \(N\), \(newPopulation\)}\;
+
+\(newPopulation \longleftarrow parents\)\;
+\While{\(|newPopulation| < N\)}{%
+    Sample two parents, \(parentOne, parentTwo\), from \(parents\)\;
+    \(offspring \longleftarrow Crossover(parentOne,parentTwo,C,P,)\)\;
+    \(mutant \longleftarrow Mutation(offspring,\mu,R,C,P,w)\)\;
+    \(newPopulation \longleftarrow newPopulation \cup \{mutant\}\)\;
+}
+\caption{\(CreateNewPopulation\)}
+\ealg%

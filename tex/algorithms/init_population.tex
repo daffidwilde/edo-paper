@@ -1,0 +1,14 @@
+\balg%
+\KwData{\(N,R,C,P,w\)}
+\KwResult{A random population of datasets of size \(N\), \(population\)}\;
+
+\(population \longleftarrow \emptyset\)\;
+\For{\(i\leftarrow 1 \ \KwTo \ N\)}{%
+    \(%
+        population \longleftarrow%
+        population \cup \left\{CreateIndividual(R,C,P,w)\right\}
+    \)\;
+}
+\caption{\(CreateInitialPopulation\)}
+\ealg%
+
