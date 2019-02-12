@@ -1,6 +1,5 @@
 \section{The evolutionary algorithm}\label{section:algorithm}
 
-%---------------------
 \subsection{Structure}
 
 \begin{itemize}
@@ -13,13 +12,11 @@
 \input{tex/algorithms/edo.tex}
 \input{tex/algorithms/init_population.tex}
 \input{tex/algorithms/individual.tex}
-\input{tex/algorithms/fitness.tex}
 \input{tex/algorithms/selection.tex}
 \input{tex/algorithms/new_population.tex}
 \input{tex/algorithms/crossover.tex}
 \input{tex/algorithms/mutation.tex}
 \input{tex/algorithms/shrinking.tex}
-\input{tex/algorithms/parameters.tex}
 
 Additional algorithms for the individual creation and operator processes are
 given in Section~\ref{subsection:mechanisms}. However, there is no defined
@@ -36,7 +33,6 @@ condition or \(\mu\)-adjustment to be any function. Some examples include:
 \end{itemize}
         
 
-%------------------------------------------------------------
 \subsection{Internal mechanisms}\label{subsection:mechanisms}
 
 \subsubsection{Individuals}
@@ -64,7 +60,6 @@ condition or \(\mu\)-adjustment to be any function. Some examples include:
 
 \inputtikz{shrinking.tex}{An diagram of the shrinking process.}
 
-%-----------------------------------------------------------
 \subsection{Implementation}\label{subsection:implementation}
 
 \begin{itemize}

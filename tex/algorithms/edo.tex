@@ -1,54 +1,27 @@
 \balg%
-\KwData{%
-    \begin{tabular}{l}
-    Fitness function, \(f: X \to \mathbb{R}\);
-    population size, \(N\);
-    row limits, \(R = [r_l, r_u]\);
-    column limits, \(C = [c_l, c_u]\);\\
+\KwData{\(f, N, R, C, \mathcal{P}, w, M, b, l, \mu, s\)}
+\KwResult{A full history of the populations and their fitnesses.}
 
-    Column distributions, \(P\);
-    relative weights for \(P\), \(w \in {[0, 1]}^{|P|}\) s.t.\ \(\sum w = 1\);
-    maximum iterations, \(M\);\\
+\Begin{%
+    create initial population of individuals\;
+    find fitness of each individual\;
+    record population and its fitness\;
 
-    Best proportion, \(\delta\);
-    lucky proportion, \(\epsilon\);
-    mutation probability, \(\mu\);
-    compaction ratio, \(s\).
-    \end{tabular}
-}
-\KwResult{A full history of the populations and their fitnesses.}\;
-
-\textcolor{blue}{initialisation}\;
-\(population \longleftarrow CreateInitialPopulation(N,R,C,P,w)\)\;
-\(populationFitness \longleftarrow GetPopulationFitness(population,f)\)\;
-\(%
-    populationHistory \longleftarrow%
-    \left\{(population, populationFitness)\right\}
-\)\;
-\(i \longleftarrow 0\)\;\;
-
-\textcolor{blue}{begin iterative step}\;
-\While{\(iteration < M\) and not \textbf{STOP}}{%
-    \textcolor{blue}{select parent individuals}\;
-    \(%
-        parents \longleftarrow%
-        Selection(population,populationFitness,\delta,\epsilon)
-    \)\;
-
-    \textcolor{blue}{create new population}\;
-    \(population \longleftarrow CreateNewPopulation(parents,N,R,C,P,w,\mu)\)\;
-
-    \textcolor{blue}{update fitness and history}\;
-    \(populationFitness \longleftarrow GetPopulationFitness(population,f)\)\;
-    \(%
-        populationHistory \longleftarrow%
-        populationHistory \cup \left\{(population,populationFitness)\right\}
-    \)\;
-
-    \textcolor{blue}{adjust parameters}\;
-    \(i \longleftarrow i + 1\)\;
-    \(P \longleftarrow ReduceMutationSpace(parents,P,i,M,s)\)\;
-    \(\mu, \textbf{STOP} \longleftarrow UpdateParameters\)\;
+    \While{%
+        current iteration less than the maximum
+        \textbf{and} stopping condition not met
+    }{%
+        select parents based on fitness and selection proportions\;
+        use parents to create new population through crossover and mutation\;
+        find fitness of each individual\;
+        update population and fitness histories\;
+        \If{adjusting the mutation probability}{%
+            update mutation probability
+        }
+        \If{using a shrinking factor}{%
+            shrink the mutation space based on parents
+        }
+    }
 }
 \caption{The evolutionary dataset optimisation algorithm}
 \ealg%

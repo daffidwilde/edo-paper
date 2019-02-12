@@ -1,30 +1,20 @@
 \balg%
-\KwData{}
-\KwResult{}\;
+\KwData{parents, current iteration, \(\mathcal{P}, M, s\)}
+\KwResult{A new mutation space focussed around the parents}
 
-\textcolor{blue}{initialisation}\;
-\(S \longleftarrow 1 - \frac{i}{s M}\)\;
-\(currentParameters \longleftarrow GetCurrentParameters(parents, P)\)\;\;
+\Begin{%
+    calculate the shrink coefficient\;
 
-\textcolor{blue}{compute new bounds on distribution parameters}\;
-\For{\(parameters \in currentParameters\)}{%
-    \For{\(parameter, parameterValues \in parameters\)}{%
-        \(m \longleftarrow Mean(parameterValues)\)\;
-        \(%
-            \Delta \longleftarrow%
-            \frac{S}{2} \times (\max parameterValues - \min parameterValues)
-        \)
-        \(%
-            L \longleftarrow%
-            \max\{parameterLimits[0], \min\{m - \Delta, m + \Delta\}\}
-        \)\;
-        \(%
-            U \longleftarrow%
-            \min\{parameterLimits[1], \max\{m - \Delta, m + \Delta\}\}
-        \)\;
-        \(parameterLimits \longleftarrow [L, U]\)\;
+    \For{distribution in \(\mathcal{P}\)}{%
+        \For{each parameter of the distribution}{%
+            get current values for parameter in parent columns\;
+            find the mean value\;
+            calculate the shift term using the values and shrink coefficient\;
+            find the new lower and upper bounds around the mean\;
+            set the parameter limits\;
+        }
     }
 }
-\caption{\(ReduceMutationSpace\)}
+\caption{Shrinking the mutation space}
 \ealg%
 
