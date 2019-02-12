@@ -11,12 +11,8 @@
 
 \input{tex/algorithms/edo.tex}
 \input{tex/algorithms/init_population.tex}
-\input{tex/algorithms/individual.tex}
-\input{tex/algorithms/selection.tex}
 \input{tex/algorithms/new_population.tex}
-\input{tex/algorithms/crossover.tex}
-\input{tex/algorithms/mutation.tex}
-\input{tex/algorithms/shrinking.tex}
+
 
 Additional algorithms for the individual creation and operator processes are
 given in Section~\ref{subsection:mechanisms}. However, there is no defined
@@ -40,6 +36,7 @@ condition or \(\mu\)-adjustment to be any function. Some examples include:
 \inputtikz{individual.tex}{%
     An example of how an individual is first created.
 }
+\input{tex/algorithms/individual.tex}
 
 \subsubsection{Selection}
 
@@ -47,18 +44,22 @@ condition or \(\mu\)-adjustment to be any function. Some examples include:
     An example of the selection process with the inclusion of some lucky
     individuals.
 }
+\input{tex/algorithms/selection.tex}
 
 \subsubsection{Crossover}
 
 \inputtikz{crossover.tex}{An example of the crossover process.}
+\input{tex/algorithms/crossover.tex}
 
 \subsubsection{Mutation}
 
 \inputtikz{mutation.tex}{An example of the mutation process.}
+\input{tex/algorithms/mutation.tex}
 
 \subsubsection{Shrinking}
 
 \inputtikz{shrinking.tex}{An diagram of the shrinking process.}
+\input{tex/algorithms/shrinking.tex}
 
 \subsection{Implementation}\label{subsection:implementation}
 
