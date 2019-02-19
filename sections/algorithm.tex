@@ -3,23 +3,27 @@
 \subsection{Structure}
 
 \begin{itemize}
-    \item Algorithm statement with components
     \item Discussion on the choice to include custom stopping/dwindling
         conditions, compacting the search space, etc.
     \item Operators and detailed mechanisms to come later.
 \end{itemize}
 
-\input{tex/algorithms/edo.tex}
+\input{tex/algorithms/edo.tex}\label{alg:edo}
 \input{tex/algorithms/init_population.tex}
 \input{tex/algorithms/new_population.tex}
 
+The statement of the EDO algorithm is deliberately vague here. This is, in part,
+because of the customisable nature of its build but also to lay out its general
+structure from a high level perspective. Lower level discussion is provided in
+Section~\ref{subsection:mechanisms} where additional algorithms for the
+individual creation, evolutionary operator and shrinkage processes are given.
 
-Additional algorithms for the individual creation and operator processes are
-given in Section~\ref{subsection:mechanisms}. However, there is no defined
-process for how to stop the algorithm or adjust the mutation probability,
-\(\mu\). This is deliberate as such conditions are specific to the problem
-domain. As such, in the Python implementation, a user may define their stopping
-condition or \(\mu\)-adjustment to be any function. Some examples include:
+Note that there are no defined processes for how to stop the algorithm or adjust
+the mutation probability, \(p_m\). These form two key areas of potential
+customisation since such conditions can be specific to the problem domain. With
+that, as is detailed in the Python implementation, a user may define their
+stopping condition or \(p_m\)-adjustment to be any reasonable function. Some
+examples include:
 
 \begin{itemize}
     \item These should be real-world examples used in other EA with references.
@@ -27,11 +31,24 @@ condition or \(\mu\)-adjustment to be any function. Some examples include:
         population fitnesses is below some tolerance.
     \item Halving the mutation probability every 100 iterations.
 \end{itemize}
-        
 
 \subsection{Internal mechanisms}\label{subsection:mechanisms}
 
+Below are detailed instructions and discussion around the internal mechanisms of
+EDO.\ Each component has an affiliated algorithm statement and accompanying
+diagram.
+
 \subsubsection{Individuals}
+
+Evolutionary algorithms operate on succeeding populations of individuals often
+coined as ``generations''. Typically, a potential solution would be encoded as a
+bit string of a fixed length and treated as a chromosome-like object to be
+manipulated directly. In EDO, as the objective is to generate datasets, there is
+no encoding or information reduction so that the datasets may be manipulated in
+a more meaningful way with the biological operators.
+
+In a sense, a dataset is treated similarly to a classical bit string as the
+primary components (loci) of the dataset are considered to be its columns.
 
 \inputtikz{individual.tex}{%
     An example of how an individual is first created.
