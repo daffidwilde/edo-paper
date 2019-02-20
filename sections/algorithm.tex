@@ -2,14 +2,47 @@
 
 \subsection{Structure}
 
+On the surface, the evolutionary algorithm in EDO follows a fairly generic
+schema; there is a random initial population, individuals are selected through a
+modified truncation process, and a uniform crossover operator is used.
+
+However, there are some additional features and the processes within are
+designed with the objective of artificial data generation in mind. With that,
+there are a number of parameters passed to the algorithm, including several that
+are not typical:
+
 \begin{itemize}
-    \item Discussion on the choice to include custom stopping/dwindling
-        conditions, compacting the search space, etc.
-    \item Operators and detailed mechanisms to come later.
+    \item A real-valued fitness function, \(f: X \to \mathbb{R}\), which acts on
+        a dataset to return a single fitness score.
+    \item A population size, \(N \in \mathbb{N}\).
+    \item Limits on the number of rows a dataset can have,
+        \(R \in \left\{(l, u) \in \mathbb{N}^2~|~l \leq u\right\}\).
+    \item Limits on the number of columns a dataset can have,
+        \(C \in \left\{(l, u) \in \mathbb{N}^2~|~l \leq u\right\}\). Note that
+        it is possible to use a different form for \(C\) so as to specify a
+        minimum or maximum number of columns a dataset should have for each
+        distribution passed in \(\mathcal{P}\).
+    \item A pool of probability distribution families, \(\mathcal{P}\). Each
+        family in this pool has a set of parameter limits which form a part of
+        the overall search space. For instance, the normal distribution family,
+        denoted by \(N(\mu, \sigma^2)\), would have limits on reasonable values
+        for the mean, \(\mu\), and the standard deviation, \(\sigma\).
+    \item A probability vector to sample distributions from \(\mathcal{P}\),
+        \(w = \left(w_1, \ldots, w_{|\mathcal{P}|}\right)\) such that
+        \(\sum_{i=1}^{|\mathcal{P}|} w_i = 1\) and
+        \(w_i \in [0, 1] \ \forall~i = 1, \ldots, |\mathcal{P}|\).
+    \item A maximum number of iterations, \(M \in \mathbb{N}\).
+    \item Two selection parameters: one to indicate the proportion of the 
+        fittest individuals to carry forward, \(b \in [0, 1]\), and to allow for
+        a small proportion of ``lucky'' individuals in the next generation,
+        \(l \in [0, 1]\).
+    \item A mutation probability, \(p_m \in [0, 1]\), used to indicate the
+        intensity and likelihood of the mutation a new individual might undergo.
+    \item A shrink factor, \(s \in [0, 1]\). The relative size of a component of
+        the search space to be retained after adjustment.
 \end{itemize}
 
 \input{tex/algorithms/edo.tex}\label{alg:edo}
-\input{tex/algorithms/init_population.tex}
 \input{tex/algorithms/new_population.tex}
 
 The statement of the EDO algorithm is deliberately vague here. This is, in part,
@@ -35,47 +68,131 @@ examples include:
 \subsection{Internal mechanisms}\label{subsection:mechanisms}
 
 Below are detailed instructions and discussion around the internal mechanisms of
-EDO.\ Each component has an affiliated algorithm statement and accompanying
-diagram.
+EDO;\ each component has an affiliated algorithm and diagram (where
+appropriate). In addition to the traditional biological operators, there are
+particular mechanisms for representing individuals as well as shrinking the
+mutation space.
 
 \subsubsection{Individuals}
 
 Evolutionary algorithms operate on succeeding populations of individuals often
-coined as ``generations''. Typically, a potential solution would be encoded as a
-bit string of a fixed length and treated as a chromosome-like object to be
-manipulated directly. In EDO, as the objective is to generate datasets, there is
-no encoding or information reduction so that the datasets may be manipulated in
-a more meaningful way with the biological operators.
+coined as ``generations''. Typically, an individual would be encoded as a bit
+string of a fixed length and treated as a chromosome-like object to be
+manipulated. In EDO, as the objective is to generate datasets, there is no
+encoding process. Instead, the datasets are manipulated directly so that the
+biological operators can behave and be interpreted in a more meaningful way.
 
-In a sense, a dataset is treated similarly to a classical bit string as the
-primary components (loci) of the dataset are considered to be its columns.
-
-\inputtikz{individual.tex}{%
+\inputtikz{individual}{%
     An example of how an individual is first created.
 }
+
+In a sense, a dataset is treated similarly to a classical bit string as the
+primary components (loci) of the dataset are considered to be its columns. As is
+seen in Figure~\ref{figure:individual}, an individual's creation is defined by
+the random generation of its columns. A set of instructions on how to sample new
+values for that column are recorded in the form of a probability distribution.
+These distributions are sampled from a pool of distribution families which is
+passed to the evolutionary algorithm along with the other parameters.
+
+Obviously, users and interpreters of EDO should not be so quick to assume that
+these pairs of distributions and columns are typical of their partner. That is,
+that the columns are a reliable representative of the distribution associated
+with them, or vice versa. A caveat to this statement: this is particularly true
+of ``shorter'' datasets with a small number of rows, whereas confidence in the
+pair could be given more liberally for ``longer'' datasets. In the case of the
+latter, the column metadata can become more useful for casually analysing the
+data which is generated. In any case, however, more direct and sophisticated
+methods should be employed to understand the structure and characteristics of
+the data before formal conclusions are made.
+
 \input{tex/algorithms/individual.tex}
 
 \subsubsection{Selection}
 
-\inputtikz{selection.tex}{%
-    An example of the selection process with the inclusion of some lucky
-    individuals.
+The capability to include random individuals is included to encourage diversity.
+This has a place in more complex optimisation scenarios \-- or for larger
+populations where a greater loss of diversity is seen in the selection process
+simply due to the nature of truncation selection~\cite{Tatsuya2002} \-- and
+should be used sparingly so as not to dominate the selection process with
+unwanted randomness.
+
+\inputtikz{selection}{%
+    The selection process with the inclusion of some lucky individuals.
 }
 \input{tex/algorithms/selection.tex}
 
 \subsubsection{Crossover}
 
-\inputtikz{crossover.tex}{An example of the crossover process.}
+\inputtikz{crossover}{The crossover process.}
 \input{tex/algorithms/crossover.tex}
 
 \subsubsection{Mutation}
 
-\inputtikz{mutation.tex}{An example of the mutation process.}
+\inputtikz{mutation}{The mutation process.}
 \input{tex/algorithms/mutation.tex}
 
 \subsubsection{Shrinking}
 
-\inputtikz{shrinking.tex}{An diagram of the shrinking process.}
+The potential benefits of adapting the search space of an EA has been
+well-discussed in the domain of complex optimisation problems. During the
+development of EDO, two methods were considered to do this. Each of these
+methods relied on a law relating a successive generation's search space with its
+predecessor. It should be noted that in both cases the methods were adapted to
+conform with the choice to represent individuals as they are rather than as bit
+strings.
+
+The first was developed to be a two-part process based on a linear law with two
+parameters: a shrink factor, \(s\), and the maximum number of iterations
+\(M\)~\cite{Amirjanov2017}. The adapted method would be as follows. For all
+iterations, \(t \geq sM\), no shrinking would take place. However, for all
+previous iterations, the suggested method would take the parents found during
+selection and act on each component of the search space. That is, for each
+iteration, \(t < sM\), every component would have its lower and upper limits,
+denoted by \(l_t\) and \(u_t\) respectively, adjusted so that they are centred
+about the mean parent value, \(\mu\), and be such that:
+\[
+    u_{t+1} - l_{t+1} = (u_t - l_t) \left(1 - \frac{t}{sM}\right)
+\]
+
+More specifically, the adjusted limits would be calculated as follows:
+\[
+    l_{t+1} = \max \left\{%
+        l_t, \ \mu - \frac{1}{2} (u_t - l_t) \left(1 - \frac{t}{sM}\right)
+    \right\},
+    \qquad%
+    u_{t+1} = \min \left\{%
+        u_t, \ \mu + \frac{1}{2} (u_t - l_t) \left(1 - \frac{t}{sM}\right)
+    \right\}
+\]
+
+The second method was designed for use in a genetic algorithm which mapped
+weighted bit strings to some pre-defined interval with lower and upper
+bounds~\cite{Amirjanov2016}. The proposed method would rely on a power law with
+a single parameter: some shrink factor, \(s\). Again, at each iteration, the
+parents would be taken and every component's limits would be adjusted so that
+they were centred about the mean parent value, \(\mu\), such that:
+\[
+    u_{t+1} - l_{t+1} = (u_t - l_t) s^t
+\]
+
+The process by which the values of \(l_{t+1}\) and \(u_{t+1}\) would be found
+are equivalent to the above but with a different shift term:
+\begin{align}
+    \label{eq:shrinking_lower}
+    l_{t+1}&= \max \left\{l_t, \ \mu - \frac{1}{2} (u_t - l_t) s^t\right\}\\
+    \label{eq:shrinking_upper}
+    u_{t+1}&= \max \left\{u_t, \ \mu + \frac{1}{2} (u_t - l_t) s^t\right\}
+\end{align}
+
+It is immediate that these methods appear to be largely indistinguishable.
+However, following some inconclusive experimental comparisons it was concluded
+that the first method be rejected in favour of the second. This decision was
+based on a wider discussion around how EDO would work for the general user
+and it was found that the second method having fewer parameters was a redeeming
+feature; this removed any potential or otherwise hidden interactions between the
+shrink factor and the maximum number of iterations which is often used as a
+fallback stopping criterion for complex problem domains.
+
 \input{tex/algorithms/shrinking.tex}
 
 \subsection{Implementation}\label{subsection:implementation}

@@ -8,8 +8,11 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsthm}
+\usepackage[backend=bibtex, style=numeric]{biblatex}
+    \addbibresource{references}
 \usepackage{booktabs}
 \usepackage{caption}
+\usepackage{float}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{setspace}
@@ -30,7 +33,7 @@
 \doublespacing%
 
 \newlength{\imgwidth}
-\setlength{\imgwidth}{0.9\textwidth}
+\setlength{\imgwidth}{\textwidth}
 
 \definecolor{magenta}{RGB}{226, 62, 138}
 
@@ -71,12 +74,12 @@
 }
 
 \newcommand{\inputtikz}[3][\imgwidth]{%
-    \begin{figure}[htbp]
+    \begin{figure}[H]
         \centering
         \resizebox{#1}{!}{%
-            \input{tex/diagrams/#2}
+            \input{tex/diagrams/#2.tex}
         }
-        \caption{#3}
+        \caption{#3}\label{figure:#2}
     \end{figure}
 }
 
@@ -102,4 +105,5 @@
 \input{sections/algorithm.tex}
 \input{sections/examples.tex}
 
+\printbibliography
 \end{document}
