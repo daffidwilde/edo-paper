@@ -130,13 +130,15 @@ the entire run of the algorithm.
 
 \input{tex/algorithms/selection.tex}
 
-The capability to include random individuals is included to encourage
-diversity since truncation selection can lead an evolutionary algorithm to
-converge to a local optimum~\cite{Jebari2013}. This has a place in more complex
-optimisation scenarios \-- or for larger populations where a greater loss of
-diversity is seen in the selection process simply due to the nature of
-truncation selection~\cite{Tatsuya2002} \-- and should be used sparingly so as
-not to dominate the selection process with unwanted randomness.
+The ability to include some random individuals is included to encourage
+diversity. It has been found that, despite its efficiency as a selection
+operator, truncation selection can lead an evolutionary algorithm to
+converge prematurely to local optimum~\cite{Jebari2013}. This feature can be
+particularly useful in more complex optimisation scenarios \-- or for larger
+populations where a greater loss of diversity is seen in the selection process
+simply due to the nature of truncation selection~\cite{Tatsuya2002}. As such, it
+should be used sparingly so as not to dominate the selection process with
+unwanted randomness.
 
 \subsection{Crossover}
 
