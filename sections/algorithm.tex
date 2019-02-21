@@ -109,6 +109,21 @@ the data before formal conclusions are made.
 
 \subsubsection{Selection}
 
+The selection operator describes the process by which individuals are chosen
+from the current population to generate the next. Almost always, the likelihood
+of an individual being selected is determined by their fitness. This is because
+the purpose of selection is to preserve favourable qualities and encourage some
+homogeneity within future generations.
+
+In EDO, a modified truncation selection method is used. Standard truncation
+selection takes a fixed number, \(n_b = \lceil bN\rceil\), of the fittest
+individuals in a population and makes them the ``parents'' of the next. The
+modification is an optional stage after the best individuals have been chosen.
+By passing some small \(l\) to the evolutionary algorithm, a number of random
+individuals can be selected to be carried forward. This number is given by \(n_l
+= \lceil lN \rceil\). It should be noted that even with this modification, no
+individual may be selected more than once in a single iteration.
+
 The capability to include random individuals is included to encourage diversity.
 This has a place in more complex optimisation scenarios \-- or for larger
 populations where a greater loss of diversity is seen in the selection process
