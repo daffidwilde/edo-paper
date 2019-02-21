@@ -3,14 +3,12 @@
 \KwResult{A new mutation space focussed around the parents}
 
 \Begin{%
-    calculate the shrink coefficient\;
-
-    \For{distribution in \(\mathcal{P}\)}{%
+    \For{each distribution in \(\mathcal{P}\)}{%
         \For{each parameter of the distribution}{%
-            get current values for parameter in parent columns\;
-            find the mean value\;
-            calculate the shift term using the values and shrink coefficient\;
-            find the new lower and upper bounds around the mean\;
+            get the current values for parameter over all parent columns\;
+            find the mean of the current values\;
+            find the new lower~(\ref{eq:shrinking_lower}) and
+            upper~(\ref{eq:shrinking_upper}) bounds around the mean\;
             set the parameter limits\;
         }
     }
