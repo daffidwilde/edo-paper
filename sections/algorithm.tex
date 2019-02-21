@@ -142,14 +142,14 @@ conform with the choice to represent individuals as they are rather than as bit
 strings.
 
 The first was developed to be a two-part process based on a linear law with two
-parameters: a shrink factor, \(s\), and the maximum number of iterations
-\(M\)~\cite{Amirjanov2017}. The adapted method would be as follows. For all
-iterations, \(t \geq sM\), no shrinking would take place. However, for all
-previous iterations, the suggested method would take the parents found during
-selection and act on each component of the search space. That is, for each
-iteration, \(t < sM\), every component would have its lower and upper limits,
-denoted by \(l_t\) and \(u_t\) respectively, adjusted so that they are centred
-about the mean parent value, \(\mu\), and be such that:
+parameters: a shrink factor, \(s \in (0, 1)\), and the maximum number of
+iterations \(M \in \mathbb{N}\)~\cite{Amirjanov2017}. The adapted method would
+be as follows. For all iterations, \(t \geq sM\), no shrinking would take place.
+However, for all previous iterations, the suggested method would take the
+parents found during selection and act on each component of the search space.
+That is, for each iteration, \(t < sM\), every component would have its lower
+and upper limits, denoted by \(l_t\) and \(u_t\) respectively, adjusted so that
+they are centred about the mean parent value, \(\mu\), and be such that:
 \[
     u_{t+1} - l_{t+1} = (u_t - l_t) \left(1 - \frac{t}{sM}\right)
 \]
@@ -165,12 +165,13 @@ More specifically, the adjusted limits would be calculated as follows:
     \right\}
 \]
 
-The second method was designed for use in a genetic algorithm which mapped
-weighted bit strings to some pre-defined interval with lower and upper
+The second method was for use in a genetic algorithm which mapped weighted bit
+strings to some pre-defined interval with lower and upper
 bounds~\cite{Amirjanov2016}. The proposed method would rely on a power law with
-a single parameter: some shrink factor, \(s\). Again, at each iteration, the
-parents would be taken and every component's limits would be adjusted so that
-they were centred about the mean parent value, \(\mu\), such that:
+a single parameter: some shrink factor, \(s \in [0, 1]\). Again, at each
+iteration, the parents would be taken and every component's limits would be
+adjusted so that they were centred about the mean parent value, \(\mu\), such
+that:
 \[
     u_{t+1} - l_{t+1} = (u_t - l_t) s^t
 \]
@@ -184,14 +185,14 @@ are equivalent to the above but with a different shift term:
     u_{t+1}&= \max \left\{u_t, \ \mu + \frac{1}{2} (u_t - l_t) s^t\right\}
 \end{align}
 
-It is immediate that these methods appear to be largely indistinguishable.
-However, following some inconclusive experimental comparisons it was concluded
-that the first method be rejected in favour of the second. This decision was
-based on a wider discussion around how EDO would work for the general user
-and it was found that the second method having fewer parameters was a redeeming
-feature; this removed any potential or otherwise hidden interactions between the
-shrink factor and the maximum number of iterations which is often used as a
-fallback stopping criterion for complex problem domains.
+From these brief definitions alone, these methods appear to be largely
+indistinguishable. However, following a wider discussion around how EDO would
+work for the general user, it was decided that the first method be rejected in
+favour of the second. It was found that the second method having fewer
+parameters was a particularly redeeming feature; this removed any hidden or
+otherwise unwanted interactions between a parameter dedicated to the shrink
+process, \(s\), and the maximum number of iterations, \(M\), which is often used
+as a fallback stopping criterion in complex problem domains.
 
 \input{tex/algorithms/shrinking.tex}
 
