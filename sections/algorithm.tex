@@ -130,24 +130,26 @@ the entire run of the algorithm.
 
 \input{tex/algorithms/selection.tex}
 
-The ability to include some random individuals is included to encourage
-diversity. It has been found that, despite its efficiency as a selection
+It has been found that, despite its efficiency as a selection
 operator, truncation selection can lead an evolutionary algorithm to
-converge prematurely to local optimum~\cite{Jebari2013}. This feature can be
-particularly useful in more complex optimisation scenarios \-- or for larger
-populations where a greater loss of diversity is seen in the selection process
-simply due to the nature of truncation selection~\cite{Tatsuya2002}. As such, it
-should be used sparingly so as not to dominate the selection process with
-unwanted randomness.
+converge prematurely to local optima~\cite{Jebari2013}. Hence, the ability to
+include some randomly selected individuals is included to encourage diversity
+throughout the run of the algorithm. This feature can be particularly useful in
+more complex optimisation scenarios \-- or for larger populations where a
+greater loss of diversity is seen in the selection process simply due to the
+nature of truncation selection~\cite{Tatsuya2002}. As such, it should be used
+sparingly so as not to dominate the selection process with unwanted randomness.
 
 \subsection{Crossover}
 
 \inputtikz{crossover}{The crossover process.}
+
 \input{tex/algorithms/crossover.tex}
 
 \subsection{Mutation}
 
 \inputtikz{mutation}{The mutation process.}
+
 \input{tex/algorithms/mutation.tex}
 
 \subsection{Shrinking}
