@@ -1,0 +1,42 @@
+\balg%
+\KwData{An individual, \(p_m\), \(R\), \(C\), \(\mathcal{P}\), \(w\)}
+\KwResult{A mutated individual}
+
+\Begin{%
+    sample a random number \(r \in [0, 1]\)\;
+    \If{\(r < p_m\) and adding a row would not violate \(R\)}{%
+        sample a value from each distribution in the metadata\;
+        append these values as a row to the end of the dataset\;
+    }
+    sample a new \(r \in [0, 1]\)\;
+    \If{\(r < p_m\) and removing a row would not violate \(R\)}{%
+        remove a row at random from the dataset
+    }
+    sample a new \(r \in [0, 1]\)\;
+    \If{\(r < p_m\) and adding a new column would not violate \(C\)}{%
+        create a new column using \(\mathcal{P}\) and \(w\)\;
+        append this column to the end of the dataset
+    }
+    sample a new \(r \in [0, 1]\)\;
+    \If{\(r < p_m\) and removing a column would not violate \(C\)}{%
+        remove a column (and its associated metadata) at random from the dataset
+    }
+    \For{each distribution in the metadata}{%
+        \For{each parameter of the distribution}{%
+            sample a random number \(r \in [0, 1]\)\;
+            \If{\(r < p_m\)}{%
+                update the parameter value by sampling a new value from the
+                associated distribution parameter limits
+            }
+        }
+    }
+    \For{each value in the dataset}{%
+        sample a random number \(r \in [0, 1]\)\;
+        \If{\(r < p_m\)}{%
+            update the value by sampling a new value from the associated
+            distribution in the metadata
+        }
+    }
+}
+\caption{The mutation process}
+\ealg%
