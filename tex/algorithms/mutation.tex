@@ -25,16 +25,17 @@
         \For{each parameter of the distribution}{%
             sample a random number \(r \in [0, 1]\)\;
             \If{\(r < p_m\)}{%
-                update the parameter value by sampling a new value from the
-                associated distribution parameter limits
+                sample a new value from within the distribution parameter
+                limits\;
+                update the parameter value with this new value
             }
         }
     }
-    \For{each value in the dataset}{%
+    \For{each entry in the dataset}{%
         sample a random number \(r \in [0, 1]\)\;
         \If{\(r < p_m\)}{%
-            update the value by sampling a new value from the associated
-            distribution in the metadata
+            sample a new value from the associated column distribution\;
+            update the entry with this new value
         }
     }
 }
