@@ -148,7 +148,26 @@ sparingly so as not to dominate the selection process with unwanted randomness.
 
 \subsection{Mutation}
 
+Mutation is used in evolutionary algorithms to encourage a broader exploration
+of the search space. Traditional applications with chromosome representations
+would mutate by run along the loci of an individual and ``switching'' the binary
+value with some constant probability. Under this framework, as previously
+discussed, an individual's columns are similar to traditional loci. However, in
+the mutation phase multiple characteristics of an individual are susceptible to
+being mutated including the dimensions of the individual and their column
+metadata.
+
 \inputtikz{mutation}{The mutation process.}
+
+The mutation process, seen in Figure~\ref{figure:mutation} and defined in
+Algorithm~\ref{algorithm:mutation},
+is deliberately fine so that all aspects of an individual can be changed in a
+meaningful yet fluid way. Each of the potential mutations occur with the same
+probability, \(p_m\), but the way in which columns are maintained assure that
+(assuming appropriate choices for \(f\) and \(\mathcal{P}\)) many mutations in
+the metadata and the dataset itself will only result in some incremental change
+in the individual's genetics and fitness overall \-- at least relatively so to,
+say, a completely new individual.
 
 \input{tex/algorithms/mutation.tex}
 
