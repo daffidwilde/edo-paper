@@ -142,6 +142,15 @@ sparingly so as not to dominate the selection process with unwanted randomness.
 
 \subsection{Crossover}
 
+Crossover is the operation of combining two individuals in order to create at
+least one offspring. Often in classical evolutionary algorithms, the term
+``crossover'' is taken literally: two bit strings are crossed at a point
+to produce two new bit strings. Another popular method is uniform crossover
+where the loci of a new individual are sampled uniformly from either parent
+individual. This method is adapted to support dataset manipulation here by
+sampling first a set of dimensions from the parents, and then inheriting entire
+columns.
+
 \inputtikz{crossover}{The crossover process.}
 
 \input{tex/algorithms/crossover.tex}
@@ -151,11 +160,11 @@ sparingly so as not to dominate the selection process with unwanted randomness.
 Mutation is used in evolutionary algorithms to encourage a broader exploration
 of the search space. Traditional applications with chromosome representations
 would mutate by run along the loci of an individual and ``switching'' the binary
-value with some constant probability. Under this framework, as previously
+value with some constant probability. Under this framework, as has been
 discussed, an individual's columns are similar to traditional loci. However, in
 the mutation phase multiple characteristics of an individual are susceptible to
-being mutated including the dimensions of the individual and their column
-metadata.
+being mutated beyond the columns themselves such as the dimensions of the
+individual and their column metadata.
 
 \inputtikz{mutation}{The mutation process.}
 
