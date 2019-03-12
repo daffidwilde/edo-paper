@@ -2,10 +2,8 @@
 
 \subsection{Structure}
 
-On the surface, the evolutionary algorithm in EDO follows a fairly generic
-schema; there is a random initial population, individuals are selected through a
-modified truncation process, and a uniform crossover operator is used. However,
-there are some additional features and the processes within are designed with
+On the surface, the EDO method is built as an evolutionary algorithm which
+follows a traditional (generic) schema with some additional features that keep
 the objective of artificial data generation in mind. With that, there are a
 number of parameters passed to the algorithm, including several that are not
 typical:
@@ -15,17 +13,27 @@ typical:
         a dataset to return a single fitness score.
     \item A population size, \(N \in \mathbb{N}\).
     \item Limits on the number of rows a dataset can have,
-        \(R \in \left\{(l, u) \in \mathbb{N}^2~|~l \leq u\right\}\).
-    \item Limits on the number of columns a dataset can have,
-        \(C \in \left\{(l, u) \in \mathbb{N}^2~|~l \leq u\right\}\). Note that
-        it is possible to use a different form for \(C\) so as to specify a
-        minimum or maximum number of columns a dataset should have for each
-        distribution passed in \(\mathcal{P}\).
-    \item A pool of probability distribution families, \(\mathcal{P}\). Each
-        family in this pool has a set of parameter limits which form a part of
+        \(%
+            R \in \left\{%
+                (r_{\min}, r_{\max}) \in \mathbb{N}^2~|~r_{\min} \leq r_{\max}
+            \right\}
+        \).
+    \item Limits on the number of columns a dataset can have
+        \[
+            C := \left(C_1, \ldots, C_{|\mathcal{P}|}\right)
+            ~\text{where}~
+            C_j \in \left\{ (c_{\min}, c_{\max}) \in {%
+                \left(\mathbb{N}\cup\{\infty\}\right)
+            }^2~|~c_{\min} \leq c_{\max}\right\}
+        \]
+        for each \(j = 1, \ldots, |\mathcal{P}|\). That is, \(C\) is defined as
+        a tuple detailing the minimum and maximum number of columns a dataset
+        can have for each distribution passed in \(\mathcal{P}\).
+    \item A set of probability distribution families, \(\mathcal{P}\). Each
+        family in this set has some parameter limits which form a part of
         the overall search space. For instance, the normal distribution family,
-        denoted by \(N(\mu, \sigma^2)\), would have limits on values
-        for the mean, \(\mu\), and the standard deviation, \(\sigma\).
+        denoted by \(N(\mu, \sigma^2)\), would have limits on values for the
+        mean, \(\mu\), and the standard deviation, \(\sigma\).
     \item A probability vector to sample distributions from \(\mathcal{P}\),
         \(w = \left(w_1, \ldots, w_{|\mathcal{P}|}\right)\) such that
         \(\sum_{i=1}^{|\mathcal{P}|} w_i = 1\) and
@@ -44,13 +52,16 @@ typical:
 The concepts discussed in this section form the mechanisms of the evolutionary
 dataset optimisation algorithm. To use the algorithm practically, these
 components have been implemented in Python as a library built on the scientific
-Python stack (NumPy and Pandas). The library is fully documented (documentation
-at \url{https://edo.readthedocs.io}) and is available online~\cite{edo-project}.
-[CHECK PARAMETERS OF ALG: $l$ used differently (I think)]
+Python stack~\cite{pandas,numpy}. The library is fully tested and documented (at
+\url{https://edo.readthedocs.io}) and is freely available online under the MIT
+license~\cite{edo-project}. The EDO implementation was developed to be
+consistent with the best practices of open source software development.
+% TODO Citation(s) needed.
+
 \input{tex/algorithms/edo.tex}\label{alg:edo}
 \input{tex/algorithms/new_population.tex}
 
-The statement of the EDO algorithm is deliberately vague here. This is, in part,
+The statement of the EDO algorithm is deliberately vague. This is, in part,
 because of the customisable nature of its build but also to lay out its general
 structure from a high level perspective. Lower level discussion is provided
 below where additional algorithms for the
