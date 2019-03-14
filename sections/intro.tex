@@ -1,31 +1,31 @@
 \section{Introduction}\label{section:introduction}
 
-When a research problem manifests itself and an algorithm is developed to solve
-the problem, the investigator is presented with questions about the performance
-of their proposed method, and its relative performance to existing methods. The
-standard response to these situations is to fix some benchmark datasets and a
-common metric amongst the proposed method and its competitors. The algorithm is
-then assessed based on this metric. This paradigm has a number of problems:
+When an algorithm is developed to solve a given problem, the developer is
+presented with questions about the performance of their proposed method, and its
+relative performance against existing methods. The standard response to these
+situations is to fix some benchmark datasets and a common metric amongst the
+proposed method and its competitors. The algorithm is then assessed based on
+this metric. This paradigm has a number of problems:
 
 \begin{enumerate}
     \item How were these benchmark examples selected? In some domains and
-        disciplines there are well-established benchmarks so literature can be
-        reliable, in others less so.
-    \item In the case of the latter, a `new' dataset is sometimes simulated to
-        assess the algorithm. This begs the question as to how and why that
-        simulation is created.
+        disciplines there are well-established benchmarks so those found through
+        literature can be reliable, in others less so.
+    \item Sometimes, when there is a lack of benchmark examples, a `new' dataset
+        is simulated to assess the algorithm. This begs the question as to how
+        and why that simulation is created.
     \item In disciplines where there are established benchmarks, there may still
         be underlying problems:
         \begin{enumerate}[(i)]
-            \item Work by Torralba and Efros~\cite{Torralba2011} showed that
-                benchmark datasets used to train and evaluate object recognition
-                models do not give a reliable measure for their performance when
-                evaluated on other benchmark datasets.
+            \item As an example, work by Torralba and Efros~\cite{Torralba2011}
+                showed that image classifiers trained and evaluated on a
+                particular dataset, or datasets, did not perform reliably when
+                evaluated using other benchmark datasets.
             \item The amount of learning one can gain as to the characteristics
                 of data which lead to good (or bad) performance of an algorithm
-                are constrained to the finite set of attributes present in the
+                is constrained to the finite set of attributes present in the
                 benchmark data chosen in the first place.
-    \end{enumerate}
+        \end{enumerate}
 \end{enumerate}
 
 This work presents a novel approach that flips this paradigm on its head.
@@ -41,16 +41,17 @@ array of problems in recent history \-- particularly where the complexity of the
 problem or its domain are significant. These methods are highly adaptive and
 their population-based construction allows for the efficient solving of problems
 that are otherwise beyond the scope of traditional search and optimisation
-methods. It is clear that the domain of studying algorithm quality falls into
-this category of problems.
+methods. It should be clear that the study of algorithm quality falls into this
+category of problems.
 
 \inputtikz{flowchart}{%
     A general schematic for an evolutionary algorithm.
 }
 
-The use of EAs to generate artificial data is not a new concept; these methods
-are used in the automated testing of software to achieve maximal coverage and to
-support structural tests~\cite{Koleejan2015, Michael2001, Sharifipour2018}. Such
-methods also have a long history in the parameter optimisation of algorithms,
-and recently in the automated design of convolutional neural
-networks~\cite{Suganuma2017, Sun2018}.
+The use of EAs to generate artificial data, however, is not a new concept; these
+methods have been used to develop techniques for the automated testing of
+software with a goal of achieve maximal coverage or to support structural
+tests~\cite{Koleejan2015,Michael2001,Sharifipour2018}. Such methods also have
+a long history in the parameter optimisation of algorithms, and recently in the
+automated design of convolutional neural network
+architecture~\cite{Suganuma2017,Sun2018}. 
