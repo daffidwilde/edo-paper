@@ -3,49 +3,54 @@
 When a research problem manifests itself and an algorithm is developed to solve
 the problem, the investigator is presented with questions about the performance
 of their proposed method, and its relative performance to existing methods. The
-standard response to these questions is to fix some benchmark datasets and a
+standard response to these situations is to fix some benchmark datasets and a
 common metric amongst the proposed method and its competitors. The algorithm is
 then assessed based on this metric. This paradigm has a number of problems:
 
 \begin{enumerate}
-    \item How were these benchmark examples selected?
+    \item How were these benchmark examples selected? In some domains and
+        disciplines there are well-established benchmarks so literature can be
+        reliable, in others less so.
+    \item In the case of the latter, a `new' dataset is sometimes simulated to
+        assess the algorithm. This begs the question as to how and why that
+        simulation is created.
+    \item In disciplines where there are established benchmarks, there may still
+        be underlying problems:
+        \begin{enumerate}[(i)]
+            \item Work by Torralba and Efros~\cite{Torralba2011} showed that
+                benchmark datasets used to train and evaluate object recognition
+                models do not give a reliable measure for their performance when
+                evaluated on other benchmark datasets.
+            \item The amount of learning one can gain as to the characteristics
+                of data which lead to good (or bad) performance of an algorithm
+                are constrained to the finite set of attributes present in the
+                benchmark data chosen in the first place.
+    \end{enumerate}
+\end{enumerate}
+
+This work presents a novel approach that flips this paradigm on its head.
+Instead of fixing data and evaluating an algorithm on some metric, the proposed
+method will generate data for which the algorithm performs well (or poorly)
+through evolution. These datasets can then be studied to learn which attributes
+and characteristics lead to the success (or failure) of a given algorithm.
+
+% TODO: Diagram showing this flipped paradigm.
 
 Evolutionary algorithms (EAs) have been applied successfully to solve a wide
 array of problems in recent history \-- particularly where the complexity of the
 problem or its domain are significant. These methods are highly adaptive and
 their population-based construction allows for the efficient solving of problems
 that are otherwise beyond the scope of traditional search and optimisation
-methods.
+methods. It is clear that the domain of studying algorithm quality falls into
+this category of problems.
 
 \inputtikz{flowchart}{%
     A general schematic for an evolutionary algorithm.
 }
 
-\begin{itemize}
-    \item What is the motivation?\\ Here, a diagram might be useful to highlight
-        the flipped paradigm. Typically one would fix some benchmark examples
-        and a metric, and then assess the algorithm based on this metric. This
-        paradigm has a number of problems:\\ 1. How were the benchmark examples
-        selected? In some disciplines/domains there are well established
-        benchmarks, in others less so. Sometimes a `new' data set is simulated
-        to assess the performance of an algorithm. How and why is this
-        simulation created?\\ 2. In disciplines where there are established
-        benchmarks, there still may be problems e.g. (i) Work by Hyndman, who
-        considered benchmark data sets used in time series analysis
-        competitions, showed that the data sets were biased towards particular
-        attributed; (ii) the amount of learning one can gain as to the
-        attributes of data which lead to good (or bad) performance of an
-        algorithm are constrained to the finite set of attributes present in the
-        benchmark data chosen in the first place.
-    \item What is the problem?
-    \item What is the solution?
-\end{itemize}
-
-\subsection{Literature review}
-
-\begin{itemize}
-    \item How is artificial data made?
-    \item Why hasn't this been done before?
-    \item Genetic algorithms used to train algorithms for data
-    \item Diagram showing that this is the ``reverse'' problem
-\end{itemize}
+The use of EAs to generate artificial data is not a new concept; these methods
+are used in the automated testing of software to achieve maximal coverage and to
+support structural tests~\cite{Koleejan2015, Michael2001, Sharifipour2018}. Such
+methods also have a long history in the parameter optimisation of algorithms,
+and recently in the automated design of convolutional neural
+networks~\cite{Suganuma2017, Sun2018}.
