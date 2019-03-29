@@ -1,4 +1,4 @@
-\documentclass[10pt]{article}
+\documentclass[11pt]{article}
 
 
 \usepackage[margin=1in, includefoot, footskip=30pt]{geometry}
@@ -13,6 +13,7 @@
 \usepackage{booktabs} % Pandas dataframes
 \usepackage{caption}
 \usepackage{enumerate} % Roman numerals
+\usepackage[default]{Fira Sans}
 \usepackage{float}
 \usepackage{graphicx}
 \usepackage{hyperref}
@@ -36,6 +37,7 @@
 \newlength{\imgwidth}
 \setlength{\imgwidth}{\textwidth}
 
+\definecolor{cyan}{RGB}{0, 164, 216}
 \definecolor{magenta}{RGB}{226, 62, 138}
 
 
@@ -45,6 +47,9 @@
 
 
 % TikZ styles, commands and settings
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+
 \tikzstyle{every picture} += [remember picture]
 \tikzstyle{na} = [baseline=-.5ex]
 
