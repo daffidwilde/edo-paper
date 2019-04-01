@@ -12,9 +12,9 @@ datasets being used, and the robustness of the method in question.
 
 This notion is not so easily observed when travelling in the opposite direction.
 Suppose that, instead, the benchmark was a dataset of particular interest and a
-preferable algorithm was to be determined. There exist a number of methods
-employed across disciplines to complete this task that take into account the
-characteristics of the data and the context of the research problem. These
+preferable algorithm was to be determined for some task. There exist a number of
+methods employed across disciplines to complete this task that take into account
+the characteristics of the data and the context of the research problem. These
 methods include the use of diagnostic tests. For instance, in the case of
 clustering, if the data displayed an indeterminate number of non-convex blobs,
 then one could recommend that an appropriate clustering algorithm would be
@@ -31,9 +31,10 @@ characteristics which lead to the success (or failure) of the algorithm may be
 described, giving a broader understanding of the algorithm on the whole.
 
 \inputtikz[.9\textwidth]{paradigm}{%
-    On the right: the path taken by data scientists currently for selecting some
-    algorithm(s) based on their performance for a given dataset. On the left:
-    the proposed flip to understand the space in which `good' datasets exist.
+    On the right: the current path for selecting some algorithm(s) based on
+    their validity and performance for a given dataset. On the left: the
+    proposed flip to better understand the space in which `good' datasets exist
+    for an algorithm.
 }
 
 This proposed flip has a number of motivations, and below is a non-exhaustive
@@ -77,17 +78,19 @@ study of algorithm quality falls into this category of problems.
     A general schematic for an evolutionary algorithm.
 }
 
-The use of EAs to generate artificial data, however, is not a new concept; these
-methods have been used to develop techniques for the automated testing of
-software with a goal of achieve maximal coverage or to support structural
-tests~\cite{Koleejan2015,Michael2001,Sharifipour2018}. Such methods also have
-a long history in the parameter optimisation of algorithms, and recently in the
-automated design of convolutional neural network
+The use of EAs to generate artificial data is not a new concept. The
+far-reaching applications of EAs in data generation have included developing
+methods for the automated testing of
+software~\cite{Koleejan2015,Michael2001,Sharifipour2018} and the synthesis of
+existing, and potentially confidential, data~\cite{Chen2016}. Such methods also
+have a long history in the parameter optimisation of algorithms, and recently in
+the automated design of convolutional neural network (CNN)
 architecture~\cite{Suganuma2017,Sun2018}.
 
-% TODO make reference to GANs and Mark Elliot's work.
-
-The unconstrained learning style of methods such as neural networks aligns with
-that proposed in this work. By allowing the EA to explore and learn about the
-search space in an organic way, a more unprejudiced level of insight can be
-established that is free from any particular framework or agenda.
+Other methods for the generation or synthesis of artificial data include
+simulated annealing~\cite{Matejka2017} and generative adversarial networks
+(GANs)~\cite{Goodfellow2014}. The unconstrained learning style of methods such
+as CNNs and GANs aligns with that proposed in this work. By allowing the EA to
+explore and learn about the search space in an organic way, less-prejudiced
+insight can be established that is not necessarily reliant on any particular
+framework or agenda.
