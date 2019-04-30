@@ -92,68 +92,63 @@ designed and be interpreted in a more meaningful way.
     An example of how an individual is first created.
 }
 
-In a sense, a dataset is treated similarly to a classical bit string as the
-primary components of the dataset are considered to be its columns. As is
-seen in Figure~\ref{figure:individual}, an individual's creation is defined by
-the generation of its columns. A set of instructions on how to sample new
-values for that column are recorded in the form of a probability distribution.
-These distributions are sampled from \(\mathcal{P}\).
+In a sense, a dataset is treated similarly to a bit string in a genetic
+algorithm as the primary components of the dataset are considered to be its
+columns. As is seen in Figure~\ref{figure:individual}, an individual's creation
+is defined by the generation of its columns. A set of instructions on how to
+sample new values for that column are recorded in the form of a probability
+distribution. These distributions are sampled from \(\mathcal{P}\).
 
-Users and interpreters of EDO should not be so quick to assume that these pairs
-of distributions and columns are typical of their partner. That is, that the
-columns are a reliable representative of the distribution associated with them,
-or vice versa. A caveat to this statement: this is particularly true of
-``shorter'' datasets with a small number of rows, whereas confidence in the pair
-could be given more liberally for ``longer'' datasets with a larger number of
-rows. In the case of the latter, the column metadata can become more useful for
-casually analysing the data which is generated. In any case, more direct and
-sophisticated methods should be employed to understand the structure and
-characteristics of the data before formal conclusions are made.
+A caveat to this: one should not assume that the columns are a reliable
+representative of the distribution associated with them, or vice versa. This is
+particularly true of ``shorter'' datasets with a small number of rows, whereas
+confidence in the pair could be given more liberally for ``longer'' datasets
+with a larger number of rows. In any case, appropriate methods should be
+employed to understand the structure and characteristics of the data produced
+before formal conclusions are made.
 
 \input{tex/algorithms/individual.tex}
 
 \subsection{Selection}
 
 The selection operator describes the process by which individuals are chosen
-from the current population to generate the next. Almost always in EAs, the
-likelihood of an individual being selected is determined by their fitness. This
-is because the purpose of selection is to preserve favourable qualities and
-encourage some homogeneity within future generations.
+from the current population to generate the next. Almost always, the likelihood
+of an individual being selected is determined by their fitness. This is because
+the purpose of selection is to preserve favourable qualities and encourage some
+homogeneity within future generations~\cite{Back1994}.
 
-\inputtikz[.9\textwidth]{selection}{%
+\inputtikz[.8\textwidth]{selection}{%
     The selection process with the inclusion of some lucky individuals.
 }
-
-In EDO, a modified truncation selection method is used as can be seen in
-Figure~\ref{figure:selection}. Standard truncation selection takes a fixed
-number, \(n_b = \lceil bN\rceil\), of the fittest individuals in a population
-and makes them the ``parents'' of the next. The modification is an optional
-stage after the best individuals have been chosen. By passing some small \(l\)
-to the evolutionary algorithm, a number of the remaining individuals can be
-selected at random to be carried forward. This number is given by \(n_l = \lceil
-lN \rceil\). It should be noted that even with this modification, no individual
-may be selected more than once in a single iteration but could potentially be
-present throughout the run of the algorithm.
-
 \input{tex/algorithms/selection.tex}
 
-It has been found that, despite its efficiency as a selection
-operator, truncation selection can lead to premature convergence at local
-optima~\cite{Jebari2013}. Hence, the ability to include some randomly selected
-individuals is included to encourage diversity throughout the run of the
-algorithm. This feature can be particularly useful in more complex optimisation
-scenarios \-- or for larger populations where a greater loss of diversity is
-seen in the selection process simply due to the nature of truncation
-selection~\cite{Tatsuya2002}. As such, it should be used sparingly so as not to
-dominate the selection process with unwanted randomness.
+In EDO, a modified truncation selection method is used, as can be seen in
+Figure~\ref{figure:selection}. Truncation selection takes a fixed number, \(n_b
+= \lceil bN\rceil\), of the fittest individuals in a population and makes them
+the ``parents'' of the next. The modification is an optional stage after the
+best individuals have been chosen: by passing some small \(l\) to the
+evolutionary algorithm, a number of the remaining individuals can be selected at
+random to be carried forward. This number is given by \(n_l = \lceil lN
+\rceil\). It should be noted that even with this modification, no individual may
+be selected more than once in a single iteration but could potentially be
+present throughout the run of the algorithm.
+
+It has been shown that, despite its efficiency as a selection operator,
+truncation selection can lead to premature convergence at local
+optima~\cite{Jebari2013, Tatsuya2002}. Hence, allowing for the inclusion of a
+small number of randomly selected individuals may encourage diversity and
+exploration throughout the run of the algorithm.
 
 \subsection{Crossover}
 
 Crossover is the operation of combining two individuals in order to create at
-least one offspring. In EDO, a method known as uniform crossover is used. Under
-this method, as can be seen in Figure~\ref{figure:crossover}, two parent
-datasets have their dimensions and columns sampled uniformly and without
-replacement to give a new individual.
+least one offspring. In EDO, a method known as uniform crossover is
+used~\cite{Semenkin2012}. Under this method, a new individual is created by
+uniformly sampling each of its
+components from a set of two ``parent'' individuals. As can be seen in
+Figure~\ref{figure:crossover}, this method has been adapted for the dataset
+representation, i.e.\ two parent datasets have their dimensions and then columns
+sampled uniformly and without replacement to give a new individual.
 
 \inputtikz{crossover}{The crossover process.}
 \input{tex/algorithms/crossover.tex}
@@ -161,25 +156,20 @@ replacement to give a new individual.
 \subsection{Mutation}
 
 Mutation is used in evolutionary algorithms to encourage a broader exploration
-of the search space. Traditional applications with chromosome representations
-would mutate by run along the loci of an individual and ``switching'' the binary
-value with some constant probability. Under this framework, as has been
-discussed, an individual's columns are similar to traditional loci. However, in
-the mutation phase multiple characteristics of an individual are susceptible to
-being mutated beyond the columns themselves such as the dimensions of the
-individual and their column metadata.
+of the search space at each generation. Under this framework, the mutation
+process acts on each characteristic of an individual: the dimensions, the column
+metadata and the entries themselves. This process is described in
+Figure~\ref{figure:mutation}, and is such that all aspects of the search space
+are susceptible to mutation.
 
 \inputtikz{mutation}{The mutation process.}
 
-The mutation process, seen in Figure~\ref{figure:mutation} and defined in
-Algorithm~\ref{algorithm:mutation},
-is deliberately fine so that all aspects of an individual can be changed in a
-meaningful yet fluid way. Each of the potential mutations occur with the same
-probability, \(p_m\), but the way in which columns are maintained assure that
-(assuming appropriate choices for \(f\) and \(\mathcal{P}\)) many mutations in
-the metadata and the dataset itself will only result in some incremental change
-in the individual's genetics and fitness overall \-- at least relatively so to,
-say, a completely new individual.
+Each of the potential mutations occur with the same probability, \(p_m\), but
+the way in which columns are maintained assure that (assuming appropriate
+choices for \(f\) and \(\mathcal{P}\)) many mutations in the metadata and the
+dataset itself will only result in some incremental change in the individual's
+genetics and fitness overall \-- at least relatively so to, say, a completely
+new individual.
 
 \input{tex/algorithms/mutation.tex}
 
