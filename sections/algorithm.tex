@@ -10,23 +10,14 @@ Optimisation'' (EDO).
 The EDO method is built as an evolutionary algorithm which follows a traditional
 (generic) schema with some additional features that keep the objective of
 artificial data generation in mind. With that, there are a number of parameters
-that are passed to EDO. The typical parameters of an evolutionary algorithm
-include:
+that are passed to EDO;\ the typical parameters of an evolutionary algorithm
+are a fitness function, \(f\), which maps from an individual to a real number,
+as well as a population size, \(N\), a maximum number of iterations, \(M\), a
+selection parameter, \(b\), and a  mutation probability, \(p_m\). In addition to
+these, EDO takes the following parameters:
 
 \begin{itemize}
-    \item A fitness function, \(f\), which maps from an individual to a real
-        number.
-    \item A population size, \(N\).
-    \item A maximum number of iterations, \(M\).
-    \item A selection proportion, \(b\), for the best individuals in a
-        population
-    \item A mutation probability, \(p_m\).
-\end{itemize}
-
-In addition to these, EDO takes the following parameters:
-
-\begin{itemize}
-    \item Limits on the number of rows a dataset can have:
+    \item Limits on the number of rows an individual dataset can have:
         \[
             R \in \left\{%
                 (r_{\min}, r_{\max}) \in \mathbb{N}^2~|~r_{\min} \leq r_{\max}
@@ -45,15 +36,15 @@ In addition to these, EDO takes the following parameters:
         distribution in \(\mathcal{P}\).
     \item A set of probability distribution families, \(\mathcal{P}\). Each
         family in this set has some parameter limits which form a part of the
-        overall search space. For instance, the normal distribution family,
+        overall search space. For instance, the family of normal distributions,
         denoted by \(N(\mu, \sigma^2)\), would have limits on values for the
         mean, \(\mu\), and the standard deviation, \(\sigma\).
     \item A probability vector to sample distributions from \(\mathcal{P}\),
         \(w = \left(w_1, \ldots, w_{|\mathcal{P}|}\right)\).
     \item A second selection parameter, \(l \in [0, 1]\), to allow for a
         small proportion of ``lucky'' individuals to be carried forward.
-    \item A shrink factor, \(s \in [0, 1]\). The relative size of a component of
-        the search space to be retained after adjustment.
+    \item A shrink factor, \(s \in [0, 1]\), defining the relative size of a
+        component of the search space to be retained after adjustment.
 \end{itemize}
 
 The concepts discussed in this section form the mechanisms of the evolutionary
@@ -83,51 +74,51 @@ particular use case. Some examples include:
         \(K\) consecutive iterations~\cite{Leung2001}.
     \item Utilising global behaviours in fitness to indicate a stopping
         point~\cite{Marti2016}.
-    \item Constant decreasing in mutation probability by varied amounts across
-        the available attributes~\cite{Kuehn2013}.
+    \item Regular decreasing in mutation probability across the available
+        attributes~\cite{Kuehn2013}.
 \end{itemize}
 
 \subsection{Individuals}
 
 Evolutionary algorithms operate on succeeding populations of individuals often
-coined as ``generations''. Typically, an individual would be encoded as a bit
-string of a fixed length and treated as a chromosome-like object to be
-manipulated. In EDO, as the objective is to generate datasets, there is no
-encoding process. Instead, the datasets are manipulated directly so that the
-biological operators can behave and be interpreted in a more meaningful way.
+coined as ``generations''. In a genetic algorithm, an individual would be
+encoded as a bit string of a fixed length and treated as a chromosome-like
+object to be manipulated. In EDO, as it is an evolutionary algorithm and the
+objective is to generate datasets, there is no encoding process. Instead, the
+datasets are manipulated directly so that the biological operators can be
+designed and be interpreted in a more meaningful way.
 
 \inputtikz{individual}{%
     An example of how an individual is first created.
 }
 
 In a sense, a dataset is treated similarly to a classical bit string as the
-primary components (loci) of the dataset are considered to be its columns. As is
+primary components of the dataset are considered to be its columns. As is
 seen in Figure~\ref{figure:individual}, an individual's creation is defined by
-the random generation of its columns. A set of instructions on how to sample new
+the generation of its columns. A set of instructions on how to sample new
 values for that column are recorded in the form of a probability distribution.
-These distributions are sampled from a pool of distribution families which is
-passed to the evolutionary algorithm along with the other parameters.
+These distributions are sampled from \(\mathcal{P}\).
 
-Obviously, users and interpreters of EDO should not be so quick to assume that
-these pairs of distributions and columns are typical of their partner. That is,
-that the columns are a reliable representative of the distribution associated
-with them, or vice versa. A caveat to this statement: this is particularly true
-of ``shorter'' datasets with a small number of rows, whereas confidence in the
-pair could be given more liberally for ``longer'' datasets. In the case of the
-latter, the column metadata can become more useful for casually analysing the
-data which is generated. In any case, however, more direct and sophisticated
-methods should be employed to understand the structure and characteristics of
-the data before formal conclusions are made.
+Users and interpreters of EDO should not be so quick to assume that these pairs
+of distributions and columns are typical of their partner. That is, that the
+columns are a reliable representative of the distribution associated with them,
+or vice versa. A caveat to this statement: this is particularly true of
+``shorter'' datasets with a small number of rows, whereas confidence in the pair
+could be given more liberally for ``longer'' datasets with a larger number of
+rows. In the case of the latter, the column metadata can become more useful for
+casually analysing the data which is generated. In any case, more direct and
+sophisticated methods should be employed to understand the structure and
+characteristics of the data before formal conclusions are made.
 
 \input{tex/algorithms/individual.tex}
 
 \subsection{Selection}
 
 The selection operator describes the process by which individuals are chosen
-from the current population to generate the next. Almost always, the likelihood
-of an individual being selected is determined by their fitness. This is because
-the purpose of selection is to preserve favourable qualities and encourage some
-homogeneity within future generations.
+from the current population to generate the next. Almost always in EAs, the
+likelihood of an individual being selected is determined by their fitness. This
+is because the purpose of selection is to preserve favourable qualities and
+encourage some homogeneity within future generations.
 
 \inputtikz[.9\textwidth]{selection}{%
     The selection process with the inclusion of some lucky individuals.
@@ -138,37 +129,33 @@ Figure~\ref{figure:selection}. Standard truncation selection takes a fixed
 number, \(n_b = \lceil bN\rceil\), of the fittest individuals in a population
 and makes them the ``parents'' of the next. The modification is an optional
 stage after the best individuals have been chosen. By passing some small \(l\)
-to the evolutionary algorithm, a number of random individuals can be selected to
-be carried forward. This number is given by \(n_l = \lceil lN \rceil\). It
-should be noted that even with this modification, no individual may be selected
-more than once in a single iteration but could potentially be present throughout
-the entire run of the algorithm.
+to the evolutionary algorithm, a number of the remaining individuals can be
+selected at random to be carried forward. This number is given by \(n_l = \lceil
+lN \rceil\). It should be noted that even with this modification, no individual
+may be selected more than once in a single iteration but could potentially be
+present throughout the run of the algorithm.
 
 \input{tex/algorithms/selection.tex}
 
 It has been found that, despite its efficiency as a selection
-operator, truncation selection can lead an evolutionary algorithm to
-converge prematurely to local optima~\cite{Jebari2013}. Hence, the ability to
-include some randomly selected individuals is included to encourage diversity
-throughout the run of the algorithm. This feature can be particularly useful in
-more complex optimisation scenarios \-- or for larger populations where a
-greater loss of diversity is seen in the selection process simply due to the
-nature of truncation selection~\cite{Tatsuya2002}. As such, it should be used
-sparingly so as not to dominate the selection process with unwanted randomness.
+operator, truncation selection can lead to premature convergence at local
+optima~\cite{Jebari2013}. Hence, the ability to include some randomly selected
+individuals is included to encourage diversity throughout the run of the
+algorithm. This feature can be particularly useful in more complex optimisation
+scenarios \-- or for larger populations where a greater loss of diversity is
+seen in the selection process simply due to the nature of truncation
+selection~\cite{Tatsuya2002}. As such, it should be used sparingly so as not to
+dominate the selection process with unwanted randomness.
 
 \subsection{Crossover}
 
 Crossover is the operation of combining two individuals in order to create at
-least one offspring. Often in classical evolutionary algorithms, the term
-``crossover'' is taken literally: two bit strings are crossed at a point
-to produce two new bit strings. Another popular method is uniform crossover
-where the loci of a new individual are sampled uniformly from either parent
-individual. This method is adapted to support dataset manipulation here by
-sampling first a set of dimensions from the parents, and then inheriting entire
-columns.
+least one offspring. In EDO, a method known as uniform crossover is used. Under
+this method, as can be seen in Figure~\ref{figure:crossover}, two parent
+datasets have their dimensions and columns sampled uniformly and without
+replacement to give a new individual.
 
 \inputtikz{crossover}{The crossover process.}
-
 \input{tex/algorithms/crossover.tex}
 
 \subsection{Mutation}
