@@ -2,13 +2,14 @@
 
 This work presents a novel approach to learning the quality and performance of
 an algorithm through the use of evolution. When an algorithm is developed to
-solve a given problem, the developer is presented with questions about the
+solve a given problem, the designer is presented with questions about the
 performance of their proposed method, and its relative performance against
 existing methods. Under the current paradigm, the standard response to this
-situation is to fix some datasets and a common metric amongst the proposed
-method and its competitors. The algorithm is then assessed based on this metric
-with minimal consideration for both the appropriateness or reliability of the
-datasets being used, and the robustness of the method in question.
+situation is to use a known fixed set of datasets and a common metric amongst
+the proposed method and its competitors. The algorithm is then assessed based on
+this metric with minimal consideration for both the appropriateness or
+reliability of the datasets being used, and the robustness of the method in
+question.
 
 This notion is not so easily observed when travelling in the opposite direction.
 Suppose that, instead, the benchmark was a dataset of particular interest and a
@@ -18,7 +19,7 @@ the characteristics of the data and the context of the research problem. These
 methods include the use of diagnostic tests. For instance, in the case of
 clustering, if the data displayed an indeterminate number of non-convex blobs,
 then one could recommend that an appropriate clustering algorithm would be
-DBSCAN~\cite{Ester1996}. Otherwise, for easy scalability, \(k\)-means may be
+DBSCAN~\cite{Ester1996}. Otherwise, for scalability, \(k\)-means may be
 chosen.
 
 The approach presented in this work aims to flip the paradigm described here by
@@ -94,3 +95,8 @@ as CNNs and GANs aligns with that proposed in this work. By allowing the EA to
 explore and learn about the search space in an organic way, less-prejudiced
 insight can be established that is not necessarily reliant on any particular
 framework or agenda.
+
+Note that the proposed methodology is not simply to use an EA to optimise an
+algorithm over a search space with fixed dimension or datatype such as those set
+out in~\cite{Chen2016}. The size and sample space itself is considered as a
+property that can be traversed through the algorithm.

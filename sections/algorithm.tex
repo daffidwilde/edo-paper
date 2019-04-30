@@ -2,20 +2,30 @@
 
 \subsection{Structure}
 
-On the surface, the EDO method is built as an evolutionary algorithm which
-follows a traditional (generic) schema with some additional features that keep
-the objective of artificial data generation in mind. With that, there are a
-number of parameters passed to the algorithm, including several that are not
-typical:
+In this section, the details of an algorithm that generates data for which a
+given function or, equivalently, an algorithm which is well suited, is
+described. This algorithm is to be referred to as ``Evolutionary Dataset
+Optimisation'' (EDO).
+
+The EDO method is built as an evolutionary algorithm which follows a traditional
+(generic) schema with some additional features that keep the objective of
+artificial data generation in mind. With that, there are a number of parameters
+that are passed to EDO. The typical parameters of an evolutionary algorithm
+include:
 
 \begin{itemize}
-    \item A real-values fitness function, \(f\), which acts on a single dataset
-        to give a single fitness score.
-    \item A population size, \(N \in \mathbb{N}\).
-    \item A maximum number of iterations, \(M \in \mathbb{N}\).
-    \item A selection parameter to detail the proportion of the fittest
-        individuals to carry forward, \(b \in [0, 1]\).
-    \item A mutation probability, \(p_m \in [0, 1]\).
+    \item A fitness function, \(f\), which maps from an individual to a real
+        number.
+    \item A population size, \(N\).
+    \item A maximum number of iterations, \(M\).
+    \item A selection proportion, \(b\), for the best individuals in a
+        population
+    \item A mutation probability, \(p_m\).
+\end{itemize}
+
+In addition to these, EDO takes the following parameters:
+
+\begin{itemize}
     \item Limits on the number of rows a dataset can have:
         \[
             R \in \left\{%
@@ -58,19 +68,15 @@ consistent with the best practices of open source software development.
 \input{tex/algorithms/edo.tex}\label{alg:edo}
 \input{tex/algorithms/new_population.tex}
 
-The statement of the EDO algorithm is deliberately vague. This is, in part,
-because of the customisable nature of its build but also to lay out its general
+The statement of the EDO algorithm is presented here to lay out its general
 structure from a high level perspective. Lower level discussion is provided
-below where additional algorithms for the
-individual creation, evolutionary operator and shrinkage processes are given
-along with diagrams (where appropriate).
+below where additional algorithms for the individual creation, evolutionary
+operator and shrinkage processes are given along with diagrams (where
+appropriate).
 
 Note that there are no defined processes for how to stop the algorithm or adjust
-the mutation probability, \(p_m\). These form two key areas of potential
-customisation since such conditions can be specific to the problem domain. With
-that, as is detailed in the Python implementation, a user may define their
-stopping condition or \(p_m\)-adjustment to be any reasonable function. Some
-examples include:
+the mutation probability, \(p_m\). This is down to their relevance to a
+particular use case. Some examples include:
 
 \begin{itemize}
     \item Stopping when no improvement in the best fitness is found within some
