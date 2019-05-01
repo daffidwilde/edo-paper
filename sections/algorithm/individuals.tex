@@ -6,27 +6,19 @@ genetic algorithm, an individual is a solution encoded as a bit string of,
 typically, fixed length and treated as a chromosome-like object to be
 manipulated. In EDO, as the objective is to generate datasets and explore the
 space in which datasets exist, there is no encoding. As such the distinction is
-made that EDO is an evolutionary algorithm. Instead of this encoding, the
-produced datasets are manipulated directly so that the biological operators can
-be designed and be interpreted in a more meaningful way.
+made that EDO is an evolutionary algorithm. 
 
-As is seen in Figure~\ref{figure:individual}, an individual's creation
-is defined by the generation of its columns. A set of instructions on how to
-sample new values for that column are recorded in the form of a probability
-distribution. These distributions are sampled and created from the families
-passed in \(\mathcal{P}\).
+As is seen in Figure~\ref{figure:individual}, an individual's creation is
+defined by the generation of its columns. A set of instructions on how to sample
+new values (in mutation, for instance, Section~\ref{subsection:mutation}) for
+that column are recorded in the form of a probability distribution. These
+distributions are sampled and created from the families passed in
+\(\mathcal{P}\). In EDO, the produced datasets and their metadata are
+manipulated directly so that the biological operators can be designed and be
+interpreted in a more meaningful way as will be seen later in this section.
 
 \inputtikz{individual}{%
     An example of how an individual is first created.
 }
-
-A caveat to this: one should not assume that the columns are a reliable
-representative of the distribution associated with them, or vice versa. This is
-particularly true of ``shorter'' datasets with a small number of rows, whereas
-confidence in the pair could be given more liberally for ``longer'' datasets
-with a larger number of rows. In any case, appropriate methods should be
-employed to understand the structure and characteristics of the data produced
-before formal conclusions are made.
-
 \input{tex/algorithms/individual.tex}
 
