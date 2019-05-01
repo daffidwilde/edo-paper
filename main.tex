@@ -1,0 +1,116 @@
+\documentclass[11pt]{article}
+
+
+\usepackage[margin=1in, includefoot]{geometry}
+
+
+\usepackage[ruled]{algorithm2e}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage[backend=bibtex, style=numeric]{biblatex}
+    \addbibresource{references}
+\usepackage{booktabs} % Pandas dataframes
+\usepackage{caption}
+\usepackage{enumerate} % Roman numerals
+\usepackage[default]{Fira Sans}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{setspace} % Spacing
+\usepackage{standalone}
+\usepackage{tikz}
+    \usetikzlibrary{%
+        arrows.meta,
+        decorations.pathreplacing,
+        decorations.text,
+        patterns,
+        shapes.arrows,
+        shapes.geometric
+    }
+
+
+% Page setup and lengths
+\captionsetup{font=doublespacing}
+\doublespacing%
+
+\newlength{\imgwidth}
+\setlength{\imgwidth}{\textwidth}
+
+\definecolor{cyan}{RGB}{0, 164, 216}
+\definecolor{magenta}{RGB}{226, 62, 138}
+
+
+% Algorithms
+\newcommand{\balg}{\begin{algorithm}[htbp]\singlespacing\DontPrintSemicolon}
+\newcommand{\ealg}{\end{algorithm}\doublespacing}
+
+
+% TikZ styles, commands and settings
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+
+\tikzstyle{every picture} += [remember picture]
+\tikzstyle{na} = [baseline=-.5ex]
+
+\tikzset{%
+    column/.pic={%
+        code{%
+            \draw[line width=1pt] (0, 0) rectangle (-2cm, 4cm);
+            \foreach \val in {0, ..., #1}{%
+                \draw[rotate=90] ([xshift=-\val*10pt] 4cm, 2cm) -- ++(0, -2cm);
+            };
+            \node at (-1cm, 1.25) {$\vdots$};
+            \foreach \val in {1, 2}{%
+                \draw (0, \val * 10pt) -- ++(-2cm, 0);
+            };
+        }
+    }
+}
+
+\tikzset{%
+    fullcolumn/.pic={%
+        code{%
+            \draw[line width=1pt] (0, 0) rectangle (-2cm, #1*10pt);
+            \foreach \val in {0, ..., #1}{%
+                \draw[rotate=90] ([xshift=-\val*10pt] #1*10pt, 2cm) -- ++(0, -2cm);
+            };
+        }
+    }
+}
+
+\newcommand{\inputtikz}[3][\imgwidth]{%
+    \begin{figure}[H]
+        \centering
+        \resizebox{#1}{!}{%
+            \input{tex/diagrams/#2.tex}
+        }
+        \caption{#3}\label{figure:#2}
+    \end{figure}
+}
+
+
+% Document
+\title{%
+    Evolutionary Dataset Optimisation:
+    learning algorithm quality through evolution
+}
+\author{Henry Wilde, Vincent Knight, Jonathan Gillard}
+% TODO Finalise order and preferred name
+\date{}
+
+\begin{document}
+
+\maketitle%
+\bigskip%
+
+\input{sections/abstract.tex}
+\newpage%
+
+\input{sections/intro.tex}
+\input{sections/algorithm/main.tex}
+\input{sections/examples.tex}
+\input{sections/conclusion.tex}
+
+\printbibliography
+\end{document}
