@@ -1,0 +1,14 @@
+\subsection{Crossover}
+
+Crossover is the operation of combining two individuals in order to create at
+least one offspring. In EDO, a method known as uniform crossover is
+used~\cite{Semenkin2012}. Under this method, a new individual is created by
+uniformly sampling each of its
+components from a set of two ``parent'' individuals. As can be seen in
+Figure~\ref{figure:crossover}, this method has been adapted for the dataset
+representation, i.e.\ two parent datasets have their dimensions and then columns
+sampled uniformly and without replacement to give a new individual.
+
+\inputtikz{crossover}{The crossover process.}
+\input{tex/algorithms/crossover.tex}
+
