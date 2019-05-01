@@ -11,30 +11,30 @@ homogeneity within future generations~\cite{Back1994}.
 }
 \input{tex/algorithms/selection.tex}
 
-In EDO, a modified truncation selection method is used, as can be seen in
-Figure~\ref{figure:selection}. Truncation selection takes a fixed number, \(n_b
-= \lceil bN\rceil\), of the fittest individuals in a population and makes them
-the ``parents'' of the next. The modification is an optional stage after the
-best individuals have been chosen: by passing some small \(l\) to the
-evolutionary algorithm, a number of the remaining individuals can be selected at
-random to be carried forward. This number is given by \(n_l = \lceil lN
-\rceil\). It should be noted that even with this modification, no individual may
-be selected more than once in a single iteration but could potentially be
-present throughout the run of the algorithm.
+In EDO, a modified truncation selection method is used~\cite{Jebari2013}, as can
+be seen in Figure~\ref{figure:selection}. Truncation selection takes a fixed
+number, \(n_b = \lceil bN\rceil\), of the fittest individuals in a population
+and makes them the ``parents'' of the next. The modification is an optional
+stage after the best individuals have been chosen: with some small \(l\), a
+number, \(n_l = \lceil lN\rceil\), of the remaining individuals can be selected
+at random to be carried forward. It should be noted that an individual could
+potentially be present throughout the entirety of the algorithm.
 
 It has been observed that, despite its efficiency as a selection operator,
 truncation selection can lead to premature convergence at local
-optima~\cite{Jebari2013, Tatsuya2002}. Hence, allowing for the inclusion of a
-small number of randomly selected individuals may encourage diversity and
-exploration throughout the run of the algorithm.
+optima~\cite{Jebari2013, Tatsuya2002}. Hence, allowing for a small number of
+randomly selected individuals may encourage diversity and further exploration
+throughout the run of the algorithm.
 
-A final component to this part of the evolutionary algorithm provides the
-ability to ``shrink'' the search space about the region observed in a given
-population. This method is based on a power law described
+A final component to the selection process is an adjustment to the search space
+made up of the distribution parameter limits in \(\mathcal{P}\). This adjustment
+gives the ability to ``shrink'' the search space about the region observed in a
+given population. This method is based on a power law described
 in~\cite{Amirjanov2016} that relies on a shrink factor, \(s\). At each
-iteration, \(t\), the parents are taken and every present distribution's
-parameter limits, \(\left(l_t, u_t\right)\), are centred about the mean parent
-value, \(\mu\):
+iteration, \(t\), every distribution which is present in the parents has its
+parameter's limits, \(\left(l_t, u_t\right)\), adjusted. This adjustment is such
+that the new limits, \(\left(l_{t+1}, u_{t+1}\right)\) are centred about the
+mean observed value, \(\mu\), for that parameter:
 \begin{align}
     \label{eq:shrinking_lower}
     l_{t+1}&= \max \left\{l_t, \ \mu - \frac{1}{2} (u_t - l_t) s^t\right\}\\
@@ -42,9 +42,8 @@ value, \(\mu\):
     u_{t+1}&= \max \left\{u_t, \ \mu + \frac{1}{2} (u_t - l_t) s^t\right\}
 \end{align}
 
-This shrinking process is described in Algorithm~\ref{algorithm:shrinking} but
-note that the behaviour of this process can give reductive results for some use
-cases. For instance, where there exist multiple optima for dataset
-characteristics.
+The shrinking process is given explicitly in
+Algorithm~\ref{algorithm:shrinking}. Note that the behaviour of this process can 
+produce reductive results for some use cases.
 
 \input{tex/algorithms/shrinking.tex}
