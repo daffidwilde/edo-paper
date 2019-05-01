@@ -14,17 +14,16 @@ homogeneity within future generations~\cite{Back1994}.
 In EDO, a modified truncation selection method is used~\cite{Jebari2013}, as can
 be seen in Figure~\ref{figure:selection}. Truncation selection takes a fixed
 number, \(n_b = \lceil bN\rceil\), of the fittest individuals in a population
-and makes them the ``parents'' of the next. The modification is an optional
-stage after the best individuals have been chosen: with some small \(l\), a
-number, \(n_l = \lceil lN\rceil\), of the remaining individuals can be selected
-at random to be carried forward. It should be noted that an individual could
-potentially be present throughout the entirety of the algorithm.
-
-It has been observed that, despite its efficiency as a selection operator,
-truncation selection can lead to premature convergence at local
-optima~\cite{Jebari2013, Tatsuya2002}. Hence, allowing for a small number of
-randomly selected individuals may encourage diversity and further exploration
-throughout the run of the algorithm.
+and makes them the ``parents'' of the next. It has been observed that, despite
+its efficiency as a selection operator, truncation selection can lead to
+premature convergence at local optima~\cite{Jebari2013, Tatsuya2002}. The
+modification for EDO is an optional stage after the best individuals have been
+chosen: with some small \(l\), a number, \(n_l = \lceil lN\rceil\), of the
+remaining individuals can be selected at random to be carried forward. Hence,
+allowing for a small number of randomly selected individuals may encourage
+diversity and further exploration throughout the run of the algorithm. It should
+be noted that regardless of this step, an individual could potentially be
+present throughout the entirety of the algorithm.
 
 A final component to the selection process is an adjustment to the search space
 made up of the distribution parameter limits in \(\mathcal{P}\). This adjustment
