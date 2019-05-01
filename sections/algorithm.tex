@@ -80,24 +80,25 @@ particular use case. Some examples include:
 
 \subsection{Individuals}
 
-Evolutionary algorithms operate on succeeding populations of individuals often
-coined as ``generations''. In a genetic algorithm, an individual would be
-encoded as a bit string of a fixed length and treated as a chromosome-like
-object to be manipulated. In EDO, as it is an evolutionary algorithm and the
-objective is to generate datasets, there is no encoding process. Instead, the
-datasets are manipulated directly so that the biological operators can be
-designed and be interpreted in a more meaningful way.
+Evolutionary algorithms operate in an iterative process on populations of
+individuals that each represent a solution to the problem in question. In a
+genetic algorithm, an individual is a solution encoded as a bit string of,
+typically, fixed length and treated as a chromosome-like object to be
+manipulated. In EDO, as the objective is to generate datasets and explore the
+space in which datasets exist, there is no encoding. As such the distinction is
+made that EDO is an evolutionary algorithm. Instead of this encoding, the
+produced datasets are manipulated directly so that the biological operators can
+be designed and be interpreted in a more meaningful way.
+
+As is seen in Figure~\ref{figure:individual}, an individual's creation
+is defined by the generation of its columns. A set of instructions on how to
+sample new values for that column are recorded in the form of a probability
+distribution. These distributions are sampled and created from the families
+passed in \(\mathcal{P}\).
 
 \inputtikz{individual}{%
     An example of how an individual is first created.
 }
-
-In a sense, a dataset is treated similarly to a bit string in a genetic
-algorithm as the primary components of the dataset are considered to be its
-columns. As is seen in Figure~\ref{figure:individual}, an individual's creation
-is defined by the generation of its columns. A set of instructions on how to
-sample new values for that column are recorded in the form of a probability
-distribution. These distributions are sampled from \(\mathcal{P}\).
 
 A caveat to this: one should not assume that the columns are a reliable
 representative of the distribution associated with them, or vice versa. This is
@@ -133,11 +134,32 @@ random to be carried forward. This number is given by \(n_l = \lceil lN
 be selected more than once in a single iteration but could potentially be
 present throughout the run of the algorithm.
 
-It has been shown that, despite its efficiency as a selection operator,
+It has been observed that, despite its efficiency as a selection operator,
 truncation selection can lead to premature convergence at local
 optima~\cite{Jebari2013, Tatsuya2002}. Hence, allowing for the inclusion of a
 small number of randomly selected individuals may encourage diversity and
 exploration throughout the run of the algorithm.
+
+A final component to this part of the evolutionary algorithm provides the
+ability to ``shrink'' the search space about the region observed in a given
+population. This method is based on a power law described
+in~\cite{Amirjanov2016} that relies on a shrink factor, \(s\). At each
+iteration, \(t\), the parents are taken and every present distribution's
+parameter limits, \(\left(l_t, u_t\right)\), are centred about the mean parent
+value, \(\mu\):
+\begin{align}
+    \label{eq:shrinking_lower}
+    l_{t+1}&= \max \left\{l_t, \ \mu - \frac{1}{2} (u_t - l_t) s^t\right\}\\
+    \label{eq:shrinking_upper}
+    u_{t+1}&= \max \left\{u_t, \ \mu + \frac{1}{2} (u_t - l_t) s^t\right\}
+\end{align}
+
+This shrinking process is described in Algorithm~\ref{algorithm:shrinking} but
+note that the behaviour of this process can give reductive results for some use
+cases. For instance, where there exist multiple optima for dataset
+characteristics.
+
+\input{tex/algorithms/shrinking.tex}
 
 \subsection{Crossover}
 
@@ -167,71 +189,7 @@ As shown in Figure~\ref{figure:mutation}, each of the potential mutations occur
 with the same probability, \(p_m\). However, the way in which columns are
 maintained assure that (assuming appropriate choices for \(f\) and
 \(\mathcal{P}\)) many mutations in the metadata and the dataset itself will only
-result in some incremental change in the individual's genetics and fitness
+result in some incremental change in the individual's fitness
 relative to, say, a completely new individual.
 
 \input{tex/algorithms/mutation.tex}
-
-\subsection{Shrinking}
-
-The potential benefits of adapting the search space of an EA has been
-well-discussed in the domain of complex optimisation problems. During the
-development of EDO, two methods were considered to do this. Each of these
-methods relied on a law relating a successive generation's search space with its
-predecessor. It should be noted that in both cases the methods were adapted to
-conform with the choice to represent individuals as they are rather than as bit
-strings.
-
-The first was developed to be a two-part process based on a linear law with two
-parameters: a shrink factor, \(s \in (0, 1)\), and the maximum number of
-iterations \(M \in \mathbb{N}\)~\cite{Amirjanov2017}. The adapted method would
-be as follows. For all iterations, \(t \geq sM\), no shrinking would take place.
-However, for all previous iterations, the suggested method would take the
-parents found during selection and act on each component of the search space.
-That is, for each iteration, \(t < sM\), every component would have its lower
-and upper limits, denoted by \(l_t\) and \(u_t\) respectively, adjusted so that
-they are centred about the mean parent value, \(\mu\), and be such that:
-\[
-    u_{t+1} - l_{t+1} = (u_t - l_t) \left(1 - \frac{t}{sM}\right)
-\]
-
-More specifically, the adjusted limits would be calculated as follows:
-\begin{align*}
-    l_{t+1} = \max \left\{%
-        l_t, \ \mu - \frac{1}{2} (u_t - l_t) \left(1 - \frac{t}{sM}\right)
-    \right\}\\
-    u_{t+1} = \min \left\{%
-        u_t, \ \mu + \frac{1}{2} (u_t - l_t) \left(1 - \frac{t}{sM}\right)
-    \right\}
-\end{align*}
-
-The second method was for use in a genetic algorithm which mapped weighted bit
-strings to some pre-defined interval with lower and upper
-bounds~\cite{Amirjanov2016}. The proposed method would rely on a power law with
-a single parameter: some shrink factor, \(s \in [0, 1]\). Again, at each
-iteration, the parents would be taken and every component's limits would be
-adjusted so that they were centred about the mean parent value, \(\mu\), such
-that:
-\[
-    u_{t+1} - l_{t+1} = (u_t - l_t) s^t
-\]
-
-The process by which the values of \(l_{t+1}\) and \(u_{t+1}\) would be found
-are equivalent to the above but with a different shift term:
-\begin{align}
-    \label{eq:shrinking_lower}
-    l_{t+1}&= \max \left\{l_t, \ \mu - \frac{1}{2} (u_t - l_t) s^t\right\}\\
-    \label{eq:shrinking_upper}
-    u_{t+1}&= \max \left\{u_t, \ \mu + \frac{1}{2} (u_t - l_t) s^t\right\}
-\end{align}
-
-From these brief definitions alone, these methods appear to be largely
-indistinguishable. However, following a wider discussion around how EDO would
-work for the general user, it was decided that the first method be rejected in
-favour of the second. It was found that the second method having fewer
-parameters was a particularly redeeming feature; this removed any hidden or
-otherwise unwanted interactions between a parameter dedicated to the shrink
-process, \(s\), and the maximum number of iterations, \(M\), which is often used
-as a fallback stopping criterion in complex problem domains.
-
-\input{tex/algorithms/shrinking.tex}
