@@ -50,9 +50,15 @@ evolutionary algorithm under these conditions.
 It is clear that there is a steep learning curve here; within the first 100
 generations an individual is found with a fitness of roughly \(10^{-10}\) which
 cannot be improved on for the remaining 900 epochs. In fact, this individual was
-found in the \(44^{th}\) epoch as can be seen in
+found around the \(44^{th}\) epoch as can be seen in
 Figure~\ref{figure:inertia-50}. The same quick convergence is seen in the number
-of rows.
+of rows. By inspecting the progression in the first 50 generations, this
+behaviour is quickly recognised as preferable and was dominant across all the
+trials conducted in this work. This preference for datasets with fewer rows
+makes sense given that \(I\) is a summation of non-negative terms (since \(d\)
+is a distance metric.) With that, when \(k\) is fixed \textit{a priori},
+reducing the number of terms in the second summation quickly reduces the value
+of \(I\). 
 
 \begin{figure}[htbp]
     \centering
@@ -68,4 +74,24 @@ of rows.
     \caption{Progressions for fitness and dimension across the first 50
              epochs.}\label{figure:inertia-50}
 \end{figure}
+
+Something that may be seen as unwanted is a compaction of the clusters.
+Referring to Figure~\ref{figure:inertia-individuals}, the best individual shows
+two clusters but they are all essentially the same point. This kind of behaviour
+is exhibited in part because it is allowed. That is, the fitness function used
+with EDO does nothing to penalise the reduction in the inter-cluster means, as
+well as the intra-cluster means. This kind of unwanted behaviour highlights a
+subtlety in how EDO is used, namely that the definition of the fitness function
+requires attention and consideration as the outcome of the EA is entirely
+dependent on it.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\imgwidth]{img/inertia-individuals-0.pdf}
+    \caption{Representative individuals from the final generation based on
+             fitness.}\label{figure:inertia-individuals}
+\end{figure}
+
+%TODO Include example with large number of rows to discuss Voronoi equivalence?
+
 
