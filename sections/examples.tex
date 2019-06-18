@@ -9,9 +9,9 @@ algorithm is an iterative, centroid-based method that aims to minimise the
 ``inertia'' of the current partition, \(Z = \left\{Z_1, \ldots, Z_k\right\}\),
 of some dataset \(X\):
 
-\[
+\begin{equation}
     I(Z, X) := \frac{1}{|X|} \sum_{j=1}^{k} \sum_{x \in Z_j} {d(x, z_j)}^2
-\]
+\end{equation}
 
 A full statement of the algorithm is given in~\ref{appendix:kmeans}. However, it
 should be clear that \(I\) may take any non-negative value.
@@ -89,7 +89,48 @@ dependent on it.
     \centering
     \includegraphics[width=\imgwidth]{img/inertia-individuals-0.pdf}
     \caption{Representative individuals from the final generation based on
-             fitness.}\label{figure:inertia-individuals}
+             inertia. Centroids displayed as
+             crosses.}\label{figure:inertia-individuals}
+\end{figure}
+
+Indeed, this fitness function could be considered flawed or fragile if it is
+supposed to evaluate the appropriateness or efficacy of the \(k\)-means
+algorithm. One additional consideration in the fitness of an individual dataset
+can reduce this observed compaction effect. The silhouette coefficient is a
+metric used to evaluate the appropriateness of a clustering to a dataset, and is
+given by the mean of the silhouette value, \(S(x)\), of each point \(x \in Z_j\)
+in each cluster:
+
+\begin{equation}
+    \begin{gathered}
+        A(x) := \frac{1}{|Z_j| - 1} \sum_{y \in Z_j \setminus \{x\}} d(x, y),
+        \qquad B(x) := \min_{k \neq j} \frac{1}{|Z_k|} \sum_{w \in Z_k} d(x, w)
+        \\\\
+        S(x) := 
+            \begin{cases}
+                \frac{B(x) - A(x)}{\max\left\{A(x), B(x)\right\}}
+                &\quad \text{if } |Z_j| > 1\\
+                0 &\quad \text{otherwise}
+            \end{cases}
+    \end{gathered}
+\end{equation}
+
+The optimisation of the silhouette coefficient is analogous to finding a dataset
+which balances the cohesion (the inverse of \(A\)) and separation (\(B\)) of its
+clusters. Hence, the inertia is addressed by maximising cohesion whilst
+considering the spread of the clusters themselves by maximising separation.
+
+Repeating the trials with the same parameters but using the silhouette
+coefficient as the fitness function produces results that have reduced the
+effect of cluster overlap whilst maintaining low values in the final inertia of
+the clustering as shown in Figure~\ref{figure:silhouette-individuals}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\imgwidth]{img/silhouette-individuals-0.pdf}
+    \caption{Representative individuals from the final generation based on
+             silhouette. Centroids displayed as
+             crosses.}\label{figure:silhouette-individuals}
 \end{figure}
 
 %TODO Include example with large number of rows to discuss Voronoi equivalence?
