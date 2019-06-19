@@ -71,7 +71,7 @@ of \(I\).
         \centering
         \includegraphics[width=\linewidth]{img/inertia-nrows-50.pdf}
     \end{minipage}
-    \caption{Progressions for fitness and dimension across the first 50
+    \caption{Progressions for final inertia and dimension across the first 50
              epochs.}\label{figure:inertia-50}
 \end{figure}
 
@@ -117,13 +117,30 @@ in each cluster:
 
 The optimisation of the silhouette coefficient is analogous to finding a dataset
 which balances the cohesion (the inverse of \(A\)) and separation (\(B\)) of its
-clusters. Hence, the inertia is addressed by maximising cohesion whilst
-considering the spread of the clusters themselves by maximising separation.
+clusters. Hence, the inertia is addressed by maximising cohesion. Meanwhile, the
+spread of the clusters themselves is considered by maximising separation.
 
 Repeating the trials with the same parameters but using the silhouette
-coefficient as the fitness function produces results that have reduced the
-effect of cluster overlap whilst maintaining low values in the final inertia of
+coefficient as the fitness function yields results summarised in
+Figure~\ref{figure:silhouette}. In this case, the datasets produced have reduced
+overlap with one another whilst maintaining low values in the final inertia of
 the clustering as shown in Figure~\ref{figure:silhouette-individuals}.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{\imgwidth}
+        \centering
+        \includegraphics[width=\linewidth]{img/silhouette-fitness.pdf}
+    \end{minipage}
+
+    \begin{minipage}{\imgwidth}
+        \centering
+        \includegraphics[width=\linewidth]{img/silhouette-nrows.pdf}
+    \end{minipage}
+    \caption{Progressions for silhouette and dimension (number of rows) for a
+             run of EDO shown at 100 epoch intervals.}\label{figure:silhouette}
+\end{figure}
+
 
 \begin{figure}[htbp]
     \centering
