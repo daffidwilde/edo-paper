@@ -120,11 +120,25 @@ which balances the cohesion (the inverse of \(A\)) and separation (\(B\)) of its
 clusters. Hence, the inertia is addressed by maximising cohesion. Meanwhile, the
 spread of the clusters themselves is considered by maximising separation.
 
-Repeating the trials with the same parameters but using the silhouette
-coefficient as the fitness function yields results summarised in
+Repeating the trials with the same parameters as previously, the silhouette
+fitness function yields the results summarised in
 Figure~\ref{figure:silhouette}. In this case, the datasets produced have reduced
 overlap with one another whilst maintaining low values in the final inertia of
-the clustering as shown in Figure~\ref{figure:silhouette-individuals}.
+the clustering as shown in Figure~\ref{figure:silhouette-individuals}. Again,
+the form of the individual clusters is much the same. The low values of inertia
+correspond to tight clusters, and the tightest clusters are those with a minimal
+number of points, i.e.\ a single point. As with the previous example, albeit at
+a much slower rate, the preferable individuals are those leading toward this
+case. That this gradual reduction in the dimension of the individuals occurs
+after the improvement of the fitness function bolsters the claim that the base
+case is also optimal.
+
+However, due to the nature of the implementation, any individual from any
+generation may be retrieved and studied should the final results be too
+concentrated on the base case. This transparency in the history and progression
+of the proposed method is something that sets it apart from other methods of the
+same ilk such as GANs which have a reputation of providing so-called ``black
+box'' solutions.
 
 \begin{figure}[htbp]
     \centering
@@ -151,5 +165,5 @@ the clustering as shown in Figure~\ref{figure:silhouette-individuals}.
 \end{figure}
 
 %TODO Include example with large number of rows to discuss Voronoi equivalence?
-
+%TODO Include DBSCAN example
 
