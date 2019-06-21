@@ -13,10 +13,11 @@
 \usepackage{booktabs} % Pandas dataframes
 \usepackage{caption}
 \usepackage{enumerate} % Roman numerals
-\usepackage[default]{Fira Sans}
+%\usepackage[default]{Fira Sans}
 \usepackage{float}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{minted}
 \usepackage{setspace} % Spacing
 \usepackage{standalone}
 \usepackage{tikz}
@@ -89,6 +90,8 @@
     \end{figure}
 }
 
+\DeclareMathOperator*{\argmin}{arg\,min}
+
 
 % Document
 \title{%
@@ -111,6 +114,8 @@
 \input{sections/algorithm/main.tex}
 \input{sections/examples.tex}
 \input{sections/conclusion.tex}
+
+\pagebreak\input{sections/appendix.tex}
 
 \printbibliography
 \end{document}
