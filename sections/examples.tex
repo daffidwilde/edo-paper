@@ -1,7 +1,169 @@
-\section{Numerical examples}\label{section:examples}
+\section{Examples}\label{section:examples}
 
-\begin{itemize}
-    \item \(k\)-means graphical. Bounded to two columns so clusters can be seen
-    \item \(k\)-means ``unbounded''. Larger column and row limits that can be
-        tested for separation and convexity.
-\end{itemize}
+The following examples act as a form of validation for EDO, and also highlight
+some of the nuances in its use. The examples will be focused around the
+clustering of data and, in particular, the \(k\)-means (Lloyd's) algorithm.
+Clustering was chosen as it is a well-understood problem that is easily
+accessible \-- especially when restricted to two dimensions. The \(k\)-means
+algorithm is an iterative, centroid-based method that aims to minimise the
+``inertia'' of the current partition, \(Z = \left\{Z_1, \ldots, Z_k\right\}\),
+of some dataset \(X\):
+
+\begin{equation}
+    I(Z, X) := \frac{1}{|X|} \sum_{j=1}^{k} \sum_{x \in Z_j} {d(x, z_j)}^2
+\end{equation}
+
+A full statement of the algorithm is given in~\ref{appendix:kmeans}. However, it
+should be clear that \(I\) may take any non-negative value.
+
+This inertia function is often taken as the objective of the \(k\)-means
+algorithm, and is used for evaluating the final clustering. This is particularly
+true when the algorithm is not being considered an unsupervised classifier where
+accuracy may be used~\cite{Huang1998}. With that, the first example is to use
+this inertia as the fitness function in EDO.\ That is, to find datasets which
+minimise \(I\).
+
+In this example, EDO is restricted to only two-dimensional datasets, i.e.\ \(C =
+\left((2, 2)\right)\). In addition to this, all columns are formed from the
+uniform distribution restricted to the unit interval, \(\mathcal{U} :=
+\left\{U(a, b)~|~a, b \in [0, 1]\right\}\). The remaining parameters are as
+follows: \(N~=~100\), \(R~=~(3, 100)\), \(M~=~1000\), \(b~=~0.2\), \(l~=~0\),
+\(p_m~=~0.01\), and shrinkage excluded. Figure~\ref{figure:inertia} shows an
+example of the fitness (left) and dimension (right) progression of the
+evolutionary algorithm under these conditions.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{\imgwidth}
+        \centering
+        \includegraphics[width=\linewidth]{img/inertia-fitness.pdf}
+    \end{minipage}
+
+    \begin{minipage}{\imgwidth}
+        \centering
+        \includegraphics[width=\linewidth]{img/inertia-nrows.pdf}
+    \end{minipage}
+    \caption{Progressions for fitness and dimension (number of rows) for a run
+             of EDO shown at 100 epoch intervals.}\label{figure:inertia}
+\end{figure}
+
+It is clear that there is a steep learning curve here; within the first 100
+generations an individual is found with a fitness of roughly \(10^{-10}\) which
+cannot be improved on for the remaining 900 epochs. In fact, this individual was
+found around the \(44^{th}\) epoch as can be seen in
+Figure~\ref{figure:inertia-50}. The same quick convergence is seen in the number
+of rows. By inspecting the progression in the first 50 generations, this
+behaviour is quickly recognised as preferable and was dominant across all the
+trials conducted in this work. This preference for datasets with fewer rows
+makes sense given that \(I\) is a summation of non-negative terms (since \(d\)
+is a distance metric.) With that, when \(k\) is fixed \textit{a priori},
+reducing the number of terms in the second summation quickly reduces the value
+of \(I\). 
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{\imgwidth}
+        \centering
+        \includegraphics[width=\linewidth]{img/inertia-fitness-50.pdf}
+    \end{minipage}
+
+    \begin{minipage}{\imgwidth}
+        \centering
+        \includegraphics[width=\linewidth]{img/inertia-nrows-50.pdf}
+    \end{minipage}
+    \caption{Progressions for final inertia and dimension across the first 50
+             epochs.}\label{figure:inertia-50}
+\end{figure}
+
+Something that may be seen as unwanted is a compaction of the clusters.
+Referring to Figure~\ref{figure:inertia-individuals}, the best individual shows
+two clusters but they are all essentially the same point. This kind of behaviour
+is exhibited in part because it is allowed. That is, the fitness function used
+with EDO does nothing to penalise the reduction in the inter-cluster means, as
+well as the intra-cluster means. This kind of unwanted behaviour highlights a
+subtlety in how EDO is used, namely that the definition of the fitness function
+requires attention and consideration as the outcome of the EA is entirely
+dependent on it.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\imgwidth]{img/inertia-individuals-0.pdf}
+    \caption{Representative individuals from the final generation based on
+             inertia. Centroids displayed as
+             crosses.}\label{figure:inertia-individuals}
+\end{figure}
+
+Indeed, this fitness function could be considered flawed or fragile if it is
+supposed to evaluate the appropriateness or efficacy of the \(k\)-means
+algorithm. One additional consideration in the fitness of an individual dataset
+can reduce this observed compaction effect. The silhouette coefficient is a
+metric used to evaluate the appropriateness of a clustering to a dataset, and is
+given by the mean of the silhouette value, \(S(x)\), of each point \(x \in Z_j\)
+in each cluster:
+
+\begin{equation}
+    \begin{gathered}
+        A(x) := \frac{1}{|Z_j| - 1} \sum_{y \in Z_j \setminus \{x\}} d(x, y),
+        \qquad B(x) := \min_{k \neq j} \frac{1}{|Z_k|} \sum_{w \in Z_k} d(x, w)
+        \\\\
+        S(x) := 
+            \begin{cases}
+                \frac{B(x) - A(x)}{\max\left\{A(x), B(x)\right\}}
+                &\quad \text{if } |Z_j| > 1\\
+                0 &\quad \text{otherwise}
+            \end{cases}
+    \end{gathered}
+\end{equation}
+
+The optimisation of the silhouette coefficient is analogous to finding a dataset
+which balances the cohesion (the inverse of \(A\)) and separation (\(B\)) of its
+clusters. Hence, the inertia is addressed by maximising cohesion. Meanwhile, the
+spread of the clusters themselves is considered by maximising separation.
+
+Repeating the trials with the same parameters as previously, the silhouette
+fitness function yields the results summarised in
+Figure~\ref{figure:silhouette}. In this case, the datasets produced have reduced
+overlap with one another whilst maintaining low values in the final inertia of
+the clustering as shown in Figure~\ref{figure:silhouette-individuals}. Again,
+the form of the individual clusters is much the same. The low values of inertia
+correspond to tight clusters, and the tightest clusters are those with a minimal
+number of points, i.e.\ a single point. As with the previous example, albeit at
+a much slower rate, the preferable individuals are those leading toward this
+case. That this gradual reduction in the dimension of the individuals occurs
+after the improvement of the fitness function bolsters the claim that the base
+case is also optimal.
+
+However, due to the nature of the implementation, any individual from any
+generation may be retrieved and studied should the final results be too
+concentrated on the base case. This transparency in the history and progression
+of the proposed method is something that sets it apart from other methods of the
+same ilk such as GANs which have a reputation of providing so-called ``black
+box'' solutions.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{\imgwidth}
+        \centering
+        \includegraphics[width=\linewidth]{img/silhouette-fitness.pdf}
+    \end{minipage}
+
+    \begin{minipage}{\imgwidth}
+        \centering
+        \includegraphics[width=\linewidth]{img/silhouette-nrows.pdf}
+    \end{minipage}
+    \caption{Progressions for silhouette and dimension (number of rows) for a
+             run of EDO shown at 100 epoch intervals.}\label{figure:silhouette}
+\end{figure}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\imgwidth]{img/silhouette-individuals-0.pdf}
+    \caption{Representative individuals from the final generation based on
+             silhouette. Centroids displayed as
+             crosses.}\label{figure:silhouette-individuals}
+\end{figure}
+
+%TODO Include example with large number of rows to discuss Voronoi equivalence?
+%TODO Include DBSCAN example
+
