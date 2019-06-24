@@ -25,15 +25,18 @@ diversity and further exploration throughout the run of the algorithm. It should
 be noted that regardless of this step, an individual could potentially be
 present throughout the entirety of the algorithm.
 
-A final component to the selection process is an adjustment to the search space
-made up of the distribution parameter limits in \(\mathcal{P}\). This adjustment
-gives the ability to ``shrink'' the search space about the region observed in a
-given population. This method is based on a power law described
-in~\cite{Amirjanov2016} that relies on a shrink factor, \(s\). At each
-iteration, \(t\), every distribution which is present in the parents has its
-parameter's limits, \(\left(l_t, u_t\right)\), adjusted. This adjustment is such
-that the new limits, \(\left(l_{t+1}, u_{t+1}\right)\) are centred about the
-mean observed value, \(\mu\), for that parameter:
+After the parents have been selected, there are two adjustments made to the
+current search space. The first is that the subtypes for each family in
+\(mathcal{P}\) are updated to only those present in the parents. The second
+adjustment is a process which acts on the distribution parameter limits for
+each subtype in \(\mathcal{P}\). This adjustment gives the ability to ``shrink''
+the search space about the region observed in a given population. This method is
+based on a power law described in~\cite{Amirjanov2016} that relies on a shrink
+factor, \(s\). At each iteration, \(t\), every distribution subtype which is
+present in the parents has its parameter's limits, \(\left(l_t, u_t\right)\),
+adjusted. This adjustment is such that the new limits, \(\left(l_{t+1},
+u_{t+1}\right)\) are centred about the mean observed value, \(\mu\), for that
+parameter:
 \begin{align}
     \label{eq:shrinking_lower}
     l_{t+1}&= \max \left\{l_t, \ \mu - \frac{1}{2} (u_t - l_t) s^t\right\}\\
@@ -43,6 +46,6 @@ mean observed value, \(\mu\), for that parameter:
 
 The shrinking process is given explicitly in
 Algorithm~\ref{algorithm:shrinking}. Note that the behaviour of this process can 
-produce reductive results for some use cases.
+produce reductive results for some use cases and is optional.
 
 \input{tex/algorithms/shrinking.tex}
