@@ -1,11 +1,20 @@
 \section{Conclusion}
 
-{\color{red}{Rough notes still}}
+In this paper we have introduced a novel approach to understanding the quality
+of an algorithm by exploring the space in which their well-performing datasets
+exist. Following a detailed explanation of its internal mechanisms, a case study
+in \(k\)-means clustering was offered as validation for the method. The method
+utilises biological operators to traverse the space of all possible datasets in
+an organic, unrestricted way. The generative nature of the proposed method also
+provides transparency and richness to the solution when compared to other
+contemporary techniques for artificial data generation as entire history of
+individuals is preserved.
 
-A caveat to this: one should not assume that the columns are a reliable
-representative of the distribution associated with them, or vice versa. This is
-particularly true of ``shorter'' datasets with a small number of rows, whereas
-confidence in the pair could be given more liberally for ``longer'' datasets
-with a larger number of rows. In any case, appropriate methods should be
+The evolutionary dataset optimisation method is dependent on a number of
+parameters set out in this paper and perhaps the most important of which is the
+choice of distribution families, \(\mathcal{P}\); these families set out the
+general statistical shape of the columns of the datasets that are produced and
+also control the present data types. The relationship between columns and their
+associated distribution is not causal and appropriate methods should be
 employed to understand the structure and characteristics of the data produced
-before formal conclusions are made.
+before formal conclusions are made as set out in the example provided.
