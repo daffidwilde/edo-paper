@@ -37,6 +37,10 @@ these, EDO takes the following parameters:
         overall search space. For instance, the family of normal distributions,
         denoted by \(N(\mu, \sigma^2)\), would have limits on values for the
         mean, \(\mu\), and the standard deviation, \(\sigma\).
+    \item A maximum number of ``subtypes'' for each family in \(\mathcal{P}\). A
+        subtype is an independent copy of the family that progresses separate
+        from the others. These are the actual distribution objects which are
+        traversed in the optimisation.
     \item A probability vector to sample distributions from \(\mathcal{P}\),
         \(w = \left(w_1, \ldots, w_{|\mathcal{P}|}\right)\).
     \item A second selection parameter, \(l \in [0, 1]\), to allow for a
