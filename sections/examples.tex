@@ -1,5 +1,7 @@
 \section{Examples}\label{section:examples}
 
+\subsection{\(k\)-means clustering}
+
 The following examples act as a form of validation for EDO, and also highlight
 some of the nuances in its use. The examples will be focused around the
 clustering of data and, in particular, the \(k\)-means (Lloyd's) algorithm.
@@ -28,37 +30,34 @@ In this example, EDO is restricted to only two-dimensional datasets, i.e.\ \(C =
 uniform distribution restricted to the unit interval, \(\mathcal{U} :=
 \left\{U(a, b)~|~a, b \in [0, 1]\right\}\). The remaining parameters are as
 follows: \(N~=~100\), \(R~=~(3, 100)\), \(M~=~1000\), \(b~=~0.2\), \(l~=~0\),
-\(p_m~=~0.01\), and shrinkage excluded. Figure~\ref{figure:inertia} shows an
-example of the fitness (left) and dimension (right) progression of the
-evolutionary algorithm under these conditions.
+\(p_m~=~0.01\), and shrinkage excluded. Figure~\ref{figure:inertia-50} shows an
+example of the fitness (above) and dimension (below) progression of the
+evolutionary algorithm under these conditions up until the \(50^{th}\) epoch.
 
-\begin{figure}[htbp]
-    \centering
-    \begin{minipage}{\imgwidth}
-        \centering
-        \includegraphics[width=\linewidth]{img/inertia-fitness.pdf}
-    \end{minipage}
+%\begin{figure}[htbp]
+%    \centering
+%    \begin{minipage}{\imgwidth}
+%        \centering
+%        \includegraphics[width=\linewidth]{img/inertia-fitness.pdf}
+%    \end{minipage}
+%
+%    \begin{minipage}{\imgwidth}
+%        \centering
+%        \includegraphics[width=\linewidth]{img/inertia-nrows.pdf}
+%    \end{minipage}
+%    \caption{Progressions for fitness and dimension (number of rows) for a run
+%             of EDO shown at 100 epoch intervals.}\label{figure:inertia}
+%\end{figure}
 
-    \begin{minipage}{\imgwidth}
-        \centering
-        \includegraphics[width=\linewidth]{img/inertia-nrows.pdf}
-    \end{minipage}
-    \caption{Progressions for fitness and dimension (number of rows) for a run
-             of EDO shown at 100 epoch intervals.}\label{figure:inertia}
-\end{figure}
-
-It is clear that there is a steep learning curve here; within the first 100
-generations an individual is found with a fitness of roughly \(10^{-10}\) which
-cannot be improved on for the remaining 900 epochs. In fact, this individual was
-found around the \(44^{th}\) epoch as can be seen in
-Figure~\ref{figure:inertia-50}. The same quick convergence is seen in the number
-of rows. By inspecting the progression in the first 50 generations, this
-behaviour is quickly recognised as preferable and was dominant across all the
-trials conducted in this work. This preference for datasets with fewer rows
-makes sense given that \(I\) is a summation of non-negative terms (since \(d\)
-is a distance metric.) With that, when \(k\) is fixed \textit{a priori},
-reducing the number of terms in the second summation quickly reduces the value
-of \(I\). 
+There is a steep learning curve here; within the first 50 generations an
+individual is found with a fitness of roughly \(10^{-10}\) which could not be
+improved on for a further 900 epochs. The same quick convergence is seen in the
+number of rows. This behaviour is quickly recognised as preferable and was
+dominant across all the trials conducted in this work. This preference for
+datasets with fewer rows makes sense given that \(I\) is a summation of
+non-negative terms (since \(d\) is a distance metric.) With that, when \(k\) is
+fixed \textit{a priori}, reducing the number of terms in the second summation
+quickly reduces the value of \(I\). 
 
 \begin{figure}[htbp]
     \centering
@@ -165,5 +164,6 @@ box'' solutions.
 \end{figure}
 
 %TODO Include example with large number of rows to discuss Voronoi equivalence?
-%TODO Include DBSCAN example
+%TODO Include DBSCAN examples
 
+\subsection{Comparison with DBSCAN}
