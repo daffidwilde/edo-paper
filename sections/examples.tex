@@ -100,19 +100,19 @@ metric used to evaluate the appropriateness of a clustering to a dataset, and is
 given by the mean of the silhouette value, \(S(x)\), of each point \(x \in Z_j\)
 in each cluster:
 
+\[
+    A(x) := \frac{1}{|Z_j| - 1} \sum_{y \in Z_j \setminus \{x\}} d(x, y),
+    \qquad B(x) := \min_{k \neq j} \frac{1}{|Z_k|} \sum_{w \in Z_k} d(x, w)
+\]
+
 \begin{equation}
-    \begin{gathered}
-        A(x) := \frac{1}{|Z_j| - 1} \sum_{y \in Z_j \setminus \{x\}} d(x, y),
-        \qquad B(x) := \min_{k \neq j} \frac{1}{|Z_k|} \sum_{w \in Z_k} d(x, w)
-        \\\\
         S(x) := 
             \begin{cases}
                 \frac{B(x) - A(x)}{\max\left\{A(x), B(x)\right\}}
                 &\quad \text{if } |Z_j| > 1\\
                 0 &\quad \text{otherwise}
-            \end{cases}
-    \end{gathered}
-\end{equation}
+            \end{cases}\label{eq:silhouette}
+\end{equation}\\
 
 The optimisation of the silhouette coefficient is analogous to finding a dataset
 which balances the cohesion (the inverse of \(A\)) and separation (\(B\)) of its
@@ -150,10 +150,10 @@ box'' solutions.
         \centering
         \includegraphics[width=\linewidth]{img/silhouette-nrows.pdf}
     \end{minipage}
-    \caption{Progressions for silhouette and dimension (number of rows) for a
-             run of EDO shown at 100 epoch intervals.}\label{figure:silhouette}
+    \caption{Progressions for the silhouette and dimension (number of rows) for
+             a run of EDO shown at 100 epoch
+             intervals.}\label{figure:silhouette}
 \end{figure}
-
 
 \begin{figure}[htbp]
     \centering
@@ -164,6 +164,70 @@ box'' solutions.
 \end{figure}
 
 %TODO Include example with large number of rows to discuss Voronoi equivalence?
-%TODO Include DBSCAN examples
 
 \subsection{Comparison with DBSCAN}
+
+The capabilities of EDO as a tool for understanding an algorithm are highlighted
+particularly when comparing an algorithm against another (or set of others)
+simultaneously.  This is done by utilising the freedom of choice in a fitness
+function for EDO.\ Consider two algorithms, \(A\) and \(B\), and some common
+metric between them, \(g\). Then understanding their similarities and contrasts
+can be done by considering the differences in this metric on the two algorithms.
+In terms of EDO, this means using \(f = g_A - g_B\), \(f = g_B - g_A\) or \(f
+= \left| g_B - g_A \right|\) as the fitness function. By doing so, pitfalls,
+edge cases or fundamental conditions for the method can be highlighted.
+Overall, this process allows the researcher to more deeply learn about the
+method of interest.
+
+As an example of this process, consider the another clustering algorithm of a
+different form such as Density Based Spatial Clustering of Applications with
+Noise (DBSCAN) and suppose the objective is to find datasets for which
+\(k\)-means outperforms this alternative. Here there is no concept of inertia as
+DBSCAN is density-based and is able to identify outliers~\cite{Ester1996}. As
+such, a valid (and arguably more appropriate) metric is the silhouette score as
+defined in~(\ref{eq:silhouette}).
+
+However, an adjustment to the fitness function must be made so as to accommodate
+for the condition of the silhouette coefficient that there be more than one
+cluster present. Let \(S_k (X)\) and \(S_D (X)\) denote the silhouette
+coefficients of the clustering found by \(k\)-means and DBSCAN respectively.
+Then the fitness function is defined to be:
+\[
+    f(X) = 
+        \begin{cases}
+            S_D (X) - S_k (X), &\quad \text{if DBSCAN identifies two or more
+            clusters}\\
+            \infty &\quad \text{otherwise.}
+        \end{cases}
+\]
+
+Note the order of the subtraction here as EDO minimises fitness functions by
+default.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{\imgwidth}
+        \centering
+        \includegraphics[width=\linewidth]{img/dbscan-fitness.pdf}
+    \end{minipage}
+
+    \begin{minipage}{\imgwidth}
+        \centering
+        \includegraphics[width=\linewidth]{img/dbscan-nrows.pdf}
+    \end{minipage}
+    \caption{Progressions for difference in silhouette and dimension for a run
+             of EDO shown at 100 epoch
+             intervals.}\label{figure:dbscan-silhouette}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\imgwidth]{img/kmeans-individuals-0.pdf}
+
+    \includegraphics[width=\imgwidth]{img/dbscan-individuals-0.pdf}
+    \caption{Representative individuals from the final generation with
+             clusters shown. Convex hull shown as outline, and approximate
+             concave hull shaded. Above by \(k\)-means, below by
+             DBSCAN.}\label{figure:dbscan-individuals}
+\end{figure}
+
