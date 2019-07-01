@@ -11,7 +11,6 @@
 \usepackage{booktabs} % Pandas dataframes
 \usepackage{caption}
 \usepackage{enumerate} % Roman numerals
-%\usepackage[default]{Fira Sans}
 \usepackage{float}
 \usepackage{graphicx}
 \usepackage{hyperref}
@@ -35,7 +34,7 @@
 \raggedbottom%
 
 \newlength{\imgwidth}
-\setlength{\imgwidth}{.9\textwidth}
+\setlength{\imgwidth}{.8\textwidth}
 
 \definecolor{cyan}{RGB}{0, 164, 216}
 \definecolor{magenta}{RGB}{226, 62, 138}
@@ -90,7 +89,7 @@
 }
 
 \DeclareMathOperator*{\argmin}{arg\,min}
-
+\renewcommand\theContinuedFloat{\alph{ContinuedFloat}}
 
 % Document
 \title{%

@@ -34,21 +34,6 @@ follows: \(N~=~100\), \(R~=~(3, 100)\), \(M~=~1000\), \(b~=~0.2\), \(l~=~0\),
 example of the fitness (above) and dimension (below) progression of the
 evolutionary algorithm under these conditions up until the \(50^{th}\) epoch.
 
-%\begin{figure}[htbp]
-%    \centering
-%    \begin{minipage}{\imgwidth}
-%        \centering
-%        \includegraphics[width=\linewidth]{img/inertia-fitness.pdf}
-%    \end{minipage}
-%
-%    \begin{minipage}{\imgwidth}
-%        \centering
-%        \includegraphics[width=\linewidth]{img/inertia-nrows.pdf}
-%    \end{minipage}
-%    \caption{Progressions for fitness and dimension (number of rows) for a run
-%             of EDO shown at 100 epoch intervals.}\label{figure:inertia}
-%\end{figure}
-
 There is a steep learning curve here; within the first 50 generations an
 individual is found with a fitness of roughly \(10^{-10}\) which could not be
 improved on for a further 900 epochs. The same quick convergence is seen in the
@@ -60,64 +45,100 @@ fixed \textit{a priori}, reducing the number of terms in the second summation
 quickly reduces the value of \(I\). 
 
 \begin{figure}[htbp]
+    \ContinuedFloat*
     \centering
-    \begin{minipage}{\imgwidth}
-        \centering
-        \includegraphics[width=\linewidth]{img/inertia-fitness-50.pdf}
-    \end{minipage}
+    \begin{tabular}{c}
+        \includegraphics[width=\imgwidth]{img/inertia-fitness-50.pdf}\\
+        \includegraphics[width=\imgwidth]{img/inertia-nrows-50.pdf}
+    \end{tabular}
+    \caption{%
+        \label{figure:inertia-50}
+        Progressions for final inertia and dimension across the first 50
+        epochs with \(R = (3, 100)\).
+    }
+\end{figure}
 
-    \begin{minipage}{\imgwidth}
-        \centering
-        \includegraphics[width=\linewidth]{img/inertia-nrows-50.pdf}
-    \end{minipage}
-    \caption{Progressions for final inertia and dimension across the first 50
-             epochs.}\label{figure:inertia-50}
+\begin{figure}[htbp]
+    \ContinuedFloat%
+    \centering
+    \begin{tabular}{c}
+        \includegraphics[width=\imgwidth]{img/large-inertia-fitness-50.pdf}\\
+        \includegraphics[width=\imgwidth]{img/large-inertia-nrows-50.pdf}
+    \end{tabular}
+    \caption{%
+        \label{figure:large-inertia-50}
+        Progressions for final inertia and dimension across the first 50 epochs
+        with \(R = (50, 100)\).
+    }
 \end{figure}
 
 Something that may be seen as unwanted is a compaction of the clusters.
-Referring to Figure~\ref{figure:inertia-individuals}, the best individual shows
+Referring to Figure~\ref{figure:inertia-individuals}, the best individual
+shows
 two clusters but they are all essentially the same point. This kind of behaviour
-is exhibited in part because it is allowed. That is, the fitness function used
-with EDO does nothing to penalise the reduction in the inter-cluster means, as
-well as the intra-cluster means. This kind of unwanted behaviour highlights a
-subtlety in how EDO is used, namely that the definition of the fitness function
-requires attention and consideration as the outcome of the EA is entirely
-dependent on it.
+is exhibited in part because it is allowed. There are two immediate ways in
+which this allowed: first, that the ``trivial'' case is included in \(R\) and,
+secondly, that the fitness function does nothing to penalise the reduction in
+the inter-cluster means, as well as the intra-cluster means. This kind of
+unwanted behaviour highlights a subtlety in how EDO should be used;
+experimentation and rigour are required to properly understand an algorithm's
+quality.
 
 \begin{figure}[htbp]
+    \ContinuedFloat*
     \centering
     \includegraphics[width=\imgwidth]{img/inertia-individuals-0.pdf}
-    \caption{Representative individuals from the final generation based on
-             inertia. Centroids displayed as
-             crosses.}\label{figure:inertia-individuals}
+    \caption{%
+        \label{figure:inertia-individuals}
+        Representative individuals from the final generation based on inertia
+        with \(R = (3, 100)\). Centroids displayed as crosses.
+    }
 \end{figure}
 
-Indeed, this fitness function could be considered flawed or fragile if it is
-supposed to evaluate the appropriateness or efficacy of the \(k\)-means
-algorithm. One additional consideration in the fitness of an individual dataset
-can reduce this observed compaction effect. The silhouette coefficient is a
-metric used to evaluate the appropriateness of a clustering to a dataset, and is
-given by the mean of the silhouette value, \(S(x)\), of each point \(x \in Z_j\)
-in each cluster:
+\begin{figure}[htbp]
+    \ContinuedFloat%
+    \centering
+    \includegraphics[width=\imgwidth]{img/large-inertia-individuals-0.pdf}
+    \caption{%
+        \label{figure:large-inertia-individuals}
+        Representative individuals from the final generation based on inertia
+        with \(R = (50, 100)\). Centroids displayed as crosses.
+    }
+\end{figure}
 
-\[
-    A(x) := \frac{1}{|Z_j| - 1} \sum_{y \in Z_j \setminus \{x\}} d(x, y),
-    \qquad B(x) := \min_{k \neq j} \frac{1}{|Z_k|} \sum_{w \in Z_k} d(x, w)
-\]
+Consider Figure~\ref{figure:large-inertia-individuals} where EDO was used with
+\(R = (50, 100)\). In this case, the clusters are still dense about a single
+point despite the trivial case being removed from consideration. Perhaps then,
+the definition of the fitness function requires further attention and
+consideration.
+
+Indeed, the final inertia could be considered a flawed or fragile fitness
+function if it is supposed to evaluate the appropriateness or efficacy of the
+\(k\)-means algorithm. Incorporating the inter-cluster spread to the fitness of
+an individual dataset can reduce this observed compaction. The silhouette
+coefficient is a metric used to evaluate the appropriateness of a clustering to
+a dataset, and is given by the mean of the silhouette value, \(S(x)\), of each
+point \(x \in Z_j\) in each cluster:
 
 \begin{equation}
+    \begin{gathered}
+        A(x) := \frac{1}{|Z_j| - 1} \sum_{y \in Z_j \setminus \{x\}} d(x, y),
+        \qquad B(x) := \min_{k \neq j} \frac{1}{|Z_k|} \sum_{w \in Z_k} d(x, w)
+        \\\\
         S(x) := 
             \begin{cases}
                 \frac{B(x) - A(x)}{\max\left\{A(x), B(x)\right\}}
                 &\quad \text{if } |Z_j| > 1\\
                 0 &\quad \text{otherwise}
             \end{cases}\label{eq:silhouette}
+    \end{gathered}
 \end{equation}\\
 
 The optimisation of the silhouette coefficient is analogous to finding a dataset
-which balances the cohesion (the inverse of \(A\)) and separation (\(B\)) of its
-clusters. Hence, the inertia is addressed by maximising cohesion. Meanwhile, the
-spread of the clusters themselves is considered by maximising separation.
+which increases both the intra-cluster cohesion (the inverse of \(A\)) and
+inter-cluster separation (\(B\)). Hence, the inertia is addressed by maximising
+cohesion. Meanwhile, the spread of the clusters themselves is considered by
+maximising separation.
 
 Repeating the trials with the same parameters as previously, the silhouette
 fitness function yields the results summarised in
@@ -196,7 +217,7 @@ Then the fitness function is defined to be:
     f(X) = 
         \begin{cases}
             S_D (X) - S_k (X), &\quad \text{if DBSCAN identifies two or more
-            clusters}\\
+            clusters (including noise)}\\
             \infty &\quad \text{otherwise.}
         \end{cases}
 \]
