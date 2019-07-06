@@ -34,7 +34,7 @@
 \raggedbottom%
 
 \newlength{\imgwidth}
-\setlength{\imgwidth}{.8\textwidth}
+\setlength{\imgwidth}{.75\textwidth}
 
 \definecolor{cyan}{RGB}{0, 164, 216}
 \definecolor{magenta}{RGB}{226, 62, 138}
@@ -79,7 +79,7 @@
 }
 
 \newcommand{\inputtikz}[3][\imgwidth]{%
-    \begin{figure}[H]
+    \begin{figure}[htbp]
         \centering
         \resizebox{#1}{!}{%
             \input{tex/diagrams/#2.tex}

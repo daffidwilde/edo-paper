@@ -6,7 +6,7 @@ of an individual being selected is determined by their fitness. This is because
 the purpose of selection is to preserve favourable qualities and encourage some
 homogeneity within future generations~\cite{Back1994}.
 
-\inputtikz[.8\textwidth]{selection}{%
+\inputtikz{selection}{%
     The selection process with the inclusion of some lucky individuals.
 }
 \input{tex/algorithms/selection.tex}
@@ -41,7 +41,7 @@ parameter:
     \label{eq:shrinking_lower}
     l_{t+1}&= \max \left\{l_t, \ \mu - \frac{1}{2} (u_t - l_t) s^t\right\}\\
     \label{eq:shrinking_upper}
-    u_{t+1}&= \max \left\{u_t, \ \mu + \frac{1}{2} (u_t - l_t) s^t\right\}
+    u_{t+1}&= \min \left\{u_t, \ \mu + \frac{1}{2} (u_t - l_t) s^t\right\}
 \end{align}
 
 The shrinking process is given explicitly in
