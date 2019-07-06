@@ -73,13 +73,14 @@ quickly reduces the value of \(I\).
 \end{figure}
 
 Something that may be seen as unwanted is a compaction of the clusters.
-Referring to Figure~\ref{figure:inertia-individuals}, the best individual
-shows
-two clusters but they are all essentially the same point. This kind of behaviour
-is exhibited in part because it is allowed. There are two immediate ways in
-which this allowed: first, that the ``trivial'' case is included in \(R\) and,
-secondly, that the fitness function does nothing to penalise the reduction in
-the inter-cluster means, as well as the intra-cluster means. This kind of
+Referring to Figure~\ref{figure:inertia-individuals}, the best individual shows
+two clusters but they are all essentially the same point whereas the worst is a
+random cloud across the whole of \(\mathcal{U}\) which was found in the
+initial population. The kind of behaviour exhibited by the best performing
+individuals occurs in part because it is allowed. There are two immediate ways
+in which this allowed: first, that the ``trivial'' case is included in \(R\)
+and, secondly, that the fitness function does nothing to penalise the reduction
+in the inter-cluster means, as well as the intra-cluster means. This kind of
 unwanted behaviour highlights a subtlety in how EDO should be used;
 experimentation and rigour are required to properly understand an algorithm's
 quality.
@@ -108,11 +109,11 @@ quality.
 
 Consider Figure~\ref{figure:large-inertia-individuals} where the individuals
 have been generated with the same parameters as previously except with adjusted
-row limits: \(R = (50, 100)\). In this case, the clusters are still dense about
-a single point despite the trivial case being removed from consideration.
-Perhaps then, this compact clustering is ``optimal''. However, more extensive
-studying may be done. That is, the defined fitness function may require further
-attention.
+row limits: \(R = (50, 100)\). In this case, the worst individuals are
+equivalent, and the best-performing clusters are still dense about a single
+point despite the trivial case being removed from consideration. Perhaps then,
+this compact clustering is ``optimal''. However, more extensive studying may be
+done. That is, the defined fitness function may require further attention.
 
 Indeed, the final inertia could be considered a flawed or fragile fitness
 function if it is supposed to evaluate the appropriateness or efficacy of the
@@ -214,13 +215,11 @@ box'' solutions.
 \end{figure}
 
 
-%TODO Include example with large number of rows to discuss Voronoi equivalence?
-
 \subsection{Comparison with DBSCAN}
 
 The capabilities of EDO as a tool for understanding an algorithm are highlighted
 particularly when comparing an algorithm against another (or set of others)
-simultaneously.  This is done by utilising the freedom of choice in a fitness
+simultaneously. This is done by utilising the freedom of choice in a fitness
 function for EDO.\ Consider two algorithms, \(A\) and \(B\), and some common
 metric between them, \(g\). Then understanding their similarities and contrasts
 can be done by considering the differences in this metric on the two algorithms.
@@ -243,25 +242,28 @@ for the condition of the silhouette coefficient that there be more than one
 cluster present. Let \(S_k (X)\) and \(S_D (X)\) denote the silhouette
 coefficients of the clustering found by \(k\)-means and DBSCAN respectively.
 Then the fitness function is defined to be:
-\[
+\begin{equation}
     f(X) = 
         \begin{cases}
             S_D (X) - S_k (X), &\quad \text{if DBSCAN identifies two or more
             clusters (including noise)}\\
             \infty &\quad \text{otherwise.}
-        \end{cases}
-\]
+        \end{cases}\label{equation:dbscan-fitness}
+\end{equation}
 
-Note the order of the subtraction here as EDO minimises fitness functions by
-default.
+There are two remarks here. First, note the order of the subtraction here as EDO
+minimises fitness functions by default. Also, \(f\) takes values in the range
+\([-2, 2]\) where \(-2\) is the best, i.e.\ \(S_D(X) = -1\) and \(S_k(X) = 1\).
+Likewise, 2 is the worst score.
 
 It must also be acknowledged that \(k\)-means and DBSCAN share no common
 parameters and so direct comparison is more difficult. For the purposes of this
 example, only one set of parameters is used but a thorough investigation should
 include a parameter sweep in cases such as these. The parameters being used are
-\(k~=~3\) for \(k\)-means, and \(\epsilon~=~0.1,\ \text{MinPoints}~=~5\) for
-DBSCAN.\ With respect to EDO, the parameters are the same as previous with
-\(R~=~(50, 100)\).
+\(k~=~3\) for \(k\)-means, and \(\epsilon~=~0.1,\ MinPoints~=~5\) for DBSCAN.\
+This set was chosen following informal experimentation using the Python library
+Scikit-learn~\cite{scikit} to find comparable parameters in the given search
+space defined by the EDO parameters used previously with \(R~=~(50,100)\).
 
 \begin{figure}[htbp]
     \centering
@@ -275,7 +277,7 @@ DBSCAN.\ With respect to EDO, the parameters are the same as previous with
         \includegraphics[width=\linewidth]{img/dbscan-nrows.pdf}
     \end{minipage}
     \caption{Progressions for difference in silhouette (\(k\)-means-preferable)
-             and dimension for a run of EDO shown at 100 epoch
+             and dimension across 1000 epochs at 100 epoch
              intervals.}\label{figure:dbscan-silhouette}
 \end{figure}
 
@@ -290,6 +292,68 @@ DBSCAN.\ With respect to EDO, the parameters are the same as previous with
              markers).}\label{figure:dbscan-individuals}
 \end{figure}
 
+Figure~\ref{figure:dbscan-silhouette} shows a summary of the progression of EDO
+for this use case. As with the previous examples where \(R~=~(50, 100)\), the
+variation in the population fitness is unstable but there is a clear trend of
+improvement in the best individual over the course of the run. There is also a
+convergence seen in the number of rows a dataset has. The resting dimension
+varied across the trials conducted in this work but none exhibited a shift
+toward the lower limit of 50 rows as with previous examples. This is suggestive
+of a more competitive environment for individuals where slight changes to an
+individual can drastically alter their fitness.
+
+The effect of such changes can be seen in Figure~\ref{figure:dbscan-individuals}
+where representative individuals are shown for this example. Here, the best
+performing individual, when clustered by \(k\)-means, shows three clear and
+nicely separated clusters. Note that they are not so tightly packed; again, this
+suggests that the route to an optimal individual is less clearly defined. In
+contrast, when the same dataset is clustered by DBSCAN a single cluster is found
+with a single noise point held within the convex hull of the cluster, i.e.\
+there are overlapping clusters (since noise points form a single cluster).
+Hence, along with the fact that the larger cluster is widely spread, it follows
+that the clustering have a relatively small, negative silhouette coefficient.
+
+Another point of interest here is the convexity of the clusters. One of the
+conditions for the success of \(k\)-means is that it requires convex clusters as
+the objective is to approximate the centroidal Voronoi
+tessellation~\cite{Du2006}. Without this condition, up to the correct choice of
+\(k\), the algorithm will fail to produce adequate results for either inertia or
+silhouette. DBSCAN, however, does not have this condition and is able to detect
+non-convex clusters so long as they are dense enough.
+Figure~\ref{figure:dbscan-individuals} shows the convex and concave hulls of the
+clusters found by each method. The ``concave hull'' of a cluster is taken to be
+the \(\alpha\)-shape of the cluster's data points~\cite{Edelsbrunner1983} where
+\(\alpha\) is determined to be the smallest value such that all the points in
+the cluster are contained in a single polygon. The convexity of cluster \(Z_j\),
+denoted \(\mathcal{C}_j\), is then determined to be the ratio of the area of its
+concave hull, \(H_c\), to the area of its convex hull, \(H_v\)~\cite{Sonka1993}:
+
+\begin{equation}
+    \mathcal{C}_j := \frac{area(H_c)}{area(H_v)}
+\end{equation}
+
+With this definition, it should be clear that a perfectly convex cluster would
+have \(C_j = 1\).
+
+It can be seen that the convexity of the clustering found by \(k\)-means appears
+to be higher than that by DBSCAN.\ This was apparent across all trials conducted
+in this work and indicates that the condition for convex clusters is being
+sought out by during the optimisation process. Meanwhile, however, it is not
+clear whether the performance of DBSCAN falls owing to its parameters or the
+method itself. This is a point where parameter sweeping would prove most useful
+so as to determine a crossing point for these two driving forces.
+
+% TODO Perhaps some statistical test could be used here, or with the second part
+% of this example.
+
+Now, to bolster the discussion above, it is required that the inverse
+optimisation be considered. That is, using the same parameters, investigate the
+datasets for which DBSCAN outperforms \(k\)-means with respect to the silhouette
+coefficient. This is equivalent to using \(-f\) as the fitness function except
+with the same penalty of \(\infty\) for the case set out
+in~(\ref{equation:dbscan-fitness}).
+Figures~\ref{figure:negative-dbscan}~\&~\ref{figure:negative-dbscan-individuals}
+show the equivalent summary as above with the revised fitness function.
 
 \begin{figure}[htbp]
     \centering
@@ -303,8 +367,8 @@ DBSCAN.\ With respect to EDO, the parameters are the same as previous with
         \includegraphics[width=\linewidth]{img/negative-dbscan-nrows.pdf}
     \end{minipage}
     \caption{Progressions for difference in silhouette (DBSCAN-preferable) and
-             dimension for a run of EDO shown at 100 epoch
-             intervals.}\label{figure:negative-dbscan-silhouette}
+             dimension across 1000 epochs at 100 epoch
+             intervals.}\label{figure:negative-dbscan}
 \end{figure}
 
 \begin{figure}[htbp]
