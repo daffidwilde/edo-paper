@@ -54,7 +54,7 @@ quickly reduces the value of \(I\).
     \caption{%
         \label{figure:inertia-50}
         Progressions for final inertia and dimension across the first 50
-        epochs with \(R = (3, 100)\).
+        epochs with \(R~=~(3,100)\).
     }
 \end{figure}
 
@@ -68,7 +68,7 @@ quickly reduces the value of \(I\).
     \caption{%
         \label{figure:large-inertia-50}
         Progressions for final inertia and dimension across the first 50 epochs
-        with \(R = (50, 100)\).
+        with \(R~=~(50,100)\).
     }
 \end{figure}
 
@@ -90,8 +90,8 @@ quality.
     \includegraphics[width=\imgwidth]{img/inertia-individuals-0.pdf}
     \caption{%
         \label{figure:inertia-individuals}
-        Representative individuals from the final generation based on inertia
-        with \(R = (3, 100)\). Centroids displayed as crosses.
+        Representative individuals based on inertia with \(R~=~(3,100)\).
+        Centroids displayed as crosses.
     }
 \end{figure}
 
@@ -101,8 +101,8 @@ quality.
     \includegraphics[width=\imgwidth]{img/large-inertia-individuals-0.pdf}
     \caption{%
         \label{figure:large-inertia-individuals}
-        Representative individuals from the final generation based on inertia
-        with \(R = (50, 100)\). Centroids displayed as crosses.
+        Representative individuals based on inertia with \(R~=~(50,100)\).
+        Centroids displayed as crosses.
     }
 \end{figure}
 
@@ -163,6 +163,7 @@ same ilk such as GANs which have a reputation of providing so-called ``black
 box'' solutions.
 
 \begin{figure}[htbp]
+    \ContinuedFloat*
     \centering
     \begin{minipage}{\imgwidth}
         \centering
@@ -173,18 +174,45 @@ box'' solutions.
         \centering
         \includegraphics[width=\linewidth]{img/silhouette-nrows.pdf}
     \end{minipage}
-    \caption{Progressions for the silhouette and dimension (number of rows) for
-             a run of EDO shown at 100 epoch
-             intervals.}\label{figure:silhouette}
+    \caption{Progression for silhouette and dimension across 1000 epochs at 100
+             epoch intervals with \(R~=~(3,100)\).}\label{figure:silhouette}
 \end{figure}
 
 \begin{figure}[htbp]
+    \ContinuedFloat%
+    \centering
+    \begin{minipage}{\imgwidth}
+        \centering
+        \includegraphics[width=\linewidth]{img/large-silhouette-fitness.pdf}
+    \end{minipage}
+
+    \begin{minipage}{\imgwidth}
+        \centering
+        \includegraphics[width=\linewidth]{img/large-silhouette-nrows.pdf}
+    \end{minipage}
+    \caption{Progression for silhouette and dimension across 1000 epochs at 100
+             epoch intervals with
+             \(R~=~(50,100)\).}\label{figure:large-silhouette}
+\end{figure}
+
+\begin{figure}[htbp]
+    \ContinuedFloat*
     \centering
     \includegraphics[width=\imgwidth]{img/silhouette-individuals-0.pdf}
-    \caption{Representative individuals from the final generation based on
-             silhouette. Centroids displayed as
+    \caption{Representative individuals based on silhouette with
+             \(R~=~(3,100)\). Centroids displayed as
              crosses.}\label{figure:silhouette-individuals}
 \end{figure}
+
+\begin{figure}[htbp]
+    \ContinuedFloat%
+    \centering
+    \includegraphics[width=\imgwidth]{img/large-silhouette-individuals-0.pdf}
+    \caption{Representative individuals based on silhouette with
+             \(R~=~(50,100)\). Centroids displayed as
+             crosses.}\label{figure:large-silhouette-individuals}
+\end{figure}
+
 
 %TODO Include example with large number of rows to discuss Voronoi equivalence?
 
@@ -227,6 +255,14 @@ Then the fitness function is defined to be:
 Note the order of the subtraction here as EDO minimises fitness functions by
 default.
 
+It must also be acknowledged that \(k\)-means and DBSCAN share no common
+parameters and so direct comparison is more difficult. For the purposes of this
+example, only one set of parameters is used but a thorough investigation should
+include a parameter sweep in cases such as these. The parameters being used are
+\(k~=~3\) for \(k\)-means, and \(\epsilon~=~0.1,\ \text{MinPoints}~=~5\) for
+DBSCAN.\ With respect to EDO, the parameters are the same as previous with
+\(R~=~(50, 100)\).
+
 \begin{figure}[htbp]
     \centering
     \begin{minipage}{\imgwidth}
@@ -238,8 +274,8 @@ default.
         \centering
         \includegraphics[width=\linewidth]{img/dbscan-nrows.pdf}
     \end{minipage}
-    \caption{Progressions for difference in silhouette and dimension for a run
-             of EDO shown at 100 epoch
+    \caption{Progressions for difference in silhouette (\(k\)-means-preferable)
+             and dimension for a run of EDO shown at 100 epoch
              intervals.}\label{figure:dbscan-silhouette}
 \end{figure}
 
@@ -248,9 +284,36 @@ default.
     \includegraphics[width=\imgwidth]{img/kmeans-individuals-0.pdf}
 
     \includegraphics[width=\imgwidth]{img/dbscan-individuals-0.pdf}
-    \caption{Representative individuals from the final generation with
-             clusters shown. Convex hull shown as outline, and approximate
-             concave hull shaded. Above by \(k\)-means, below by
-             DBSCAN.}\label{figure:dbscan-individuals}
+    \caption{Representative individuals with clusters shown. Convex hull shown
+             as outline, and approximate concave hull shaded. Above by
+             \(k\)-means, below by DBSCAN (noise points shown with small
+             markers).}\label{figure:dbscan-individuals}
 \end{figure}
 
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{\imgwidth}
+        \centering
+        \includegraphics[width=\linewidth]{img/negative-dbscan-fitness.pdf}
+    \end{minipage}
+
+    \begin{minipage}{\imgwidth}
+        \centering
+        \includegraphics[width=\linewidth]{img/negative-dbscan-nrows.pdf}
+    \end{minipage}
+    \caption{Progressions for difference in silhouette (DBSCAN-preferable) and
+             dimension for a run of EDO shown at 100 epoch
+             intervals.}\label{figure:negative-dbscan-silhouette}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\imgwidth]{img/negative-kmeans-individuals-0.pdf}
+
+    \includegraphics[width=\imgwidth]{img/negative-dbscan-individuals-0.pdf}
+    \caption{Representative individuals with clusters shown. Convex hull shown
+             as outline, and approximate concave hull shaded. Above by
+             \(k\)-means, below by DBSCAN (noise points shown with small
+             markers).}\label{figure:negative-dbscan-individuals}
+\end{figure}
