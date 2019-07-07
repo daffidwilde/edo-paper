@@ -1,7 +1,5 @@
 \documentclass{svjour3}
 
-\usepackage[margin=2.5cm, includefoot]{geometry}
-
 \usepackage[ruled]{algorithm2e}
 \usepackage{amssymb}
 \usepackage{amsmath}
@@ -14,6 +12,7 @@
 \usepackage{float}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{mathptmx}
 \usepackage{minted}
 \usepackage{setspace} % Spacing
 \usepackage{standalone}
@@ -29,8 +28,6 @@
 
 
 % Page setup and lengths
-\captionsetup{font=doublespacing}
-\doublespacing%
 \raggedbottom%
 
 \newlength{\imgwidth}
@@ -41,8 +38,8 @@
 
 
 % Algorithms
-\newcommand{\balg}{\begin{algorithm}[htbp]\singlespacing\DontPrintSemicolon}
-\newcommand{\ealg}{\end{algorithm}\doublespacing}
+\newcommand{\balg}{\begin{algorithm}[htbp]\DontPrintSemicolon}
+\newcommand{\ealg}{\end{algorithm}}
 
 
 % TikZ styles, commands and settings

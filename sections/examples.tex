@@ -25,14 +25,19 @@ accuracy may be used~\cite{Huang1998}. With that, the first example is to use
 this inertia as the fitness function in EDO.\ That is, to find datasets which
 minimise \(I\).
 
-In this example, EDO is restricted to only two-dimensional datasets, i.e.\ \(C =
-\left((2, 2)\right)\). In addition to this, all columns are formed from the
-uniform distribution restricted to the unit interval, \(\mathcal{U} :=
-\left\{U(a, b)~|~a, b \in [0, 1]\right\}\). The remaining parameters are as
-follows: \(N~=~100\), \(R~=~(3, 100)\), \(M~=~1000\), \(b~=~0.2\), \(l~=~0\),
-\(p_m~=~0.01\), and shrinkage excluded. Figure~\ref{figure:inertia-50} shows an
-example of the fitness (above) and dimension (below) progression of the
-evolutionary algorithm under these conditions up until the \(50^{th}\) epoch.
+For the purposes of visualisation, in this example EDO is restricted to only
+two-dimensional datasets, i.e.\ \(C = \left((2, 2)\right)\). In addition to
+this, all columns are formed from the uniform distribution restricted to the
+unit interval:
+\[
+    \mathcal{U} := \left\{U(a, b)~|~a, b \in [0, 1]\right\}
+\]
+
+The remaining parameters are as follows: \(N~=~100\), \(R~=~(3, 100)\),
+\(M~=~1000\), \(b~=~0.2\), \(l~=~0\), \(p_m~=~0.01\), and shrinkage excluded.
+Figure~\ref{figure:inertia-50} shows an example of the fitness (above) and
+dimension (below) progression of the evolutionary algorithm under these
+conditions up until the \(50^{th}\) epoch.
 
 There is a steep learning curve here; within the first 50 generations an
 individual is found with a fitness of roughly \(10^{-10}\) which could not be
@@ -126,14 +131,15 @@ point \(x \in Z_j\) in each cluster:
 \begin{equation}
     \begin{gathered}
         A(x) := \frac{1}{|Z_j| - 1} \sum_{y \in Z_j \setminus \{x\}} d(x, y),
-        \qquad B(x) := \min_{k \neq j} \frac{1}{|Z_k|} \sum_{w \in Z_k} d(x, w)
-        \\\\
-        S(x) := 
+        \\
+        B(x) := \min_{k \neq j} \frac{1}{|Z_k|} \sum_{w \in Z_k} d(x, w)
+        \\
+        \label{eq:silhouette}S(x) := 
             \begin{cases}
                 \frac{B(x) - A(x)}{\max\left\{A(x), B(x)\right\}}
                 &\quad \text{if } |Z_j| > 1\\
                 0 &\quad \text{otherwise}
-            \end{cases}\label{eq:silhouette}
+            \end{cases}
     \end{gathered}
 \end{equation}\\
 
@@ -245,8 +251,13 @@ Then the fitness function is defined to be:
 \begin{equation}
     f(X) = 
         \begin{cases}
-            S_D (X) - S_k (X), &\quad \text{if DBSCAN identifies two or more
-            clusters (including noise)}\\
+            S_D (X) - S_k (X), &\quad \text{%
+                \begin{tabular}{l}
+                    if DBSCAN identifies two or
+                    \\
+                    more clusters (inc.\ noise)
+                \end{tabular}
+            }\\
             \infty &\quad \text{otherwise.}
         \end{cases}\label{equation:dbscan-fitness}
 \end{equation}
