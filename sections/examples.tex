@@ -333,7 +333,7 @@ concave hull, \(H_c\), to the area of its convex hull, \(H_v\)~\cite{Sonka1993}:
 \end{equation}
 
 With this definition, it should be clear that a perfectly convex cluster would
-have \(C_j = 1\).
+have \(\mathcal{C}_j = 1\).
 
 It can be seen that the convexity of the clustering found by \(k\)-means appears
 to be higher than that by DBSCAN.\ This was apparent across all trials conducted
@@ -344,9 +344,10 @@ method itself. This is a point where parameter sweeping would prove most useful
 so as to determine a crossing point for these two driving forces.
 
 % TODO Perhaps some statistical test could be used here, or with the second part
-% of this example.
+% of this example. Would require lots more trials (approx one week to run and
+% summarise the data)
 
-Now, to bolster the discussion above, it is required that the inverse
+Now, to add to the discussion above, it is required that the inverse
 optimisation be considered. That is, using the same parameters, investigate the
 datasets for which DBSCAN outperforms \(k\)-means with respect to the silhouette
 coefficient. This is equivalent to using \(-f\) as the fitness function except
