@@ -14,8 +14,8 @@
 \usepackage{hyperref}
 \usepackage{mathptmx}
 \usepackage{minted}
-\usepackage{setspace} % Spacing
 \usepackage{standalone}
+\usepackage{subfig}
 \usepackage{tikz}
     \usetikzlibrary{%
         arrows.meta,
@@ -31,7 +31,7 @@
 \raggedbottom%
 
 \newlength{\imgwidth}
-\setlength{\imgwidth}{.75\textwidth}
+\setlength{\imgwidth}{\textwidth}
 
 \definecolor{cyan}{RGB}{0, 164, 216}
 \definecolor{magenta}{RGB}{226, 62, 138}
@@ -75,7 +75,7 @@
     }
 }
 
-\newcommand{\inputtikz}[3][\imgwidth]{%
+\newcommand{\inputtikz}[3][.8\linewidth]{%
     \begin{figure}[htbp]
         \centering
         \resizebox{#1}{!}{%
