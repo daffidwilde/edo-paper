@@ -13,5 +13,13 @@ Figure~\ref{figure:crossover}.
 \inputtikz{crossover}{%
     The crossover process between two individuals with different dimensions.
 }
+
+Observe that there is no requirement on the dimensions of the parents to be of
+similar or equal shapes. This is because the driving aim of the proposed method
+is to explore the space of all possible datasets. In the case where there is
+incongruence in the lengths of the two parents, missing values may appear in a
+shorter column that is sampled. To resolve this, values are sampled from the
+probability distribution associated with that column to fill in these gaps.
+
 \input{tex/algorithms/crossover.tex}
 
