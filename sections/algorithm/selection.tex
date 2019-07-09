@@ -6,7 +6,7 @@ of an individual being selected is determined by their fitness. This is because
 the purpose of selection is to preserve favourable qualities and encourage some
 homogeneity within future generations~\cite{Back1994}.
 
-\inputtikz[.8\textwidth]{selection}{%
+\inputtikz[.8\imgwidth]{selection}{%
     The selection process with the inclusion of some lucky individuals.
 }
 \input{tex/algorithms/selection.tex}
@@ -27,7 +27,7 @@ present throughout the entirety of the algorithm.
 
 After the parents have been selected, there are two adjustments made to the
 current search space. The first is that the subtypes for each family in
-\(mathcal{P}\) are updated to only those present in the parents. The second
+\(\mathcal{P}\) are updated to only those present in the parents. The second
 adjustment is a process which acts on the distribution parameter limits for
 each subtype in \(\mathcal{P}\). This adjustment gives the ability to ``shrink''
 the search space about the region observed in a given population. This method is
@@ -41,7 +41,7 @@ parameter:
     \label{eq:shrinking_lower}
     l_{t+1}&= \max \left\{l_t, \ \mu - \frac{1}{2} (u_t - l_t) s^t\right\}\\
     \label{eq:shrinking_upper}
-    u_{t+1}&= \max \left\{u_t, \ \mu + \frac{1}{2} (u_t - l_t) s^t\right\}
+    u_{t+1}&= \min \left\{u_t, \ \mu + \frac{1}{2} (u_t - l_t) s^t\right\}
 \end{align}
 
 The shrinking process is given explicitly in
