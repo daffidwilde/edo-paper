@@ -8,14 +8,15 @@ clustering of data and, in particular, the \(k\)-means (Lloyd's) algorithm.
 Clustering was chosen as it is a well-understood problem that is easily
 accessible \-- especially when restricted to two dimensions. The \(k\)-means
 algorithm is an iterative, centroid-based method that aims to minimise the
-``inertia'' of the current partition, \(Z = \left\{Z_1, \ldots, Z_k\right\}\),
+`inertia' of the current partition, \(Z = \left\{Z_1, \ldots, Z_k\right\}\),
 of some dataset \(X\):
 \begin{equation}
     I(Z, X) := \frac{1}{|X|} \sum_{j=1}^{k} \sum_{x \in Z_j} {d(x, z_j)}^2
+    \label{eq:inertia}
 \end{equation}
 
-A full statement of the algorithm is given in~\ref{app:kmeans}. It should be
-clear that \(I\) may take any non-negative value.
+A full statement of the algorithm to minimise~(\ref{eq:inertia}) is given
+in~\ref{app:kmeans}. 
 
 This inertia function is taken as the objective of the \(k\)-means algorithm,
 and is used for evaluating the final clustering. This is particularly true when
@@ -84,7 +85,7 @@ individuals show two clusters that are essentially the same point whereas the
 worst is a random cloud across the whole of \(\mathcal{U}\) which was found in
 the initial population. The kind of behaviour exhibited by the best performing
 individuals occurs in part because it is allowed. There are two immediate ways
-in which this allowed: first, that the ``trivial'' case is included in \(R\)
+in which this allowed: first, that the `trivial' case is included in \(R\)
 and, secondly, that the fitness function does nothing to penalise the proximity
 of the inter-cluster means, as well as aiming to reduce the intra-cluster means.
 This kind of unwanted behaviour highlights a subtlety in how EDO should be used;
@@ -118,7 +119,7 @@ limits, \(R = (50, 100)\), so as to exclude this trivial case. In these trials,
 the results are equivalent: the worst performing individuals are without
 structure whilst the best-performing individuals display clusters that are dense
 about a single point despite the minimum number of rows being increased. Perhaps
-then, this compacted clustering is ``optimal''.
+then, this compacted clustering is `optimal'.
 
 However, more extensive studying may be done. That is, the defined fitness
 function may require further attention. Indeed, the final inertia could be
@@ -151,7 +152,7 @@ maximising separation.
 
 Repeating the trials with the same parameters as with inertia, the silhouette
 fitness function yields the results summarised in
-Figures~\ref{fig:small-silhouette}~\&~\ref{fig:large-silhouette}. Irrespective
+Figures~\ref{fig:small-silhouette}~and~\ref{fig:large-silhouette}. Irrespective
 of row limits, the datasets produced show increased separation from one another
 whilst maintaining low values in the final inertia of the clustering as shown in
 Figure~\ref{fig:silhouette-inds}. Again, the form of the individual clusters is
@@ -166,8 +167,8 @@ However, due to the nature of the implementation, any individual from any
 generation may be retrieved and studied should the final results be too
 concentrated on any given case. This transparency in the history and progression
 of the proposed method is something that sets it apart from other methods of the
-same ilk such as GANs which have a reputation of providing so-called ``black
-box'' solutions.
+same ilk such as GANs which have a reputation of providing so-called `black
+box' solutions.
 
 \addtocounter{figure}{1}
 \begin{figure}[htbp]
@@ -264,11 +265,11 @@ Then the fitness function is defined to be:
 There are several remarks to be made here. First, note the order of the
 subtraction here as EDO minimises fitness functions by default. Also, \(f\)
 takes values in the range \([-2, 2]\) where \(-2\) is the best, i.e.\ \(S_D(X) =
--1\) and \(S_k(X) = 1\).  Likewise, 2 is the worst score. Finally, the
-silhouette coefficient requires at least two clusters to be present and so if
-DBSCAN identifies a single cluster then that individual will be penalised
-heavily under this fitness function when, in fact, that clustering may be of
-high quality. As such, this fitness function may require adjustment.
+-1\) and \(S_k(X) = 1\). Likewise, 2 is the worst score. Finally, the silhouette
+coefficient requires at least two clusters to be present and so if DBSCAN
+identifies a single cluster then that individual will be penalised heavily under
+this fitness function when, in fact, that clustering may be of high quality. As
+such, this fitness function may require adjustment.
 
 It must also be acknowledged that \(k\)-means and DBSCAN share no common
 parameters and so direct comparison is more difficult. For the purposes of this
@@ -345,8 +346,8 @@ condition, up to the correct choice of \(k\), the algorithm will fail to produce
 adequate results for either inertia or silhouette. DBSCAN, however, does not
 have this condition and is able to detect non-convex clusters so long as they
 are dense enough. Figure~\ref{fig:dbscan-inds} shows the both the clustering and
-the convex and concave hulls of the clusters found by each method. The ``concave
-hull'' of a cluster is taken to be the \(\alpha\)-shape of the cluster's data
+the convex and concave hulls of the clusters found by each method. The `concave
+hull' of a cluster is taken to be the \(\alpha\)-shape of the cluster's data
 points~\cite{Edelsbrunner1983} where \(\alpha\) is determined to be the smallest
 value such that all the points in the cluster are contained in a single polygon.
 The convexity of cluster \(Z_j\), denoted \(\mathcal{C}_j\), is then determined
@@ -411,13 +412,13 @@ in~(\ref{eq:dbscan-fitness}).
     }\label{fig:negative-inds}
 \end{figure}
 
-Figures~\ref{fig:negative-prog}~\&~\ref{fig:negative-inds} show the same summary
-as above with the revised fitness function. Inspecting the former, it is seen
-that the best fitness found is worse than with the previous example. This, in
-part, is due to the fact that \(k\)-means cannot find a clustering with negative
-values as no clusters may overlap. The method can, however, produce results with
-small silhouette scores where the clusters are tightly packed. Hence, the best
-fitness score is now \(-1\) whereas the worst is 2, still.
+Figures~\ref{fig:negative-prog}~and~\ref{fig:negative-inds} show the same
+summary as above with the revised fitness function. Inspecting the former, it is
+seen that the best fitness found is worse than with the previous example. This,
+in part, is due to the fact that \(k\)-means cannot find a clustering with
+negative values as no clusters may overlap. The method can, however, produce
+results with small silhouette scores where the clusters are tightly packed.
+Hence, the best fitness score is now \(-1\) whereas the worst is 2, still.
 
 Note in the first two frames of Figure~\ref{fig:neg-inds-k} how \(k\)-means is
 forced to split what is evidently a single cluster in two whereas DBSCAN is able

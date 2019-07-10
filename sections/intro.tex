@@ -6,10 +6,11 @@ solve a given problem, the designer is presented with questions about the
 performance of their proposed method, and its relative performance against
 existing methods. This is an inherently difficult task. However, under the
 current paradigm, the standard response to this situation is to use a known
-fixed set of datasets and a common metric amongst the proposed method and its
-competitors. The algorithm is then assessed based on this metric with minimal
-consideration for both the appropriateness or reliability of the datasets being
-used, and the robustness of the method in question.
+fixed set of datasets \-- or simulate new data sets themselves \-- and a common
+metric amongst the proposed method and its competitors. The algorithm is then
+assessed based on this metric with often minimal consideration for both the
+appropriateness or reliability of the datasets being used, and the robustness of
+the method in question.
 
 This notion is not so easily observed when travelling in the opposite direction.
 Suppose that, instead, the benchmark was a dataset of particular interest and a
@@ -20,7 +21,7 @@ methods include the use of diagnostic tests. For instance, in the case of
 clustering, if the data displayed an indeterminate number of non-convex blobs,
 then one could recommend that an appropriate clustering algorithm would be
 DBSCAN~\cite{Ester1996}. Otherwise, for scalability, \(k\)-means may be
-chosen.
+chosen~\cite{Wu2009}.
 
 The approach presented in this work aims to flip the paradigm described here by
 allowing the data itself to be unfixed. This fluidity in the data is achieved by
@@ -29,7 +30,8 @@ other) through the use of an evolutionary algorithm. The purpose of doing so is
 not to simply create a bank of useful datasets but rather to allow for the
 subsequent studying of these datasets. In doing so, the attributes and
 characteristics which lead to the success (or failure) of the algorithm may be
-described, giving a broader understanding of the algorithm on the whole.
+described, giving a broader understanding of the algorithm on the whole. Our
+framework is described in Figure~\ref{fig:paradigm}.
 
 \inputtikz{paradigm}{%
     On the right: the current path for selecting some algorithm(s) based on
@@ -73,7 +75,7 @@ paradigm:
 Evolutionary algorithms (EAs) have been applied successfully to solve a wide
 array of problems \-- particularly where the complexity of the problem or its
 domain are significant. These methods are highly adaptive and
-their population-based construction (displayed in Figure~\ref{figure:flowchart})
+their population-based construction (displayed in Figure~\ref{fig:flowchart})
 allows for the efficient solving of problems that are otherwise beyond the scope
 of traditional search and optimisation methods.
 

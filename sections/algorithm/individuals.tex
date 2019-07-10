@@ -8,7 +8,7 @@ manipulated. In EDO, as the objective is to generate datasets and explore the
 space in which datasets exist, there is no encoding. As such the distinction is
 made that EDO is an evolutionary algorithm. 
 
-As is seen in Figure~\ref{figure:individual}, an individual's creation is
+As is seen in Figure~\ref{fig:individual}, an individual's creation is
 defined by the generation of its columns. A set of instructions on how to sample
 new values (in mutation, for instance, Section~\ref{subsection:mutation}) for
 that column are recorded in the form of a probability distribution. These
@@ -19,12 +19,12 @@ interpreted in a more meaningful way as will be seen later in this section.
 
 However, one should not assume that the columns are a reliable representative of
 the distribution associated with them, or vice versa. This is particularly true
-of ``shorter'' datasets with a small number of rows, whereas confidence in the
-pair could be given more liberally for ``longer'' datasets with a larger number
+of `shorter' datasets with a small number of rows, whereas confidence in the
+pair could be given more liberally for `longer' datasets with a larger number
 of rows. In any case, appropriate methods for analysis should be employed before
 formal conclusions are made.
 
-\inputtikz{individual}{%
+\inputtikz[\linewidth]{individual}{%
     An example of how an individual is first created.
 }
 \input{tex/algorithms/individual.tex}
