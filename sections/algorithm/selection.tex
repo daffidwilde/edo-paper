@@ -12,9 +12,9 @@ homogeneity within future generations~\cite{Back1994}.
 \input{tex/algorithms/selection.tex}
 
 In EDO, a modified truncation selection method is used~\cite{Jebari2013}, as can
-be seen in Figure~\ref{figure:selection}. Truncation selection takes a fixed
+be seen in Figure~\ref{fig:selection}. Truncation selection takes a fixed
 number, \(n_b = \lceil bN\rceil\), of the fittest individuals in a population
-and makes them the ``parents'' of the next. It has been observed that, despite
+and makes them the `parents' of the next. It has been observed that, despite
 its efficiency as a selection operator, truncation selection can lead to
 premature convergence at local optima~\cite{Jebari2013, Tatsuya2002}. The
 modification for EDO is an optional stage after the best individuals have been
@@ -29,7 +29,7 @@ After the parents have been selected, there are two adjustments made to the
 current search space. The first is that the subtypes for each family in
 \(\mathcal{P}\) are updated to only those present in the parents. The second
 adjustment is a process which acts on the distribution parameter limits for
-each subtype in \(\mathcal{P}\). This adjustment gives the ability to ``shrink''
+each subtype in \(\mathcal{P}\). This adjustment gives the ability to `shrink'
 the search space about the region observed in a given population. This method is
 based on a power law described in~\cite{Amirjanov2016} that relies on a shrink
 factor, \(s\). At each iteration, \(t\), every distribution subtype which is
