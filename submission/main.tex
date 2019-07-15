@@ -1,20 +1,18 @@
-\RequirePackage{fix-cm}
-\documentclass{svjour3}
+\documentclass[smallextended]{svjour3}
 
-\usepackage[ruled]{algorithm2e}
+\usepackage[boxruled]{algorithm2e}
 \usepackage{amssymb}
 \usepackage{amsmath}
-\usepackage[backend=bibtex, style=numeric, giveninits=true]{biblatex}
-    \addbibresource{references}
 \usepackage{booktabs} % Pandas dataframes
-\usepackage{caption}
+\usepackage{color}
 \usepackage{enumerate} % Roman numerals
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{listings}
 \usepackage{mathptmx}
-\usepackage{minted}
-\usepackage{standalone}
+\usepackage[square,sort,comma,numbers]{natbib}
 \usepackage{subfig}
+\usepackage{texments}
 \usepackage{tikz}
     \usetikzlibrary{%
         arrows.meta,
@@ -27,21 +25,41 @@
 
 
 % Page setup and lengths
-\raggedbottom%
+%\raggedbottom%
 
 \newlength{\imgwidth}
-\setlength{\imgwidth}{.95\textwidth}
+\setlength{\imgwidth}{.96\textwidth}
 
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
 \definecolor{cyan}{RGB}{0, 164, 216}
 \definecolor{magenta}{RGB}{226, 62, 138}
 
 
-% Algorithms
+% Algorithms and code
 \newcommand{\balg}[1][htbp]{%
     \begin{algorithm}[#1]\DontPrintSemicolon
 }
-\newcommand{\ealg}{\end{algorithm}}
+\newcommand{\ealg}{%
+    \end{algorithm}
+}
 
+\lstset{
+    backgroundcolor=,
+	tabsize=4,
+	rulecolor=,
+	language=python,
+        basicstyle=\scriptsize\ttfamily,
+        aboveskip={1.5\baselineskip},
+        breaklines=true,
+        columns=fixed,
+        identifierstyle=\ttfamily,
+        keywordstyle=\color{deepblue},
+        stringstyle=\color{deepgreen},
+        commentstyle=\color{deepred},
+        emphstyle=\color{deepred}
+}
 
 % TikZ styles, commands and settings
 \pgfdeclarelayer{background}
@@ -76,7 +94,7 @@
     }
 }
 
-\newcommand{\inputtikz}[3][.8\linewidth]{%
+\newcommand{\inputtikz}[3][.9\imgwidth]{%
     \begin{figure}[htbp]
         \centering
         \resizebox{#1}{!}{%
@@ -101,8 +119,8 @@
     Jonathan Gillard
 }
 \institute{%
-    School of Mathematics, Senghennydd Rd, Cardiff, WALES CF24 4AG \\
-    \textit{\email{\{wildehd, knightva, gillardjw\}@cardiff.ac.uk}}
+    School of Mathematics, Senghennydd Rd, Cardiff, WALES CF24 4AG\\
+    \email{\{wildehd, knightva, gillardjw\}@cardiff.ac.uk}
 }
 \date{Received: date / Accepted: date}
 
@@ -117,6 +135,16 @@
 \input{examples.tex}
 \input{conclusion.tex}
 
-\pagebreak\input{appendix.tex}
-\printbibliography%
+\begin{acknowledgements}
+    The authors wish to thank the Cwm Taf Morgannwg University Health Board for
+    their funding and support of the Ph.D. of which this work has formed a part.
+\end{acknowledgements}
+
+\section*{Conflict of interest}
+
+The authors declare that they have no conflict of interest.
+
+\bibliographystyle{spmpsci}
+\bibliography{references}
+\input{appendix.tex}
 \end{document}

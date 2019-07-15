@@ -1,5 +1,3 @@
-%\subsection{Structure}
-
 In this section, the details of an algorithm that generates data for which a
 given function or, equivalently, an algorithm which is well suited, is
 described. This algorithm is to be referred to as ``Evolutionary Dataset
@@ -13,7 +11,6 @@ are a fitness function, \(f\), which maps from an individual to a real number,
 as well as a population size, \(N\), a maximum number of iterations, \(M\), a
 selection parameter, \(b\), and a  mutation probability, \(p_m\). In addition to
 these, EDO takes the following parameters:
-
 \begin{itemize}
     \item A set of probability distribution families, \(\mathcal{P}\). Each
         family in this set has some parameter limits which form a part of the
@@ -27,19 +24,19 @@ these, EDO takes the following parameters:
     \item A probability vector to sample distributions from \(\mathcal{P}\),
         \(w = \left(w_1, \ldots, w_{|\mathcal{P}|}\right)\).
     \item Limits on the number of rows an individual dataset can have,
-        \(
+        \[
             R \in \left\{%
                 (r_{\min}, r_{\max}) \in \mathbb{N}^2~|~r_{\min} \leq r_{\max}
             \right\}
-        \)
+        \]
     \item Limits on the number of columns a dataset can have,
-        \(
+        \[
             C := \left(C_1, \ldots, C_{|\mathcal{P}|}\right)
-        \) where\\\(
+            \text{ where }
             C_j \in \left\{ (c_{\min}, c_{\max}) \in {%
                 \left(\mathbb{N}\cup\{\infty\}\right)
             }^2~|~c_{\min} \leq c_{\max}\right\}
-        \)
+        \]
         for each \(j = 1, \ldots, |\mathcal{P}|\). That is, \(C\) defines the
         minimum and maximum number of columns a dataset may have from each
         distribution in \(\mathcal{P}\).
@@ -57,7 +54,6 @@ Python stack~\cite{pandas,numpy}. The library is fully tested and documented (at
 license~\cite{edo-project}. The EDO implementation was developed to be
 consistent with the current best practices of open source software
 development~\cite{Jiminez2017}.
-% TODO Citation(s) needed from Vince.
 
 \input{alg-edo.tex}\label{alg:edo}
 \input{alg-new-population.tex}
@@ -66,12 +62,9 @@ The statement of the EDO algorithm is presented here to lay out its general
 structure from a high level perspective. Lower level discussion is provided
 below where additional algorithms for the individual creation, evolutionary
 operator and shrinkage processes are given along with diagrams (where
-appropriate).
-
-Note that there are no defined processes for how to stop the algorithm or adjust
-the mutation probability, \(p_m\). This is down to their relevance to a
-particular use case. Some examples include:
-
+appropriate). Note that there are no defined processes for how to stop the
+algorithm or adjust the mutation probability, \(p_m\). This is down to their
+relevance to a particular use case. Some examples include:
 \begin{itemize}
     \item Regular decreasing in mutation probability across the available
         attributes~\cite{Kuehn2013}.
@@ -80,4 +73,3 @@ particular use case. Some examples include:
     \item Utilising global behaviours in fitness to indicate a stopping
         point~\cite{Marti2016}.
 \end{itemize}
-
