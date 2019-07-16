@@ -1,3 +1,7 @@
+\documentclass[border=5pt]{standalone}
+\usepackage{edo-tikz}
+
+\begin{document}
 \begin{tikzpicture}
 
     \begin{pgfonlayer}{background}
@@ -29,8 +33,7 @@
 
     \node[circle] (q2a) at (1, -3) {?};
     \node[circle] (q2b) at (3, -3) {?};
-    \node at ([xshift=30pt]q2b.east) {%
-        \color{gray}\small{%
+    \node at ([xshift=30pt]q2b.east) {\small{%
             \begin{tabular}{c}
                 Review and\\
                 comparison
@@ -74,8 +77,7 @@
     \draw[->, cyan] (bench.east) -- (-1.9, 0);
 
     \draw[->, thick]
-        (a2.north west) to [out=130, in=230] node[midway, left] {%
-            \color{gray}\small{%
+        (a2.north west) to [out=130, in=230] node[midway, left] {\small{%
                 \begin{tabular}{c}
                     Evolutionary\\
                     dataset\\
@@ -84,4 +86,4 @@
             }
         } (data.south west);
 \end{tikzpicture}
-
+\end{document}
