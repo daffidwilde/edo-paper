@@ -10,7 +10,6 @@
 \usepackage{hyperref}
 \usepackage{listings}
 \usepackage{mathptmx}
-\usepackage[square,sort,comma,numbers]{natbib}
 \usepackage{subfig}
 
 
@@ -593,7 +592,7 @@ relative to, say, a completely new individual.
 \subsection{\(k\)-means clustering}
 
 The following examples act as a form of validation for EDO, and also highlight
-some of the nuances in its use. The examples will be focused around the
+some of the nuances in its use. The examples will be focussed around the
 clustering of data and, in particular, the \(k\)-means (Lloyd's) algorithm.
 Clustering was chosen as it is a well-understood problem that is easily
 accessible \-- especially when restricted to two dimensions. The \(k\)-means
@@ -635,10 +634,10 @@ improved on for a further 900 epochs. The same quick convergence is seen in the
 number of rows. This behaviour is quickly recognised as preferable and was
 dominant across all the trials conducted in this work. This preference for
 datasets with fewer rows makes sense given that \(I\) is the sum of the mean
-error from each cluster centre. With that, when \(k\) is
-fixed \textit{a priori}, reducing the number of points in each cluster (i.e.\
-the terms of the second summation) quickly reduces the mean error of that
-cluster and thus the value of \(I\). 
+error from each cluster centre. With that, when \(k\) is fixed \textit{a
+priori}, reducing the number of points in each cluster (i.e.\ the terms of the
+second summation) quickly reduces the mean error of that cluster and thus the
+value of \(I\). 
 
 \addtocounter{figure}{1}
 \begin{figure}[htbp]
@@ -1045,15 +1044,202 @@ before formal conclusions are made as set out in the examples provided.
 
 The authors declare that they have no conflict of interest.
 
-\bibliographystyle{spmpsci}
-\bibliography{references}
+%\bibliographystyle{spmpsci}
+%\bibliography{references.bib}
+
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{{#1}}
+\providecommand{\urlprefix}{URL }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{DOI~\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{DOI~\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+
+\bibitem{Amirjanov2016}
+Amirjanov, A.: Modeling the dynamics of a changing range genetic algorithm.
+\newblock Procedia Computer Science \textbf{102}, 570 -- 577 (2016).
+\newblock \doi{https://doi.org/10.1016/j.procs.2016.09.444}
+
+\bibitem{Back1994}
+B{\"a}ck, T.: Selective pressure in evolutionary algorithms: a characterization
+  of selection mechanisms.
+\newblock In: Proceedings of the First IEEE Conference on Evolutionary
+  Computation. IEEE World Congress on Computational Intelligence, pp. 57--62
+  (1994).
+\newblock \doi{10.1109/ICEC.1994.350042}
+
+\bibitem{Chen2016}
+Chen, Y., Elliot, M., Sakshaug, J.: A genetic algorithm approach to synthetic
+  data production.
+\newblock In: PrAISe@ECAI (2016)
+
+\bibitem{Du2006}
+Du, Q., Emelianenko, M., Ju, L.: Convergence of the lloyd algorithm for
+  computing centroidal voronoi tessellations.
+\newblock SIAM Journal on Numerical Analysis \textbf{44}(1), 102--119 (2006).
+\newblock \doi{10.1137/040617364}
+
+\bibitem{Edelsbrunner1983}
+Edelsbrunner, H., Kirkpatrick, D., Seidel, R.: On the shape of a set of points
+  in the plane.
+\newblock IEEE Transactions on Information Theory \textbf{29}(4), 551--559
+  (1983).
+\newblock \doi{10.1109/TIT.1983.1056714}
+
+\bibitem{Ester1996}
+Ester, M., Kriegel, H.P., Sander, J., Xu, X.: A density-based algorithm for
+  discovering clusters in large spatial databases with noise.
+\newblock In: KDD (1996)
+
+\bibitem{Goodfellow2014}
+Goodfellow, I., Pouget-Abadie, J., Mirza, M., Xu, B., Warde-Farley, D., Ozair,
+  S., Courville, A., Bengio, Y.: Generative adversarial nets.
+\newblock In: Advances in Neural Information Processing Systems 27, pp.
+  2672--2680. Curran Associates, Inc. (2014).
+\newblock
+  \urlprefix\url{http://papers.nips.cc/paper/5423-generative-adversarial-nets.pdf}
+
+\bibitem{Huang1998}
+Huang, Z.: Extensions to the k-means algorithm for clustering large data sets
+  with categorical values.
+\newblock Data Mining and Knowledge Discovery \textbf{2}(3), 283--304 (1998).
+\newblock \doi{10.1023/A:1009769707641}
+
+\bibitem{Jebari2013}
+Jebari, K.: Selection methods for genetic algorithms.
+\newblock International Journal of Emerging Sciences \textbf{3}, 333--344
+  (2013)
+
+\bibitem{Jiminez2017}
+Jim{\'e}nez, R.C., Kuzak, M., Alhamdoosh, M., Barker, M., Batut, B., Borg, M.,
+  Capella-Gutierrez, S., Chue~Hong, N., Cook, M., Corpas, M., Flannery, M.,
+  Garcia, L., Gelp{\'\i}, J.L., Gladman, S., Goble, C., Gonz{\'a}lez~Ferreiro,
+  M., Gonzalez-Beltran, A., Griffin, P.C., Gr{\"u}ning, B., Hagberg, J., Holub,
+  P., Hooft, R., Ison, J., Katz, D.S., Lesko{\v s}ek, B., L{\'o}pez~G{\'o}mez,
+  F., Oliveira, L.J., Mellor, D., Mosbergen, R., Mulder, N., Perez-Riverol, Y.,
+  Pergl, R., Pichler, H., Pope, B., Sanz, F., Schneider, M.V., Stodden, V.,
+  Suchecki, R., Svobodov{\'a}Va{\v r}ekov{\'a}, R., Talvik, H.A., Todorov, I.,
+  Treloar, A., Tyagi, S., van Gompel, M., Vaughan, D., Via, A., Wang, X.,
+  Watson-Haigh, N.S., Crouch, S.: Four simple recommendations to encourage best
+  practices in research software.
+\newblock F1000Research \textbf{6}, ELIXIR--876 (2017).
+\newblock \doi{10.12688/f1000research.11407.1}
+
+\bibitem{Koleejan2015}
+Koleejan, C., Xue, B., Zhang, M.: Code coverage optimisation in genetic
+  algorithms and particle swarm optimisation for automatic software test data
+  generation.
+\newblock 2015 IEEE Congress on Evolutionary Computation (CEC) pp. 1204--1211
+  (2015)
+
+\bibitem{Kuehn2013}
+Kuehn, M., Severin, T., Salzwedel, H.: Variable mutation rate at genetic
+  algorithms: Introduction of chromosome fitness in connection with
+  multi-chromosome representation.
+\newblock International Journal of Computer Applications \textbf{72}, 31--38
+  (2013).
+\newblock \doi{10.5120/12636-9343}
+
+\bibitem{Leung2001}
+Leung, Y.W., Wang, Y.: An orthogonal genetic algorithm with quantization for
+  global numerical optimization.
+\newblock IEEE Transactions on Evolutionary Computation \textbf{5}(1), 41--53
+  (2001).
+\newblock \doi{10.1109/4235.910464}
+
+\bibitem{Marti2016}
+Mart{\'i}, L., Garc{\'i}a, J., Berlanga, A., Molina, J.M.: A stopping criterion
+  for multi-objective optimization evolutionary algorithms.
+\newblock Information Sciences \textbf{367-368}, 700 -- 718 (2016).
+\newblock \doi{https://doi.org/10.1016/j.ins.2016.07.025}
+
+\bibitem{Matejka2017}
+Matejka, J., Fitzmaurice, G.: Same stats, different graphs: Generating datasets
+  with varied appearance and identical statistics through simulated annealing.
+\newblock In: Proceedings of the 2017 CHI Conference on Human Factors in
+  Computing Systems, CHI '17, pp. 1290--1294. ACM (2017).
+\newblock \doi{10.1145/3025453.3025912}
+
+\bibitem{pandas}
+McKinney, W.: Data structures for statistical computing in python.
+\newblock Proceedings of the 9th Python in Science Conference (2010--).
+\newblock \urlprefix\url{https://pandas.pydata.org/}.
+\newblock [Online; accessed 2019-03-01]
+
+\bibitem{Michael2001}
+Michael, C.C., McGraw, G., Schatz, M.: Generating software test data by
+  evolution.
+\newblock IEEE Trans. Software Eng. \textbf{27}, 1085--1110 (2001)
+
+\bibitem{Motoki2002}
+Motoki, T.: Calculating the expected loss of diversity of selection schemes.
+\newblock Evolutionary Computation \textbf{10}(4), 397--422 (2002).
+\newblock \doi{10.1162/106365602760972776}
+
+\bibitem{numpy}
+Oliphant, T.: {NumPy}: A guide to {NumPy}.
+\newblock USA: Trelgol Publishing (2006--).
+\newblock \urlprefix\url{http://www.numpy.org/}.
+\newblock [Online; accessed 2019-03-01]
+
+\bibitem{scikit}
+Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel,
+  O., Blondel, M., Prettenhofer, P., Weiss, R., Dubourg, V., Vanderplas, J.,
+  Passos, A., Cournapeau, D., Brucher, M., Perrot, M., Duchesnay, E.:
+  {Scikit-learn: Machine Learning in Python }.
+\newblock Journal of Machine Learning Research \textbf{12}, 2825--2830 (2011)
+
+\bibitem{Semenkin2012}
+Semenkin, E., Semenkina, M.: Self-configuring genetic algorithm with modified
+  uniform crossover operator.
+\newblock In: Advances in Swarm Intelligence, pp. 414--421 (2012)
+
+\bibitem{Sharifipour2018}
+Sharifipour, H., Shakeri, M., Haghighi, H.: Structural test data generation
+  using a memetic ant colony optimization based on evolution strategies.
+\newblock Swarm and Evolutionary Computation \textbf{40}, 76 -- 91 (2018).
+\newblock \doi{https://doi.org/10.1016/j.swevo.2017.12.009}
+
+\bibitem{Sonka1993}
+Sonka, M., Hlavac, V., Boyle, R.: {Image Processing, Analysis and Machine
+  Vision}.
+\newblock Springer {US} (1993).
+\newblock \doi{10.1007/978-1-4899-3216-7}
+
+\bibitem{Suganuma2017}
+Suganuma, M., Shirakawa, S., Nagao, T.: A genetic programming approach to
+  designing convolutional neural network architectures.
+\newblock In: GECCO (2017)
+
+\bibitem{Sun2018}
+Sun, Y., Xue, B., Zhang, M., Yen, G.G.: Automatically designing {CNN}
+  architectures using genetic algorithm for image classification.
+\newblock CoRR \textbf{{abs/1808.03818}} (2018)
+
+\bibitem{edo-project}
+{The EDO library developers}: {EDO: v0.2.1} (2019).
+\newblock \doi{10.5281/zenodo.2651075}.
+\newblock \urlprefix\url{http://dx.doi.org/10.5281/zenodo.2651075}
+
+\bibitem{Torralba2011}
+Torralba, A., Efros, A.A.: Unbiased look at dataset bias.
+\newblock Proceedings of the 2011 IEEE Conference on Computer Vision and
+  Pattern Recognition (2011).
+\newblock \doi{10.1109/CVPR.2011.5995347}.
+\newblock \urlprefix\url{http://dx.doi.org/10.1109/CVPR.2011.5995347}
+
+\bibitem{Wu2009}
+Wu, X., Wu, X., Kumar, V.: {The Top Ten Algorithms in Data Mining}.
+\newblock CRC (2009)
+
+\end{thebibliography}
 
 
 \appendix\section{Appendix}
 
 \subsection{Lloyd's algorithm}\label{app:kmeans}
 
-\balg[H]%
+\balg%
 \KwIn{a dataset \(X\), a number of centroids \(k\), a distance metric \(d\)}
 \KwOut{a partition of \(X\) into \(k\) parts, \(Z\)}
 
