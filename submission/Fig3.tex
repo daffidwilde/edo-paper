@@ -1,3 +1,7 @@
+\documentclass[border=5pt]{standalone}
+\usepackage{edo-tikz}
+
+\begin{document}
 \begin{tikzpicture}
 
     % Columns
@@ -65,7 +69,6 @@
     \draw[->] ([xshift=5pt] normal.south)
         to [out=270, in=90] ([yshift=20pt] norm2)
         node[right=15pt, yshift=20pt] {%
-            %\color{gray}
             \begin{tabular}{l}
                 Sample or create a\\
                 distribution subtype\\
@@ -80,7 +83,6 @@
 
     \draw[->] ([yshift=-10pt] norm2.south) -- ++(0, -1)
         node[right=20pt, yshift=15pt] {%
-            %\color{gray}
             \begin{tabular}{l}
                 Sample values\\
                 from distribution
@@ -88,3 +90,4 @@
         };
 
 \end{tikzpicture}
+\end{document}
