@@ -4,7 +4,7 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsthm}
-\usepackage[backend=bibtex, style=numeric]{biblatex}
+\usepackage[backend=bibtex, style=numeric, giveninits=true]{biblatex}
     \addbibresource{references}
 \usepackage{booktabs} % Pandas dataframes
 \usepackage{caption}
@@ -31,14 +31,16 @@
 \raggedbottom%
 
 \newlength{\imgwidth}
-\setlength{\imgwidth}{\textwidth}
+\setlength{\imgwidth}{.95\textwidth}
 
 \definecolor{cyan}{RGB}{0, 164, 216}
 \definecolor{magenta}{RGB}{226, 62, 138}
 
 
 % Algorithms
-\newcommand{\balg}{\begin{algorithm}[htbp]\DontPrintSemicolon}
+\newcommand{\balg}[1][htbp]{%
+    \begin{algorithm}[#1]\DontPrintSemicolon
+}
 \newcommand{\ealg}{\end{algorithm}}
 
 
@@ -81,7 +83,7 @@
         \resizebox{#1}{!}{%
             \input{tex/diagrams/#2.tex}
         }
-        \caption{#3}\label{figure:#2}
+        \caption{#3}\label{fig:#2}
     \end{figure}
 }
 
@@ -115,6 +117,6 @@
 \input{sections/examples.tex}
 \input{sections/conclusion.tex}
 
-\input{sections/appendix.tex}
+\pagebreak\input{sections/appendix.tex}
 \printbibliography%
 \end{document}
