@@ -15,6 +15,17 @@ selection parameter, \(b\), and a  mutation probability, \(p_m\). In addition to
 these, EDO takes the following parameters:
 
 \begin{itemize}
+    \item A set of probability distribution families, \(\mathcal{P}\). Each
+        family in this set has some parameter limits which form a part of the
+        overall search space. For instance, the family of normal distributions,
+        denoted by \(N(\mu, \sigma^2)\), would have limits on values for the
+        mean, \(\mu\), and the standard deviation, \(\sigma\).
+    \item A maximum number of ``subtypes'' for each family in \(\mathcal{P}\). A
+        subtype is an independent copy of the family that progresses separate
+        from the others. These are the actual distribution objects which are
+        traversed in the optimisation.
+    \item A probability vector to sample distributions from \(\mathcal{P}\),
+        \(w = \left(w_1, \ldots, w_{|\mathcal{P}|}\right)\).
     \item Limits on the number of rows an individual dataset can have,
         \(
             R \in \left\{%
@@ -32,19 +43,8 @@ these, EDO takes the following parameters:
         for each \(j = 1, \ldots, |\mathcal{P}|\). That is, \(C\) defines the
         minimum and maximum number of columns a dataset may have from each
         distribution in \(\mathcal{P}\).
-    \item A set of probability distribution families, \(\mathcal{P}\). Each
-        family in this set has some parameter limits which form a part of the
-        overall search space. For instance, the family of normal distributions,
-        denoted by \(N(\mu, \sigma^2)\), would have limits on values for the
-        mean, \(\mu\), and the standard deviation, \(\sigma\).
-    \item A maximum number of ``subtypes'' for each family in \(\mathcal{P}\). A
-        subtype is an independent copy of the family that progresses separate
-        from the others. These are the actual distribution objects which are
-        traversed in the optimisation.
-    \item A probability vector to sample distributions from \(\mathcal{P}\),
-        \(w = \left(w_1, \ldots, w_{|\mathcal{P}|}\right)\).
     \item A second selection parameter, \(l \in [0, 1]\), to allow for a
-        small proportion of ``lucky'' individuals to be carried forward.
+        small proportion of `lucky' individuals to be carried forward.
     \item A shrink factor, \(s \in [0, 1]\), defining the relative size of a
         component of the search space to be retained after adjustment.
 \end{itemize}
@@ -55,7 +55,8 @@ components have been implemented in Python as a library built on the scientific
 Python stack~\cite{pandas,numpy}. The library is fully tested and documented (at
 \url{https://edo.readthedocs.io}) and is freely available online under the MIT
 license~\cite{edo-project}. The EDO implementation was developed to be
-consistent with the best practices of open source software development.
+consistent with the current best practices of open source software
+development~\cite{Jiminez2017}.
 % TODO Citation(s) needed from Vince.
 
 \input{tex/algorithms/edo.tex}\label{alg:edo}
