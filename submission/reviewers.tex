@@ -1,0 +1,239 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in, includefoot, footskip=30pt]{geometry}
+
+\title{Response to reviewers for manuscript APIN-D-19-01616}
+\author{Henry Wilde, Vincent Knight, Jonathan Gillard}
+\date{}
+
+\begin{document}
+
+\maketitle%
+
+Included in this document are the responses of these authors to the comments
+made by the reviewers in regard to the manuscript submitted to Applied
+Intelligence as ``Evolutionary Dataset Optimisation: learning algorithm quality
+through evolution''.
+
+\section*{Reviewer 1}
+
+\begin{itemize}
+
+\item
+\begin{verbatim}
+    I think the subject and object of this paper is very ambiguous in the
+    introduction even though authors well described the previous work, I hope
+    the author should consider why this paper is necessary to the read.
+\end{verbatim}
+
+The introduction has been revised to be more direct in its summary of the paper,
+and its motivation has been expanded on.
+
+% TODO Reorganise the introduction to be punchier. Address the points raised in
+% the introduction.
+
+\item
+\begin{verbatim}
+    The language needs to be revised by native speaker research.
+\end{verbatim}
+
+The manuscript was written by three native English speakers but we have made
+sure that any lingering spelling mistakes or grammatical issues have been
+addressed.
+
+\item
+\begin{verbatim}
+    make the ABSTRACT as a single paragraph and make sure do present your work
+    in clearer.
+\end{verbatim}
+
+In this draft of the paper, the abstract has been reduced to a single paragraph.
+
+% TODO Reduce the abstract to a single paragraph.
+
+\item
+\begin{verbatim}
+    You should improve the ABSTRACT.(rewrite the abstract to reflect the main
+    idea and it's results, without any not suitable details) in the ABSTRACT
+    alongside with the obtained results (the results you got it and what is the
+    situation of your results in comparison with other published methods).
+    Mentioned to the benchmarks which have been used in this paper.
+\end{verbatim}
+
+% TODO Rework the abstract to be punchier and with less waffle. Address in
+% comment that the paper itself uses no benchmark datasets.
+
+\item
+\begin{verbatim}
+    in figure 1, there are question marks, you did not explain that. why?
+\end{verbatim}
+
+The choice for question marks was to symbolise that a series of questions may be
+asked of the data. This has now been done explicitly.
+
+% TODO include this explicitly.
+
+\item
+\begin{verbatim}
+    Add in the and of section 1, add a new paragraph that presents the
+    organization of the paper.
+\end{verbatim}
+
+As can be seen at the end of the `Introduction' section, there is now a summary
+of the organisation of the paper.
+
+% TODO Write contents paragraph.
+
+\item
+\begin{verbatim}
+    Unify the symbols such as Figure or Fig.
+\end{verbatim}
+
+This was a minor oversight that has now been amended.
+
+\item
+\begin{verbatim}
+    The related works section is not provided. I suggest to increase the number
+    of studies and add anew discussion there to show the advantage,
+    disadvantage, and weakness of the studied works. Authors should discuss the
+    literature review more deep and clearly.
+\end{verbatim}
+
+% TODO Expand on existing literature review of other methods and make clear that
+% the proposed method is largely novel in its motivation. This is the reason
+% there is no dedicated literature review section, and that is not required by
+% the journal.
+
+\item
+\begin{verbatim}
+    Most references in the list of reference are very old, therefore, must
+    update the reference list to contain articles related off at least five
+    years and indexing in ISI and Scopus Database, in general update that list
+    by the following reference related to predictions: 1-Abualigah, L. M. Q.
+    (2019). Feature Selection and Enhanced Krill Herd Algorithm for Text
+    Document Clustering. Studies in Computational Intelligence. 2-Abualigah, L.
+    M. Q., & Hanandeh, E. S. (2015). Applying genetic algorithms to information
+    retrieval using vector space model. International Journal of Computer
+    Science, Engineering and Applications, 5(1), 19. 3-Abualigah, L. M., &
+    Khader, A. T. (2017). Unsupervised text feature selection technique based on
+    hybrid particle swarm optimization algorithm with genetic operators for the
+    text clustering. The Journal of Supercomputing, 73(11), 4773-4795.
+    4-Abualigah, L. M., Khader, A. T., & Hanandeh, E. S. (2018). Hybrid
+    clustering analysis using improved krill herd algorithm. Applied
+    Intelligence. 5-Abualigah, L. M., Khader, A. T., & Hanandeh, E. S. (2018). A
+    Combination of Objective Functions and Hybrid Krill Herd Algorithm for Text
+    Document Clustering Analysis. Engineering Applications of Artificial
+    Intelligence. 6-Abualigah, L. M., Khader, A. T., & Hanandeh, E. S. (2017). A
+    new feature selection method to improve the document clustering using
+    particle swarm optimization algorithm. Journal of Computational Science.
+\end{verbatim}
+
+While some of the references are older than 5 years, this is almost always due
+to the fact that they are seminal papers for particular concepts, algorithms and
+software packages. Having said that, we have revised our reference list to
+include some of the suggested articles and other contemporary works where
+appropriate.
+
+% TODO Revise some of the older (pre-2013) references and incorporate some of
+% the above.
+
+\item
+\begin{verbatim}
+    You need to explain clearly your proposed methods epically for the proposed
+    method.
+\end{verbatim}
+
+We believe that the proposed method is explained in great detail with diagrams
+and algorithms for each subprocess; to add an epic explanation to this
+description would make the manuscript cumbersome in terms of its length.
+
+\item
+\begin{verbatim}
+    Add a new figure to show the general procedures of the proposed method
+\end{verbatim}
+
+As stated in the text of the article and above, there are diagrams which
+describe the concept and motivation of the work (Figure 1), the general
+structure of the method algorithmically (Figure 2), and each subprocess of the
+method (Figures 3\--6). It is unclear what kind of figure is being asked for
+here which has not already been covered.
+
+\item
+\begin{verbatim}
+    For the experimental results, it will be good to present a statistical test
+    in the comparison of the results with other published methods. This can help
+    to support the claim on improved results obtained with the selection methods
+    studied.
+\end{verbatim}
+
+This is an interesting idea but it is unclear what is meant. Certainly, a
+statistical test showing the results of the convexity comparison in the final
+examples would be beneficial to the article. However, there are no published
+methods that do what is being done in the article.
+
+% TODO Speak with Jon about how this could be done. Will likely require a lot of
+% computational time on Siren to run more results.
+
+\item
+\begin{verbatim}
+    What are the pros and cons of the proposed method? Please respond to this
+    question in the article text.
+\end{verbatim}
+
+The advantages and disadvantages of the method are now discussed more explicitly
+in the conclusion of the paper. In particular, the issue with using a genetic
+algorithm approach is discussed.
+
+% TODO Address this in the conclusion. Positives are discussed but one of the
+% biggest limitations may well be that the method cannot produce *any* dataset.
+
+\item
+\begin{verbatim}
+    in this paper, as you claimed, benchmark datasets are proposed. This is not
+    clear in the paper
+\end{verbatim}
+
+Where this is discussed in the manuscript, references are provided to articles
+that use benchmark datasets. In addition, however, examples have now been
+provided as well as references to benchmark dataset surveys.
+
+% TODO Find some benchmark dataset surveys for time series, forecasting, image
+% recognition, etc., and include some examples of well-known benchmark datasets.
+
+\end{itemize}
+
+\section*{Reviewer 2}
+
+\begin{itemize}
+
+\item
+\begin{verbatim}
+    The key concept behind the work is the evolutionary generation of datasets
+    in order to understand the limitations and capabilities of ML algorithms.
+    Thus, for this to be effective, you need to demonstrate that your
+    representation and genetic operators are capable of permitting evolution to
+    generate any possible dataset - or at least the set of datasets that would
+    adequately cover the sets corresponding to the ML algorithm under
+    investigation. e.g. If K-means needs to be investigated with sets A,B,C,D,E
+    (each of which might be a different class of distribution) but your
+    evolutionary approach is only capable of generating sets A,C,E, then you may
+    gain an incomplete or misleading view of the capabilities of the algorithm.
+    It is a big ask perhaps to prove that your method can generate *any* data
+    distribution (or is not overly biassed towards the generation of some
+    compared to others because of the representation or operators) and I'm sure
+    later versions would be able to improve in these areas, but this issue is so
+    important for the approach to be viable, that I think you should provide
+    some evidence in the paper that the method can produce adequate coverage.
+\end{verbatim}
+
+\item
+\begin{verbatim}
+    The second concern is the way evolutionary algorithms tend to find the
+    easiest way out - so how can you stop the EA from evolving the simplest,
+    easiest datasets for each ML algorithm (or the most difficult datasets if
+    you reverse the fitness), instead of exploring the range of possibilities?
+    (One option is to move more into curiosity-driven search, perhaps?)
+\end{verbatim}
+
+\end{itemize}
+\end{document}
