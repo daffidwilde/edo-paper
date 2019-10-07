@@ -72,23 +72,22 @@
 
 
 \begin{abstract}
-    In this paper we propose a new method for learning how algorithms perform.
+    In this paper we propose a novel method for learning how algorithms perform.
     Classically, algorithms are compared on a finite number of existing (or
-    newly simulated) benchmark data sets based on some fixed metrics. The
+    newly simulated) benchmark datasets based on some fixed metrics. The
     algorithm(s) with the smallest value of this metric are chosen to be the
-    `best performing'.
-
-    We offer a new approach to flip this paradigm. We instead aim to gain a
-    richer picture of the performance of an algorithm by generating artificial
-    data through genetic evolution, the purpose of which is to create
-    populations of datasets for which a particular algorithm performs well.
-    These data sets can be studied to learn as to what attributes lead to a
-    particular progress of a given algorithm.
-
+    `best performing'. We offer a new approach to flip this paradigm. We
+    instead aim to gain a richer picture of the performance of an algorithm by
+    generating artificial data through genetic evolution, the purpose of which
+    is to create populations of datasets for which a particular algorithm
+    performs well on a given metric. These datasets can be studied so as to
+    learn what attributes lead to a particular progression of a given algorithm.
     Following a detailed description of the algorithm as well as a brief
-    description of an open source implementation, a number of numeric
-    experiments are presented to show the performance of the method which we
-    call Evolutionary Dataset Optimisation.
+    description of an open source implementation, a case study of \(k\)-means
+    clustering is presented to demonstrate the performance and nuances of the
+    method which we call Evolutionary Dataset Optimisation. In this study, a
+    number of known properties about preferable datasets for \(k\)-means are
+    realised in the generated datasets.
 
     \keywords{%
         Evolutionary algorithm \and
@@ -107,11 +106,11 @@ solve a given problem, the designer is presented with questions about the
 performance of their proposed method, and its relative performance against
 existing methods. This is an inherently difficult task. However, under the
 current paradigm, the standard response to this situation is to use a known
-fixed set of datasets \-- or simulate new data sets themselves \-- and a common
+fixed set of datasets \-- or simulate new datasets themselves \-- and a common
 metric amongst the proposed method and its competitors. The algorithm is then
 assessed based on this metric with often minimal consideration for both the
-appropriateness or reliability of the datasets being used, and the robustness of
-the method in question.
+appropriateness or reliability of the datasets being used, and the robustness
+of the method in question.
 
 This notion is not so easily observed when travelling in the opposite direction.
 Suppose that, instead, the benchmark was a dataset of particular interest and a
@@ -175,10 +174,10 @@ paradigm:
 
 Evolutionary algorithms (EAs) have been applied successfully to solve a wide
 array of problems \-- particularly where the complexity of the problem or its
-domain are significant. These methods are highly adaptive and
-their population-based construction (displayed in Figure~\ref{fig:flowchart})
-allows for the efficient solving of problems that are otherwise beyond the scope
-of traditional search and optimisation methods.
+domain are significant. These methods are highly adaptive and their
+population-based construction (displayed in Figure~\ref{fig:flowchart}) allows
+for the efficient solving of problems that are otherwise beyond the scope of
+traditional search and optimisation methods.
 
 \begin{figure}[htbp]
     \centering
@@ -214,7 +213,7 @@ property that can be traversed through the algorithm.
 
 In this section, the details of an algorithm that generates data for which a
 given function or, equivalently, an algorithm which is well suited, is
-described. This algorithm is to be referred to as ``Evolutionary Dataset
+described. This algorithm is to be referred to as ``Evolutionary dataset
 Optimisation'' (EDO).
 
 The EDO method is built as an evolutionary algorithm which follows a traditional
@@ -294,7 +293,7 @@ development~\cite{Jiminez2017}.
         }
     }
 }
-\caption{The evolutionary dataset optimisation algorithm}
+\caption{The Evolutionary Dataset Optimisation algorithm}
 \ealg\label{alg:edo}
 
 \balg%
@@ -1033,7 +1032,7 @@ The generative nature of the proposed method also provides transparency and
 richness to the solution when compared to other contemporary techniques for
 artificial data generation as the entire history of individuals is preserved.
 
-The evolutionary dataset optimisation method is dependent on a number of
+The Evolutionary Dataset Optimisation method is dependent on a number of
 parameters set out in this paper and perhaps the most important of which is the
 choice of distribution families, \(\mathcal{P}\); these families set out the
 general statistical shape of the columns of the datasets that are produced and
@@ -1106,7 +1105,7 @@ Goodfellow, I., Pouget-Abadie, J., Mirza, M., Xu, B., Warde-Farley, D., Ozair,
   \urlprefix\url{http://papers.nips.cc/paper/5423-generative-adversarial-nets.pdf}
 
 \bibitem{Huang1998}
-Huang, Z.: Extensions to the k-means algorithm for clustering large data sets
+Huang, Z.: Extensions to the k-means algorithm for clustering large datasets
   with categorical values.
 \newblock Data Mining and Knowledge Discovery \textbf{2}(3), 283--304 (1998).
 \newblock \doi{10.1023/A:1009769707641}

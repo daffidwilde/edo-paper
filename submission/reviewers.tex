@@ -39,7 +39,8 @@ and its motivation has been expanded on.
 
 The manuscript was written by three native English speakers but we have made
 sure that any lingering spelling mistakes or grammatical issues have been
-addressed.
+addressed. If there are any specific language errors that the reviewer can point
+out that would helpful.
 
 \item
 \begin{verbatim}
@@ -48,8 +49,6 @@ addressed.
 \end{verbatim}
 
 In this draft of the paper, the abstract has been reduced to a single paragraph.
-
-% TODO Reduce the abstract to a single paragraph.
 
 \item
 \begin{verbatim}
@@ -60,8 +59,13 @@ In this draft of the paper, the abstract has been reduced to a single paragraph.
     Mentioned to the benchmarks which have been used in this paper.
 \end{verbatim}
 
-% TODO Rework the abstract to have less waffle. Address in comment that the
-% paper itself uses no benchmark datasets.
+We feel that the main concept of the method is summarised well in the abstract,
+including its motivation. As is discussed throughout this response, and in the
+article itself, classical results are not included in this work but we have
+revised the final sentence of the abstract to more accurately describe the case
+study provided at the end of the article. In particular, we state that `a
+number of known [favourable] properties' are found by the proposed method for
+\(k\)-means.
 
 \item
 \begin{verbatim}
@@ -69,9 +73,8 @@ In this draft of the paper, the abstract has been reduced to a single paragraph.
 \end{verbatim}
 
 The choice for question marks was to symbolise that a series of questions may be
-asked of the data. This has now been done explicitly.
-
-% TODO include this explicitly.
+asked of the data. This has now been done explicitly by changing the annotation
+in the figure to be `Asking questions of the data'.
 
 \item
 \begin{verbatim}
@@ -89,7 +92,8 @@ of the organisation of the paper.
     Unify the symbols such as Figure or Fig.
 \end{verbatim}
 
-This was a minor oversight that has now been amended.
+This was a minor oversight that has now been amended. Thank you for bringing
+this to our attention.
 
 \item
 \begin{verbatim}
@@ -103,6 +107,8 @@ This was a minor oversight that has now been amended.
 % the proposed method is largely novel in its motivation. This is the reason
 % there is no dedicated literature review section, and that is not required by
 % the journal.
+
+% We refer to the editor if section required...
 
 \item
 \begin{verbatim}
@@ -130,33 +136,40 @@ This was a minor oversight that has now been amended.
 
 While some of the references are older than 5 years, this is often due to the
 fact that they are seminal papers for particular concepts, algorithms and
-software packages. Having said that, we have revised our reference list to
-include some of the suggested articles and other contemporary works where
-appropriate.
+software packages. For this reason, they are entirely relevant to the paper
+which is why they have been included.
+
+Taking this comment into account, however, we have revised our reference list to
+include two of the suggested articles (4 \&?) and other contemporary works
+where appropriate.
 
 % TODO Revise some of the older (pre-2013) references and incorporate some of
-% the above.
+% the above. Start with (4).
 
 \item
 \begin{verbatim}
     You need to explain clearly your proposed methods epically for the proposed
     method.
-\end{verbatim}
 
-We believe that the proposed method is explained in great detail with diagrams
-and algorithms for each subprocess; to add an epic explanation to this
-description would make the manuscript cumbersome in terms of its length.
-
-\item
-\begin{verbatim}
     Add a new figure to show the general procedures of the proposed method
 \end{verbatim}
 
-As stated in the text of the article and above, there are diagrams which
-describe the concept and motivation of the work (Figure 1), the general
-structure of the method algorithmically (Figure 2), and each subprocess of the
-method (Figures 3\--6). It is unclear what kind of figure is being asked for
-here which has not already been covered.
+We believe that the proposed method is explained in great detail with
+supplementary diagrams and algorithms for each subprocess; to add an `epic'
+explanation to this description would make the manuscript cumbersome in terms of
+its length.
+
+In terms of adding a new figure, there are diagrams which describe the concept
+and motivation of the work (Figure 1), the general structure of the method
+algorithmically (Figure 2), and each subprocess of the method (Figures 3\--6).
+It is unclear what kind of figure is being asked for here which has not already
+been covered.
+
+We refer to the editor on these points as the description of the method has been
+a point of pride for the authors that has been specifically commended when the
+work has been presented in seminars.
+
+% What does epically mean?
 
 \item
 \begin{verbatim}
@@ -166,13 +179,12 @@ here which has not already been covered.
     studied.
 \end{verbatim}
 
-This is an interesting idea but it is unclear what is meant. Certainly, a
-statistical test showing the results of the convexity comparison in the final
-examples would be beneficial to the article. However, there are no published
-methods that do what is being done in the article.
-
-% TODO Speak with Jon about how this could be done. Will likely require a lot of
-% computational time on Siren to run more results.
+As is discussed in the introduction, the proposed method comes from a novel
+paradigm in which there are no `other published methods' to compare it with. In
+this paradigm, the objective of the method is to generate data rather than to
+complete some comparable task where traditionally one would be able to do
+something like method A vs.\ method B. As such, there is no sensible grounding
+to use a statistical test in this case.
 
 \item
 \begin{verbatim}
@@ -193,9 +205,12 @@ algorithm approach is discussed.
     clear in the paper
 \end{verbatim}
 
-Where this is discussed in the manuscript, references are provided to articles
-that use benchmark datasets. In addition, however, examples have now been
-provided as well as references to benchmark dataset surveys.
+This paper does not propose benchmark datasets. Where benchmark datasets are
+mentioned, it is to motivate the proposed paradigm and method, and not for
+comparison. Within this discussion, references are provided to articles that use
+benchmark datasets. In addition to these, particular examples have now been
+provided as well as references to benchmark dataset surveys to show their
+ubiquity.
 
 % TODO Find some benchmark dataset surveys for time series, forecasting, image
 % recognition, etc., and include some examples of well-known benchmark datasets.
@@ -230,6 +245,9 @@ provided as well as references to benchmark dataset surveys.
 % a scatter plot of the data with low opacity so hotspots could be identified.
 % Maybe colour code stages of the epochs (100s).
 
+% This can be controlled using the objective function. Why rule it out? This
+% will require further study.
+
 \item
 \begin{verbatim}
     The second concern is the way evolutionary algorithms tend to find the
@@ -243,6 +261,9 @@ provided as well as references to benchmark dataset surveys.
 % address the fact that the concept remains the same in that exploration of
 % `good' datasets is not really done. The E/GA is merely a tool that allows for
 % this whilst maintaining histories of behaviours.
+
+% Not an exhaustive search, rather completely unsupervised.
+% Objective function modified to be run sequentially for further insight.
 
 \end{itemize}
 \end{document}
