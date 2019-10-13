@@ -1,6 +1,8 @@
 \documentclass[11pt]{article}
 
-\usepackage[margin=1in, includefoot, footskip=30pt]{geometry}
+\usepackage[margin=2cm, includefoot, footskip=30pt]{geometry}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
 
 \title{Response to reviewers for manuscript APIN-D-19-01616}
 \author{Henry Wilde, Vincent Knight, Jonathan Gillard}
@@ -17,40 +19,43 @@ through evolution''.
 
 \section*{Reviewer 1}
 
-\begin{itemize}
-
-\item
+\begin{tcolorbox}
 \begin{verbatim}
     I think the subject and object of this paper is very ambiguous in the
     introduction even though authors well described the previous work, I hope
     the author should consider why this paper is necessary to the read.
 \end{verbatim}
+\end{tcolorbox}
 
 The introduction has been revised to be more direct in its summary of the work,
-and its motivation has been expanded on.
+and its motivation has been expanded on. In particular, we have laboured the
+point even more that the proposed method belongs to a new paradigm in which no
+methods are currently published. We have expanded on the issues we raise with
+the current paradigm and provide further references to support our statements
+(see paragraph 4 of the introduction).\\
 
-% TODO Reorganise the introduction to be punchier. Address the points raised in
-% the introduction.
-
-\item
+\begin{tcolorbox}
 \begin{verbatim}
     The language needs to be revised by native speaker research.
 \end{verbatim}
+\end{tcolorbox}
 
 The manuscript was written by three native English speakers but we have made
 sure that any lingering spelling mistakes or grammatical issues have been
 addressed. If there are any specific language errors that the reviewer can point
-out that would helpful.
+out that would helpful.\\
 
-\item
+\begin{tcolorbox}
 \begin{verbatim}
     make the ABSTRACT as a single paragraph and make sure do present your work
     in clearer.
 \end{verbatim}
+\end{tcolorbox}
 
-In this draft of the paper, the abstract has been reduced to a single paragraph.
+In this draft of the paper, the abstract has been reduced to a single
+paragraph.\\
 
-\item
+\begin{tcolorbox}
 \begin{verbatim}
     You should improve the ABSTRACT.(rewrite the abstract to reflect the main
     idea and it's results, without any not suitable details) in the ABSTRACT
@@ -58,58 +63,111 @@ In this draft of the paper, the abstract has been reduced to a single paragraph.
     situation of your results in comparison with other published methods).
     Mentioned to the benchmarks which have been used in this paper.
 \end{verbatim}
+\end{tcolorbox}
 
 We feel that the main concept of the method is summarised well in the abstract,
 including its motivation. As is discussed throughout this response, and in the
 article itself, classical results are not included in this work and no
-benchmarks are used hence those points being omitted from the abstract. However,
+benchmarks are used hence those points are omitted from the abstract. However,
 we have revised the final sentence of the abstract to more accurately describe
 the case study provided at the end of the article. In particular, we state that
 `a number of known [favourable] properties' are identified by the proposed
-method for \(k\)-means.
+method for \(k\)-means so that there is no ambiguity in the result displayed in
+the paper.\\
 
-\item
+\begin{tcolorbox}
 \begin{verbatim}
     in figure 1, there are question marks, you did not explain that. why?
 \end{verbatim}
+\end{tcolorbox}
 
 The choice for question marks was to symbolise that a series of questions may be
 asked of the data. This has now been done explicitly by changing the annotation
-in the figure to be `Asking questions of the data'.
+in the figure to be `Asking questions of the data'. In addition to this, the
+same phrase has been used in the text when describing the process that it
+describes in Figure 1.\\
 
-\item
+\begin{tcolorbox}
 \begin{verbatim}
     Add in the and of section 1, add a new paragraph that presents the
     organization of the paper.
 \end{verbatim}
+\end{tcolorbox}
 
 As can be seen at the end of the `Introduction' section, there is now a summary
-of the organisation of the paper by section.
+of the organisation of the paper by section.\\
 
-\item
+\begin{tcolorbox}
 \begin{verbatim}
     Unify the symbols such as Figure or Fig.
 \end{verbatim}
+\end{tcolorbox}
 
 This was a minor oversight that has now been amended. Thank you for bringing
-this to our attention.
+this to our attention.\\
 
-\item
+\begin{tcolorbox}
 \begin{verbatim}
     The related works section is not provided. I suggest to increase the number
     of studies and add anew discussion there to show the advantage,
     disadvantage, and weakness of the studied works. Authors should discuss the
     literature review more deep and clearly.
 \end{verbatim}
+\end{tcolorbox}
 
-% TODO Expand on existing literature review of other methods and make clear that
-% the proposed method is largely novel in its motivation. This is the reason
-% there is no dedicated literature review section, and that is not required by
-% the journal.
+We have expanded the size of the bibliography in the paper, adding references to
+enrich the introduction and algorithm description. These are as follows:
+\begin{itemize}
+    \item Abualigah, L.M., Khader, A.T., Hanandeh, E.S.: A combination of
+        objective functions and hybrid krill herd algorithm for text document
+        clustering analysis. Engineering Applications of Artificial Intelligence
+        73, 111 \-- 125 (2018). DOI 10.1016/j.engappai.2018.05.003
+    \item Abualigah, L.M., Khader,A.T., Hanandeh,E.S.: Hybrid clustering
+        analysis using improved krill herd algorithm. Applied Intelligence
+        48(11), 4047 \-- 4071 (2018). DOI 10.1007/s10489-018-1190-6
+    \item Campos, G., Zimek, A., Sander, J., Campello, R., Micenkov, B.,
+        Schubert, E., Assent, I., Houle, M.: On the evaluation of unsupervised
+        outlier detection: measures, datasets, and an empirical study. Data
+        Mining and Knowledge Discovery 30(4), 891 \-- 927 (2016). DOI
+        10.1007/s10618-015-0444-8
+    \item Chen, Y., Elliot, M., Smith, D.: The application of genetic algorithms
+        to data synthesis: A comparison of three crossover methods. In: Privacy
+        in Statistical Databases, pp. 160 \-- 171. Springer International
+        Publishing (2018). DOI 10.1007/ 978-3-319-99771-1 11
+    \item Dau, H.A., Keogh, E., Kamgar, K., Yeh, C.C.M., Zhu, Y., Gharghabi, S.,
+        Ratanamahatana, C.A., Yanping, Hu, B., Begum, N., Bagnall, A., Mueen,
+        A., Batista, G., Hexagon-ML: The UCR time series classification archive
+        (2018). \url{https://www.cs.ucr.edu/~eamonn/time_series_data_2018/}
+    \item Liu, L., Cheng, L., Liu, Y., Jia, Y., Rosenblum, D.: Recognizing
+        complex activities by a probabilistic interval-based model (2016)
+    \item Olson, R.S., La Cava, W., Orzechowski, P., Urbanowicz, R.J., Moore,
+        J.H.: PMLB: a large benchmark suite for machine learning evaluation and
+        comparison. BioData Mining 10(1), 36 (2017). DOI
+        10.1186/s13040-017-0154-4
+    \item Wang, N., Shi, J., Yeung, D.Y., Jia, J.: Understanding and diagnosing
+        visual tracking systems (2015). DOI 10.1109/ICCV.2015.355
+    \item Zhao, W., Ma, H., He, Q.: Parallel k-means clustering based on
+        MapReduce. In: Cloud Computing, pp. 674 \-- 679. Springer Berlin
+        Heidelberg (2009). DOI 10.1007/978-3-642-10665-1 71
+\end{itemize}
 
-% We refer to the editor if section required...
+As is discussed throughout this response, the proposed method has no
+contemporaries in this paradigm. As such, the close discussion of the studied
+works would be not of benefit to the paper as they are not relevant in the
+classical sense where their contents is comparable to that of this work. The
+purpose of the introduction, really, is to provide the motivation of the paper
+of which the proposed method forms only a part. The root of the motivation
+(summarised in the numbered list in the introduction) is not novel and is
+addressed in a number of the cited works in the introduction. The fact that the
+proposed method is an example of a method from this paradigm is discussed in the
+later part of the introduction where other methods are addressed.
 
-\item
+We refer to the editor if a standalone `related works' section is required since
+it is not included as part of the Submission Guidelines. The guidelines are
+available at the following link:
+\url{https://www.springer.com/journal/10489/submission-guidelines?IFA}.\\
+
+\begin{tcolorbox}
 \begin{verbatim}
     Most references in the list of reference are very old, therefore, must
     update the reference list to contain articles related off at least five
@@ -132,26 +190,25 @@ this to our attention.
     new feature selection method to improve the document clustering using
     particle swarm optimization algorithm. Journal of Computational Science.
 \end{verbatim}
+\end{tcolorbox}
 
 While some of the references are older than 5 years, this is often due to the
 fact that they are seminal papers for particular concepts, algorithms and
-software packages. For this reason, they are entirely relevant to the paper
-which is why they have been included.
+software packages. For this reason, they are entirely relevant to the paper and
+have been included.
 
 Taking this comment into account, however, we have revised our reference list to
-include two of the suggested articles (4 \&?) and other contemporary works
-where appropriate.
+include two of the suggested articles (4 \& 5) and other contemporary works
+where appropriate.\\
 
-% TODO Revise some of the older (pre-2013) references and incorporate some of
-% the above. Start with (4).
-
-\item
+\begin{tcolorbox}
 \begin{verbatim}
     You need to explain clearly your proposed methods epically for the proposed
     method.
 
     Add a new figure to show the general procedures of the proposed method
 \end{verbatim}
+\end{tcolorbox}
 
 We believe that the proposed method is explained in great detail with
 supplementary diagrams and algorithms for each subprocess; to add an `epic'
@@ -166,61 +223,53 @@ been covered.
 
 We refer to the editor on these points as the description of the method has been
 a point of pride for the authors that has been specifically commended when the
-work has been presented in seminars.
+work has been presented in seminars.\\
 
-% What does epically mean?
-
-\item
+\begin{tcolorbox}
 \begin{verbatim}
     For the experimental results, it will be good to present a statistical test
     in the comparison of the results with other published methods. This can help
     to support the claim on improved results obtained with the selection methods
     studied.
 \end{verbatim}
+\end{tcolorbox}
 
 As is discussed in the introduction, the proposed method comes from a novel
 paradigm in which there are no `other published methods' to compare it with. In
 this paradigm, the objective of the method is to generate data rather than to
-complete some comparable task where traditionally one would be able to do
-something like method A vs.\ method B. As such, there is no sensible grounding
-to use a statistical test in this case.
+complete some comparable task X where one would be able to do some analysis like
+`method A on X vs.\ method B on X'. As this is not possible, there is no
+sensible grounding to use a statistical test in this case.\\
 
-\item
+\begin{tcolorbox}
 \begin{verbatim}
     What are the pros and cons of the proposed method? Please respond to this
     question in the article text.
 \end{verbatim}
+\end{tcolorbox}
 
 The advantages and disadvantages of the method are now discussed more explicitly
 in the conclusion of the paper. In particular, the issue with using a genetic
-algorithm approach is discussed.
+algorithm approach is discussed.\\
 
 % TODO Address this in the conclusion. Positives are discussed but one of the
 % biggest limitations may well be that the method cannot produce *any* dataset.
 
-\item
+\begin{tcolorbox}
 \begin{verbatim}
     in this paper, as you claimed, benchmark datasets are proposed. This is not
     clear in the paper
 \end{verbatim}
+\end{tcolorbox}
 
 This paper does not propose benchmark datasets. Where benchmark datasets are
 mentioned, it is to motivate the proposed paradigm and method, and not for
 comparison. Within this discussion, references are provided to articles that use
-benchmark datasets. In addition to these, particular examples have now been
-provided as well as references to benchmark dataset surveys to show their
-ubiquity.
-
-% TODO Find some benchmark dataset surveys for time series, forecasting, image
-% recognition, etc., and include some examples of well-known benchmark datasets.
-
-\end{itemize}
+benchmark datasets and to compilations of benchmark datasets themselves.
 
 \section*{Reviewer 2}
 
-\begin{itemize}
-
-\item
+\begin{tcolorbox}
 \begin{verbatim}
     The key concept behind the work is the evolutionary generation of datasets
     in order to understand the limitations and capabilities of ML algorithms.
@@ -239,6 +288,7 @@ ubiquity.
     important for the approach to be viable, that I think you should provide
     some evidence in the paper that the method can produce adequate coverage.
 \end{verbatim}
+\end{tcolorbox}
 
 % TODO Can this be proven mathematically? I think it could be demonstrated using
 % a scatter plot of the data with low opacity so hotspots could be identified.
@@ -247,7 +297,7 @@ ubiquity.
 % This can be controlled using the objective function. Why rule it out? This
 % will require further study.
 
-\item
+\begin{tcolorbox}
 \begin{verbatim}
     The second concern is the way evolutionary algorithms tend to find the
     easiest way out - so how can you stop the EA from evolving the simplest,
@@ -255,6 +305,7 @@ ubiquity.
     you reverse the fitness), instead of exploring the range of possibilities?
     (One option is to move more into curiosity-driven search, perhaps?)
 \end{verbatim}
+\end{tcolorbox}
 
 % TODO More literature review required to discuss curiosity search and need to
 % address the fact that the concept remains the same in that exploration of
@@ -264,5 +315,4 @@ ubiquity.
 % Not an exhaustive search, rather completely unsupervised.
 % Objective function modified to be run sequentially for further insight.
 
-\end{itemize}
 \end{document}
