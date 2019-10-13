@@ -144,6 +144,10 @@ enrich the introduction and algorithm description. These are as follows:
         J.H.: PMLB: a large benchmark suite for machine learning evaluation and
         comparison. BioData Mining 10(1), 36 (2017). DOI
         10.1186/s13040-017-0154-4
+    \item Vikhar, P.A.: Evolutionary algorithms: A critical review and its
+        future prospects. In: 2016 International Conference on Global Trends in
+        Signal Processing, Information Computing and Communication (ICGTSPICC),
+        pp. 261–265 (2016). DOI 10.1109/ICGTSPICC.2016.7955308
     \item Wang, N., Shi, J., Yeung, D.Y., Jia, J.: Understanding and diagnosing
         visual tracking systems (2015). DOI 10.1109/ICCV.2015.355
     \item Zhao, W., Ma, H., He, Q.: Parallel k-means clustering based on
@@ -248,12 +252,10 @@ sensible grounding to use a statistical test in this case.\\
 \end{verbatim}
 \end{tcolorbox}
 
-The advantages and disadvantages of the method are now discussed more explicitly
-in the conclusion of the paper. In particular, the issue with using a genetic
-algorithm approach is discussed.\\
-
-% TODO Address this in the conclusion. Positives are discussed but one of the
-% biggest limitations may well be that the method cannot produce *any* dataset.
+The advantages and disadvantages of the proposed method are now discussed more
+explicitly in the conclusion of the paper. In particular, issues around the
+total coverage, premature termination and simplistic solutions are discussed
+with reference to Figure 15.
 
 \begin{tcolorbox}
 \begin{verbatim}
@@ -266,6 +268,8 @@ This paper does not propose benchmark datasets. Where benchmark datasets are
 mentioned, it is to motivate the proposed paradigm and method, and not for
 comparison. Within this discussion, references are provided to articles that use
 benchmark datasets and to compilations of benchmark datasets themselves.
+
+%%%%%%%%%%%%%%%%%%%%%
 
 \section*{Reviewer 2}
 
@@ -290,6 +294,17 @@ benchmark datasets and to compilations of benchmark datasets themselves.
 \end{verbatim}
 \end{tcolorbox}
 
+Thank you for this extensive comment. We agree that it may be an overstatement
+to say that our method can produce \textbf{any} dataset so we have revised our
+language throughout the text. More importantly, though, we have addressed the
+ability for our method to produce `adequate' coverage. In Figure 15, there is a
+scatter plot showing the distribution of all individuals from every 50
+generations using the first of the DBSCAN examples. The main conclusions of this
+plot are discussed in the conclusion of the article but may summarised as: (a)
+the method has covered a very substantial part of the search space, and (b) the
+method is indeed able to identify some preferable behaviour rather than
+persisting a full random cloud over the unit square.
+
 % TODO Can this be proven mathematically? I think it could be demonstrated using
 % a scatter plot of the data with low opacity so hotspots could be identified.
 % Maybe colour code stages of the epochs (100s).
@@ -307,12 +322,16 @@ benchmark datasets and to compilations of benchmark datasets themselves.
 \end{verbatim}
 \end{tcolorbox}
 
-% TODO More literature review required to discuss curiosity search and need to
-% address the fact that the concept remains the same in that exploration of
-% `good' datasets is not really done. The E/GA is merely a tool that allows for
-% this whilst maintaining histories of behaviours.
+This comment has been addressed by quite a substantial expansion of the
+conclusion. In the last few paragraphs, a meta-learning methodology is suggested
+for how this pitfall may be avoided within the scope of the proposed method. In
+this discussion, we address the fact that although the method is unsupervised,
+by designing an appropriately sophisticated fitness function a user could adopt
+a reinforced (or otherwise semi-supervised) learning behaviour with the proposed
+method.
 
-% Not an exhaustive search, rather completely unsupervised.
-% Objective function modified to be run sequentially for further insight.
+We have also stressed (in the introduction and conclusion) the particular
+reasons for choosing an EA in this work, and that this method is just an example
+of what may come from further research within this new paradigm.
 
 \end{document}
