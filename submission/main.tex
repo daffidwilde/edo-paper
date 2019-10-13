@@ -215,8 +215,8 @@ way, less-prejudiced insight can be established that is not necessarily reliant
 on any particular framework or agenda.
 
 Note that the proposed methodology is not simply to use an EA to optimise an
-algorithm over a search space with fixed dimension or datatype such as those set
-out in~\cite{Chen2016}. The shape of a dataset is considered a part of the
+algorithm over a search space with fixed dimension or data type such as those
+set out in~\cite{Chen2016}. The shape of a dataset is considered a part of the
 sample space itself that can be traversed through the evolutionary algorithm.
 
 The remainder of the paper is structured as follows:
@@ -831,7 +831,7 @@ which have a reputation of providing so-called `black box' solutions.
     }\label{fig:silhouette-inds}
 \end{figure}
 
-\subsection{Comparison with DBSCAN}
+\subsection{Comparison with DBSCAN}\label{subsec:dbscan}
 
 The extent of the capabilities EDO holds as a tool to better understand an
 algorithm are especially apparent when comparing an algorithm against another
@@ -1046,20 +1046,85 @@ The method was able to reveal some known results without prior knowledge when
 investigating \(k\)-means in several scenarios, and again when comparing
 \(k\)-means and another leading clustering method, DBSCAN.\
 
-The method itself utilises biological operators to traverse the space of all
-possible datasets in an organic way with a minimal external framework attached.
-The generative nature of the proposed method also provides transparency and
-richness to the solution when compared to other contemporary techniques for
-artificial data generation as the entire history of individuals is preserved.
+The method itself utilises biological operators to traverse a potentially broad
+region of the space of all possible datasets. This is done in an organic way
+with a minimal external framework attached. The generative nature of the
+proposed method also provides transparency and richness to the solution when
+compared to other contemporary techniques for artificial data generation as the
+entire history of individuals is preserved. While other search and optimisation
+methods exist, the decision to use an EA here was down to this transparency and
+the ease with which to implement biological operators that are both meaningful
+and easily understood. 
 
 The Evolutionary Dataset Optimisation method is dependent on a number of
-parameters set out in this paper and perhaps the most important of which is the
-choice of distribution families, \(\mathcal{P}\); these families set out the
-general statistical shape of the columns of the datasets that are produced and
-also control the present data types. The relationship between columns and their
-associated distribution is not causal and appropriate methods should be
+parameters set out in this work and perhaps the most important of which is the
+choice of distribution families, \(\mathcal{P}\); these families go on to define
+the general statistical shape of the columns of the datasets that are produced
+and also control the present data types. The relationship between columns and
+their associated distribution is not causal and appropriate methods should be
 employed to understand the structure and characteristics of the data produced
 before formal conclusions are made as set out in the case study provided.
+
+A note on the limitations of the proposed method is that evolutionary algorithms
+are known to terminate in local optima despite (given sufficient time and
+resource) being able to identify the global optimum of a particular problem
+instance~\cite{Vikhar2016}. This limitation is not limited to EAs, however,
+and is true for any stochastic search method.
+
+A corollary of this is that an EA may not be able to traverse the entire sample
+space, or even a sufficient part of it. This would be even more problematic in
+the case presented in this work where the sample space is not even of a fixed
+size or data type. However, this is addressed in Figure~\ref{fig:coverage} where
+it is evident that the EDO method was able to explore a large proportion of the
+sample space. In the early stages, it is also clear here how the EA got stuck in
+small parts of the search space before later moving toward a subregion of the
+unit square.
+
+\begin{figure}[htbp]
+    \includegraphics[width=\imgwidth]{Fig15.pdf}
+    \caption{%
+        A scatter of all the individuals found at 50 epoch intervals in the
+        first example of Section~\ref{subsec:dbscan}, i.e.\ those summarised in
+        Figure~\ref{fig:dbscan-inds}.
+    }\label{fig:coverage}
+\end{figure}
+
+Although this does provide evidence to say that the EA's current design can
+sufficiently explore its given search space, it does not provide any guarantee
+that this will happen, even in expectation. Proving this mathematically would
+greatly strengthen the validity of the proposed method's capabilities in any use
+case but will require further research that is beyond the scope of this work.
+
+Something that does stand against EAs is their tendancy to find the `easy' way
+out. That is, reducing down to the simplest solution which solves the given
+problem. In most cases, that is not a problem and is often, in fact, favourable.
+Throughout the case study provided, this is seen to happen.
+Figure~\ref{fig:coverage} shows this behaviour again by the strong diagonal
+region in later generations. In that particular example, the easiest solution
+for the EA (i.e.\ for \(k\)-means to outperform DBSCAN) was to collapse one
+dimension of the search space to make the problem one-dimensional. This kind of
+behaviour is not necessarily a bad thing as trivial, basic and simple cases are
+of great importance when understanding an algorithm's quality.
+
+However, should that be a problem, then the objective function could be adjusted
+accordingly. In the case study, several iterations of fitness functions were
+examined but each was adjusted by hand according to what was apparent at the
+time. Due to the architecture of the implementation of this method, this could
+be done in practicality. For instance, a similar strategy could be employed
+automatically by a more sophisticated fitness function that retains some
+information about the datasets generated from previous runs of EDO on a
+particular (or at least similar) parameter set. In this way, the currently
+completely unsupervised learning conducted by the EA could be ushered away from
+less helpful solutions (via some penalty, say) and toward previously unexplored
+behaviours. This automatic, iterative application of the proposed method would
+likely reveal more sophisticated insights into a particular algorithm.
+
+In essence, the proposed method is merely a tool that demonstrates the benefit
+of the flipped paradigm set out in this work. The concept of where `good'
+datasets exist is not something that is well-documented in literature and the
+hope of this work is that Evolutionary Dataset Optimisation acts as a starting
+point for further works to come.
+
 
 % END OF MAIN MANUSCRIPT
 
