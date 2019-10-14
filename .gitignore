@@ -25,6 +25,8 @@
 # *.eps
 *.pdf
 !main.pdf
+!reviewers.pdf
+!editor.pdf
 
 ## Generated if empty string is given at "Please type another file name for output:"
 .pdf
