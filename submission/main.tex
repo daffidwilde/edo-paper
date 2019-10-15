@@ -117,15 +117,15 @@ the appropriateness or reliability of the datasets being used, and the
 robustness of the method(s) in question~\cite{Abualigah2018a,Huang1998,Liu2016}.
 
 This process is not so readily observed when travelling in the opposite
-direction but methods to do so exist. To be clear, suppose that the object of
-interest was not an algorithm but rather a dataset. In this case, the objective
-is to determine a preferable algorithm to complete some task on the data.
-There exist a number of methods employed across disciplines to complete this
-task that take into account the characteristics of the data and the context of
-the research problem. These methods are often equivalent to asking questions of
-the data, and include the use of diagnostic tests. For instance, in the case of
-clustering, if the data displayed an indeterminate number of non-convex blobs,
-then one could recommend that an appropriate clustering algorithm would be
+direction but methods to do so exist. Suppose that the object of interest was
+not an algorithm but rather a dataset. In this case, the objective is to
+determine a preferable algorithm to complete some task on the data.  There exist
+a number of methods employed across disciplines to complete this task that take
+into account the characteristics of the data and the context of the research
+problem. These methods are often equivalent to asking questions of the data, and
+include the use of diagnostic tests. For instance, in the case of clustering, if
+the data displayed an indeterminate number of non-convex blobs, then one could
+recommend that an appropriate clustering algorithm would be
 DBSCAN~\cite{Ester1996}. Otherwise, for scalability, \(k\)-means may be
 chosen~\cite{Wu2009,Zhao2009}.
 
@@ -778,8 +778,8 @@ any individual from any generation may be retrieved and studied should the final
 results be too concentrated on any given case. The summary provided here is one
 particular way of studying the body of datasets generated with this method and
 this transparency in the history and progression of the proposed method is
-something that sets it apart from other methods of the same ilk such as GANs
-which have a reputation of providing so-called `black box' solutions.
+something that sets it apart from other methods such as GANs which have a
+reputation of providing so-called `black box' solutions.
 
 \addtocounter{figure}{1}
 \begin{figure}[htbp]
@@ -1074,11 +1074,11 @@ and is true for any stochastic search method.
 A corollary of this is that an EA may not be able to traverse the entire sample
 space, or even a sufficient part of it. This would be even more problematic in
 the case presented in this work where the sample space is not even of a fixed
-size or data type. However, this is addressed in Figure~\ref{fig:coverage} where
-it is evident that the EDO method was able to explore a large proportion of the
-sample space. In the early stages, it is also clear here how the EA got stuck in
-small parts of the search space before later moving toward a subregion of the
-unit square.
+size or data type. However, Figure~\ref{fig:coverage} shows an exploration of
+sample space and it is evident that the EDO method was able to explore a large
+proportion of it. In the early stages, it is also clear here how the EA got
+stuck in small parts of the search space before later moving toward a subregion
+of the unit square.
 
 \begin{figure}[htbp]
     \includegraphics[width=\imgwidth]{Fig15.pdf}
@@ -1091,9 +1091,8 @@ unit square.
 
 Although this does provide evidence to say that the EA's current design can
 sufficiently explore its given search space, it does not provide any guarantee
-that this will happen, even in expectation. Proving this mathematically would
-greatly strengthen the validity of the proposed method's capabilities in any use
-case but will require further research that is beyond the scope of this work.
+that this will happen, even in expectation. Proving this theoretically is an
+area for further investigation.
 
 Something that does stand against EAs is their tendancy to find the `easy' way
 out. That is, reducing down to the simplest solution which solves the given
