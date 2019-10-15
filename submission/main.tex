@@ -87,11 +87,12 @@
     performs well on a given metric. These datasets can be studied so as to
     learn what attributes lead to a particular progression of a given algorithm.
     Following a detailed description of the algorithm as well as a brief
-    description of an open source implementation, a case study of \(k\)-means
-    clustering is presented to demonstrate the performance and nuances of the
+    description of an open source implementation, a case study in clustering is
+    presented. This case study demonstrates the performance and nuances of the
     method which we call Evolutionary Dataset Optimisation. In this study, a
-    number of known properties about preferable datasets for \(k\)-means are
-    realised in the generated datasets.
+    number of known properties about preferable datasets for the clustering
+    algorithms known as \(k\)-means and DBSCAN are realised in the generated 
+    datasets.
 
     \keywords{%
         Evolutionary algorithm \and
@@ -1057,28 +1058,23 @@ the ease with which to implement biological operators that are both meaningful
 and easily understood. 
 
 The Evolutionary Dataset Optimisation method is dependent on a number of
-parameters set out in this work and perhaps the most important of which is the
-choice of distribution families, \(\mathcal{P}\); these families go on to define
-the general statistical shape of the columns of the datasets that are produced
-and also control the present data types. The relationship between columns and
-their associated distribution is not causal and appropriate methods should be
-employed to understand the structure and characteristics of the data produced
-before formal conclusions are made as set out in the case study provided.
+parameters set out in this work one of which is the choice of distribution
+families, \(\mathcal{P}\); these families go on to define the general
+statistical shape of the columns of the datasets that are produced and also
+control the present data types. The relationship between columns and their
+associated distribution is not causal and appropriate methods should be employed
+to understand the structure and characteristics of the data produced before
+formal conclusions are made as set out in the case study provided.
 
-A note on the limitations of the proposed method is that evolutionary algorithms
-are known to terminate in local optima despite (given sufficient time and
-resource) being able to identify the global optimum of a particular problem
-instance~\cite{Vikhar2016}. This limitation is not limited to EAs, however,
-and is true for any stochastic search method.
-
-A corollary of this is that an EA may not be able to traverse the entire sample
-space, or even a sufficient part of it. This would be even more problematic in
-the case presented in this work where the sample space is not even of a fixed
-size or data type. However, Figure~\ref{fig:coverage} shows an exploration of
-sample space and it is evident that the EDO method was able to explore a large
-proportion of it. In the early stages, it is also clear here how the EA got
-stuck in small parts of the search space before later moving toward a subregion
-of the unit square.
+It is known that EAs might terminate at a local optimum and may not be able to
+traverse the entire sample space~\cite{Vikhar2016}, or even a sufficient part of
+it. This would be even more problematic in the case presented in this work where
+the sample space is not even of a fixed size or data type. In all experiments
+carried out for this work, this theoretic limitation has not arisen.
+Figure~\ref{fig:coverage} shows an exploration of the sample space and it is
+evident that the EDO method was able to explore a large proportion of it. In the
+early stages, it is also clear here how the EA got stuck in small parts of the
+search space before later moving toward a subregion of the unit square.
 
 \begin{figure}[htbp]
     \includegraphics[width=\imgwidth]{Fig15.pdf}
