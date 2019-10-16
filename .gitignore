@@ -2,6 +2,10 @@
 *.swp
 *.ipynb_checkpoints/
 
+## Data
+data/
+!data/README.md
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
