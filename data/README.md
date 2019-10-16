@@ -1,6 +1,6 @@
 DATA
 ====
-
+ 
 This directory contains all of the data generated as part of the paper
 "Evolutionary Dataset Optimisation: learning algorithm quality through
 evolution".
