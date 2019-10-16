@@ -1,10 +1,11 @@
 Dear Editor,
 
-We are writing regarding your email subject: "". Firstly, we want to highlight
-the second reviewer who we feel not only read the paper but provided suggestions
-and comments that have greatly improved the paper. As is evident by our revised
-manuscript and our response, we have fully taken these comments onboard and we
-look forward to any further scientific discussion with this reviewer.
+We are writing regarding your email subject: "Decision on your manuscript
+APIN-D-19-01616". Firstly, we want to highlight the second reviewer who we feel
+not only read the paper but provided suggestions and comments that have greatly
+improved the paper. As is evident by our revised manuscript and our response, we
+have fully taken these comments onboard and we look forward to any further
+scientific discussion with this reviewer.
 
 Regarding the first reviewer, we have addressed their comments as best as
 possible. We would just like to bring to your attention the quality of their
