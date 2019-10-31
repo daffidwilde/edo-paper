@@ -1,20 +1,21 @@
 \documentclass[11pt]{article}
 
+\usepackage[margin=2cm, includefoot, footskip=30pt]{geometry}
+\usepackage{setspace}
+    \onehalfspacing%
+
+\usepackage[numbers]{natbib}
+
 \usepackage[boxruled]{algorithm2e}
 \usepackage{amssymb}
 \usepackage{amsmath}
-\usepackage[backend=bibtex, style=numeric]{biblatex}
-    \addbibresource{references.bib}
 \usepackage{booktabs} % Pandas dataframes
 \usepackage{color}
 \usepackage{enumerate} % Roman numerals
-\usepackage[margin=2cm, includefoot, footskip=30pt]{geometry}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{listings}
 \usepackage{mathptmx}
-\usepackage{setspace}
-    \doublespacing%
 \usepackage{subfig}
 
 
@@ -29,10 +30,10 @@
 
 % Algorithms and code
 \newcommand{\balg}[1][htbp]{%
-    \begin{algorithm}[#1]\singlespacing\DontPrintSemicolon
+    \begin{algorithm}[#1]\DontPrintSemicolon
 }
 \newcommand{\ealg}{%
-    \end{algorithm}\doublespacing%
+    \end{algorithm}
 }
 
 \lstset{
@@ -53,6 +54,7 @@
 
 
 % Other options
+\renewcommand{\figurename}{Figure}
 \DeclareMathOperator*{\argmin}{arg\,min}
 \renewcommand\theContinuedFloat{\alph{ContinuedFloat}}
 
@@ -62,33 +64,35 @@
     Evolutionary Dataset Optimisation:
     learning algorithm quality through evolution
 }
-\author{%
-    Henry Wilde, Vincent Knight, Jonathan Gillard
+\author{Henry Wilde, Vincent Knight and Jonathan Gillard \\
+    \textit{School of Mathematics, Senghennydd Rd, Cardiff, WALES CF24 4AG} \\
+    \texttt{\{wildehd, knightva, gillardjw\}@cardiff.ac.uk}
 }
 
 \begin{document}
+\bibliographystyle{spmpsci}
+
 \maketitle%
 
 
 \begin{abstract}
-    In this paper we propose a new method for learning how algorithms perform.
+    In this paper we propose a novel method for learning how algorithms perform.
     Classically, algorithms are compared on a finite number of existing (or
-    newly simulated) benchmark data sets based on some fixed metrics. The
+    newly simulated) benchmark datasets based on some fixed metrics. The
     algorithm(s) with the smallest value of this metric are chosen to be the
-    `best performing'.
-
-    We offer a new approach to flip this paradigm. We instead aim to gain a
-    richer picture of the performance of an algorithm by generating artificial
-    data through genetic evolution, the purpose of which is to create
-    populations of datasets for which a particular algorithm performs well.
-    These data sets can be studied to learn as to what attributes lead to a
-    particular progress of a given algorithm.
-
+    `best performing'. We offer a new approach to flip this paradigm. We
+    instead aim to gain a richer picture of the performance of an algorithm by
+    generating artificial data through genetic evolution, the purpose of which
+    is to create populations of datasets for which a particular algorithm
+    performs well on a given metric. These datasets can be studied so as to
+    learn what attributes lead to a particular progression of a given algorithm.
     Following a detailed description of the algorithm as well as a brief
-    description of an open source implementation, a number of numeric
-    experiments are presented to show the performance of the method which we
-    call Evolutionary Dataset Optimisation.
-
+    description of an open source implementation, a case study in clustering is
+    presented. This case study demonstrates the performance and nuances of the
+    method which we call Evolutionary Dataset Optimisation. In this study, a
+    number of known properties about preferable datasets for the clustering
+    algorithms known as \(k\)-means and DBSCAN are realised in the generated 
+    datasets.
 \end{abstract}
 
 
@@ -97,25 +101,27 @@
 This work presents a novel approach to learning the quality and performance of
 an algorithm through the use of evolution. When an algorithm is developed to
 solve a given problem, the designer is presented with questions about the
-performance of their proposed method, and its relative performance against
+performance of their proposed method and its relative performance against
 existing methods. This is an inherently difficult task. However, under the
 current paradigm, the standard response to this situation is to use a known
-fixed set of datasets \-- or simulate new data sets themselves \-- and a common
-metric amongst the proposed method and its competitors. The algorithm is then
-assessed based on this metric with often minimal consideration for both the
-appropriateness or reliability of the datasets being used, and the robustness of
-the method in question.
+fixed set of datasets \-- or simulate new datasets themselves \-- and a common
+metric amongst the proposed method and its competitors. The collated algorithms
+are then assessed based on this metric with often minimal consideration for
+the appropriateness or reliability of the datasets being used, and the
+robustness of the method(s) in question~\cite{Abualigah2018a,Huang1998,Liu2016}.
 
-This notion is not so easily observed when travelling in the opposite direction.
-Suppose that, instead, the benchmark was a dataset of particular interest and a
-preferable algorithm was to be determined for some task. There exist a number of
-methods employed across disciplines to complete this task that take into account
-the characteristics of the data and the context of the research problem. These
-methods include the use of diagnostic tests. For instance, in the case of
-clustering, if the data displayed an indeterminate number of non-convex blobs,
-then one could recommend that an appropriate clustering algorithm would be
+This process is not so readily observed when travelling in the opposite
+direction but methods to do so exist. Suppose that the object of interest was
+not an algorithm but rather a dataset. In this case, the objective is to
+determine a preferable algorithm to complete some task on the data.  There exist
+a number of methods employed across disciplines to complete this task that take
+into account the characteristics of the data and the context of the research
+problem. These methods are often equivalent to asking questions of the data, and
+include the use of diagnostic tests. For instance, in the case of clustering, if
+the data displayed an indeterminate number of non-convex blobs, then one could
+recommend that an appropriate clustering algorithm would be
 DBSCAN~\cite{Ester1996}. Otherwise, for scalability, \(k\)-means may be
-chosen~\cite{Wu2009}.
+chosen~\cite{Wu2009,Zhao2009}.
 
 The approach presented in this work aims to flip the paradigm described here by
 allowing the data itself to be unfixed. This fluidity in the data is achieved by
@@ -145,12 +151,13 @@ paradigm:
     \item How are these benchmark examples selected? There is no true measure of
         their reliability other than their frequent use. In some domains and
         disciplines there are well-established benchmarks so those found through
-        literature may well be reliable, but in others less so.
+        literature may well be reliable, but in others less
+        so~\cite{Campos2016,UCRArchive2018,Wang2015}.
     \item Sometimes, when there is a lack of benchmark examples, a `new' dataset
-        is simulated to assess the algorithm. This begs the question as to how
-        and why that simulation is created. Not only this, but the origins of
-        existing benchmarks is often a matter of convenience rather than their
-        merit.
+        is simulated to assess the algorithm~\cite{Olson2017}. This begs the
+        question as to how and why that simulation is created. Not only this,
+        but the origins of existing benchmarks is often a matter of convenience
+        rather than their merit.
     \item In disciplines where there are established benchmarks, there may still
         be underlying problems around the true performance of an algorithm:
         \begin{enumerate}[(i)]
@@ -166,12 +173,15 @@ paradigm:
         \end{enumerate}
 \end{enumerate}
 
-Evolutionary algorithms (EAs) have been applied successfully to solve a wide
-array of problems \-- particularly where the complexity of the problem or its
-domain are significant. These methods are highly adaptive and
-their population-based construction (displayed in Figure~\ref{fig:flowchart})
-allows for the efficient solving of problems that are otherwise beyond the scope
-of traditional search and optimisation methods.
+This work presents just one method from this new paradigm, and that method is
+built around the concept of evolution. Evolutionary algorithms (EAs) have been
+applied successfully to solve a wide array of problems \-- particularly where
+the complexity of the problem or its domain are significant. These methods are
+highly adaptive and their population-based construction (displayed in
+Figure~\ref{fig:flowchart}) allows for the efficient solving of problems that
+are otherwise beyond the scope of traditional search and optimisation methods.
+EAs have been chosen here as they are simple in design yet their capabilities
+encompass the difficulties of the flipped paradigm set out above.
 
 \begin{figure}[htbp]
     \centering
@@ -181,7 +191,7 @@ of traditional search and optimisation methods.
     }\label{fig:flowchart}
 \end{figure}
 
-The use of EAs to generate artificial data is not a new concept. Its
+The use of EAs to generate artificial data is not a new concept, however. Its
 applications in data generation have included developing methods for the
 automated testing of software~\cite{Koleejan2015,Michael2001,Sharifipour2018}
 and the synthesis of existing or confidential data~\cite{Chen2016}. Such methods
@@ -189,26 +199,36 @@ also have a long history in the parameter optimisation of algorithms, and
 recently in the automated design of convolutional neural network (CNN)
 architecture~\cite{Suganuma2017,Sun2018}.
 
-Other methods for the generation or synthesis of artificial data include
-simulated annealing~\cite{Matejka2017} and generative adversarial networks
-(GANs)~\cite{Goodfellow2014}. The unconstrained learning style of methods such
-as CNNs and GANs aligns with that proposed in this work. By allowing the EA to
-explore and learn about the search space in an organic way, less-prejudiced
-insight can be established that is not necessarily reliant on any particular
-framework or agenda.
+Other methods for the generation or synthesis of artificial data are numerous
+and range from simple concepts such as simulated annealing~\cite{Matejka2017}
+to swarm-based learning techniques~\cite{Abualigah2018b} or generative
+adversarial networks (GANs)~\cite{Goodfellow2014}. The unconstrained learning
+style of methods such as CNNs and GANs aligns with that proposed in this work.
+By allowing the EA to explore and learn about the search space in an organic
+way, less-prejudiced insight can be established that is not necessarily reliant
+on any particular framework or agenda.
 
 Note that the proposed methodology is not simply to use an EA to optimise an
-algorithm over a search space with fixed dimension or datatype such as those set
-out in~\cite{Chen2016}. The size and sample space itself is considered as a
-property that can be traversed through the algorithm.
+algorithm over a search space with fixed dimension or data type such as those
+set out in~\cite{Chen2016}. The shape of a dataset is considered a part of the
+sample space itself that can be traversed through the evolutionary algorithm.
 
+The remainder of the paper is structured as follows:
+\begin{itemize}
+    \item Section 2 describes the structure of the proposed method including its
+        parameters and operators.
+    \item Section 3 contains a case study where the success and failure of
+        \(k\)-means clustering is examined using the proposed method. Included
+        also is a comparison between \(k\)-means and another clustering
+        algorithm DBSCAN.\
+    \item Section 4 concludes this paper.
+\end{itemize}
 
 \section{The evolutionary algorithm}\label{section:algorithm}
 
 In this section, the details of an algorithm that generates data for which a
-given function or, equivalently, an algorithm which is well suited, is
-described. This algorithm is to be referred to as ``Evolutionary Dataset
-Optimisation'' (EDO).
+given function, or (equivalently) algorithm, is well-suited is described. This
+algorithm is to be referred to as ``Evolutionary Dataset Optimisation'' (EDO).
 
 The EDO method is built as an evolutionary algorithm which follows a traditional
 (generic) schema with some additional features that keep the objective of
@@ -287,7 +307,7 @@ development~\cite{Jiminez2017}.
         }
     }
 }
-\caption{The evolutionary dataset optimisation algorithm}
+\caption{The Evolutionary Dataset Optimisation algorithm}
 \ealg\label{alg:edo}
 
 \balg%
@@ -457,7 +477,7 @@ produce reductive results for some use cases and is optional.
     }
 }
 \caption{Shrinking the mutation space}\label{algorithm:shrinking}
-\ealg
+\ealg%
 
 \subsection{Crossover}
 
@@ -465,11 +485,11 @@ Crossover is the operation of combining two individuals in order to create at
 least one offspring. In genetic algorithms, the term `crossover' can be taken
 literally: two bit strings are crossed at a point to create two new bit strings.
 Another popular method is uniform crossover, which has been favoured for its
-efficiency and efficacy in combining individuals~\cite{Semenkin2012}. For EDO,
-this method is adapted to support dataset manipulation: a new individual is
-created by uniformly sampling each of its components (dimensions and then
-columns) from a set of two `parent' individuals, as shown in
-Figure~\ref{fig:crossover}.
+efficiency and efficacy in combining individuals in both bit string and matrix
+representations~\cite{Chen2018,Semenkin2012}. For EDO, this method is adapted to
+support dataset manipulation: a new individual is created by uniformly sampling
+each of its components (dimensions and then columns) from a set of two `parent'
+individuals, as shown in Figure~\ref{fig:crossover}.
 
 \begin{figure}[htbp]
     \centering
@@ -577,7 +597,7 @@ relative to, say, a completely new individual.
 \ealg%
 
 
-\section{Examples}\label{section:examples}
+\section{A case study in clustering}\label{section:examples}
 
 \subsection{\(k\)-means clustering}
 
@@ -747,12 +767,12 @@ reduction in the dimension of the individuals occurs despite adjusting the
 fitness function and considering the space which excludes the trivial case
 bolsters the claim that the base case is also optimal.
 
-Due to the nature of the implementation, any individual from any
-generation may be retrieved and studied should the final results be too
-concentrated on any given case. The summary provided here is one particular way
-of studying the body of datasets generated with this method and this
-transparency in the history and progression of the proposed method is something
-that sets it apart from other methods of the same ilk such as GANs which have a
+At this point, it should be noted that, due to the nature of the implementation,
+any individual from any generation may be retrieved and studied should the final
+results be too concentrated on any given case. The summary provided here is one
+particular way of studying the body of datasets generated with this method and
+this transparency in the history and progression of the proposed method is
+something that sets it apart from other methods such as GANs which have a
 reputation of providing so-called `black box' solutions.
 
 \addtocounter{figure}{1}
@@ -805,7 +825,7 @@ reputation of providing so-called `black box' solutions.
     }\label{fig:silhouette-inds}
 \end{figure}
 
-\subsection{Comparison with DBSCAN}
+\subsection{Comparison with DBSCAN}\label{subsec:dbscan}
 
 The extent of the capabilities EDO holds as a tool to better understand an
 algorithm are especially apparent when comparing an algorithm against another
@@ -994,9 +1014,9 @@ Figures~\ref{fig:negative-prog}~and~\ref{fig:negative-inds} show the same
 summary as above with the revised fitness function. Inspecting the former, it is
 seen that the best fitness found is worse than with the previous example. This,
 in part, is due to the fact that \(k\)-means cannot find a clustering with
-negative values as no clusters may overlap. The method can, however, produce
-results with small silhouette scores where the clusters are tightly packed.
-Hence, the best fitness score is now \(-1\) whereas the worst is 2, still.
+negative values as no clusters may overlap. It can, however, produce results
+with small silhouette scores where the clusters are tightly packed. Hence, the
+best fitness score is now \(-1\) whereas the worst is 2, still.
 
 Note in the first two frames of Figure~\ref{fig:neg-inds-k} how \(k\)-means is
 forced to split what is evidently a single cluster in two whereas DBSCAN is able
@@ -1009,6 +1029,16 @@ clouds (as seen in the rightmost two frames of the figure) and the simplest step
 toward a fit dataset is one that maintains that vaguely dense body with minimal
 noise points far from it.
 
+As has already been stated, the software implementation of the EDO method
+has been produced in line with the best practices of open source software
+development and reproducible research. In aid of this, all of the source code
+used in these examples (including to create the figures) has been archived
+under the DOI
+\href{https://doi.org/10.5281/zenodo.3492236}{10.5281/zenodo.3492236}.
+Likewise, all of the data produced to support this case study have been archived
+under the DOI
+\href{https://doi.org/10.5281/zenodo.3492228}{10.5281/zenodo.3492228}.
+
 
 \section{Conclusion}
 
@@ -1020,32 +1050,94 @@ The method was able to reveal some known results without prior knowledge when
 investigating \(k\)-means in several scenarios, and again when comparing
 \(k\)-means and another leading clustering method, DBSCAN.\
 
-The method itself utilises biological operators to traverse the space of all
-possible datasets in an organic way with a minimal external framework attached.
-The generative nature of the proposed method also provides transparency and
-richness to the solution when compared to other contemporary techniques for
-artificial data generation as the entire history of individuals is preserved.
+The method itself utilises biological operators to traverse a potentially broad
+region of the space of all possible datasets. This is done in an organic way
+with a minimal external framework attached. The generative nature of the
+proposed method also provides transparency and richness to the solution when
+compared to other contemporary techniques for artificial data generation as the
+entire history of individuals is preserved. While other search and optimisation
+methods exist, the decision to use an EA here was down to this transparency and
+the ease with which to implement biological operators that are both meaningful
+and easily understood. 
 
-The evolutionary dataset optimisation method is dependent on a number of
-parameters set out in this paper and perhaps the most important of which is the
-choice of distribution families, \(\mathcal{P}\); these families set out the
-general statistical shape of the columns of the datasets that are produced and
-also control the present data types. The relationship between columns and their
-associated distribution is not causal and appropriate methods should be
-employed to understand the structure and characteristics of the data produced
-before formal conclusions are made as set out in the case study provided.
+The Evolutionary Dataset Optimisation method is dependent on a number of
+parameters set out in this work one of which is the choice of distribution
+families, \(\mathcal{P}\); these families go on to define the general
+statistical shape of the columns of the datasets that are produced and also
+control the present data types. The relationship between columns and their
+associated distribution is not causal and appropriate methods should be employed
+to understand the structure and characteristics of the data produced before
+formal conclusions are made as set out in the case study provided.
+
+It is known that EAs might terminate at a local optimum and may not be able to
+traverse the entire sample space~\cite{Vikhar2016}, or even a sufficient part of
+it. This would be even more problematic in the case presented in this work where
+the sample space is not even of a fixed size or data type. In all experiments
+carried out for this work, this theoretic limitation has not arisen.
+Figure~\ref{fig:coverage} shows an exploration of the sample space and it is
+evident that the EDO method was able to explore a large proportion of it. In the
+early stages, it is also clear here how the EA got stuck in small parts of the
+search space before later moving toward a subregion of the unit square.
+
+\begin{figure}[htbp]
+    \includegraphics[width=\imgwidth]{Fig15.pdf}
+    \caption{%
+        A scatter of all the individuals found at 50 epoch intervals in the
+        first example of Section~\ref{subsec:dbscan}, i.e.\ those summarised in
+        Figure~\ref{fig:dbscan-inds}.
+    }\label{fig:coverage}
+\end{figure}
+
+Although this does provide evidence to say that the EA's current design can
+sufficiently explore its given search space, it does not provide any guarantee
+that this will happen, even in expectation. Proving this theoretically is an
+area for further investigation.
+
+Something that does stand against EAs is their tendancy to find the `easy' way
+out. That is, reducing down to the simplest solution which solves the given
+problem. In most cases, that is not a problem and is often, in fact, favourable.
+Throughout the case study provided, this is seen to happen.
+Figure~\ref{fig:coverage} shows this behaviour again by the strong diagonal
+region in later generations. In that particular example, the easiest solution
+for the EA (i.e.\ for \(k\)-means to outperform DBSCAN) was to collapse one
+dimension of the search space to make the problem one-dimensional. This kind of
+behaviour is not necessarily a bad thing as trivial, basic and simple cases are
+of great importance when understanding an algorithm's quality.
+
+However, should that be a problem, then the objective function could be adjusted
+accordingly. In the case study, several iterations of fitness functions were
+examined but each was adjusted by hand according to what was apparent at the
+time. Due to the architecture of the implementation of this method, this could
+be done in practicality. For instance, a similar strategy could be employed
+automatically by a more sophisticated fitness function that retains some
+information about the datasets generated from previous runs of EDO on a
+particular (or at least similar) parameter set. In this way, the currently
+completely unsupervised learning conducted by the EA could be ushered away from
+less helpful solutions (via some penalty, say) and toward previously unexplored
+behaviours. This automatic, iterative application of the proposed method would
+likely reveal more sophisticated insights into a particular algorithm.
+
+In essence, the proposed method is merely a tool that demonstrates the benefit
+of the flipped paradigm set out in this work. The concept of where `good'
+datasets exist is not something that is well-documented in literature and the
+hope of this work is that Evolutionary Dataset Optimisation acts as a starting
+point for further works to come.
+
 
 % END OF MAIN MANUSCRIPT
 
 \section*{Acknowledgements}
-    The authors wish to thank the Cwm Taf Morgannwg University Health Board for
-    their funding and support of the Ph.D. of which this work has formed a part.
+
+The authors wish to thank the Cwm Taf Morgannwg University Health Board for
+their funding and support of the Ph.D. of which this work has formed a part.
 
 \section*{Conflict of interest}
 
 The authors declare that they have no conflict of interest.
 
-\printbibliography%
+\bibliography{references}
+
+\pagebreak%
 
 \appendix\section{Appendix}
 
@@ -1078,12 +1170,10 @@ The authors declare that they have no conflict of interest.
 Below is an example of how the Python implementation was used to complete the
 first example, including the definition of the fitness function.
 
-\singlespacing%
 \begin{lstlisting}
 import edo
 from edo.pdfs import Uniform
 from sklearn.cluster import KMeans
-
 
 def fitness(dataframe, seed):
     """ Return the final inertia of 2-means on the `dataframe`
@@ -1091,7 +1181,6 @@ def fitness(dataframe, seed):
 
     km = KMeans(n_clusters=2, random_state=seed).fit(dataframe)
     return km.inertia_
-
 
 Uniform.param_limits["bounds"] = [0, 1]
 

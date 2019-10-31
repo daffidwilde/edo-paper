@@ -2,6 +2,10 @@
 *.swp
 *.ipynb_checkpoints/
 
+## Data
+data/
+!data/README.md
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
@@ -25,6 +29,7 @@
 # *.eps
 *.pdf
 !main.pdf
+!submission/*.pdf
 
 ## Generated if empty string is given at "Please type another file name for output:"
 .pdf
