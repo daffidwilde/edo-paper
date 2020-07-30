@@ -1,13 +1,12 @@
 """ Code to generate the plots for k-means with inertia and higher bounds. """
 
-from pathlib import Path
 import sys
 import warnings
+from pathlib import Path
 
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.cluster import KMeans
-
 
 SEED = 0
 if len(sys.argv) == 2:

@@ -3,10 +3,9 @@
 import sys
 from pathlib import Path
 
+from edo_exp import run_trial
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
-
-from edo_exp import run_trial
 
 PATH = Path("../../../data/kmeans_silhouette_higher/")
 
@@ -40,8 +39,16 @@ def main(num_cores, size, selection, mutation, seed):
     col_limits = [2, 2]
 
     run_trial(
-        data, kmeans_fitness, num_cores, size, row_limits, col_limits,
-        selection, mutation, seed, {"seed": seed}
+        data,
+        kmeans_fitness,
+        num_cores,
+        size,
+        row_limits,
+        col_limits,
+        selection,
+        mutation,
+        seed,
+        {"seed": seed},
     )
 
 

@@ -1,22 +1,21 @@
 """ Code to generate the plots for DBSCAN over k-means. """
 
-from pathlib import Path
 import sys
 import warnings
+from pathlib import Path
 
 import alphashape as alph
-from alphashape.optimizealpha import _testalpha
 import matplotlib.pyplot as plt
-from matplotlib.collections import PatchCollection
-from matplotlib.patches import Patch
 import numpy as np
 import pandas as pd
 import scipy
 import shapely
+from alphashape.optimizealpha import _testalpha
 from descartes import PolygonPatch
+from matplotlib.collections import PatchCollection
+from matplotlib.patches import Patch
 from sklearn.cluster import DBSCAN, KMeans
 from sklearn.metrics import silhouette_score
-
 
 SEED = 0
 if len(sys.argv) == 2:
