@@ -1,14 +1,13 @@
 """ Code to generate the plots for k-means with silhouette and lower bounds. """
 
-from pathlib import Path
 import sys
 import warnings
+from pathlib import Path
 
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
-
 
 SEED = 0
 if len(sys.argv) == 2:
