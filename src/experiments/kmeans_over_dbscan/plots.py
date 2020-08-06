@@ -1,23 +1,22 @@
 """ Code to generate the plots for DBSCAN over k-means. """
 
-from pathlib import Path
 import sys
 import warnings
+from pathlib import Path
 
 import alphashape as alph
-from alphashape.optimizealpha import _testalpha
 import matplotlib.pyplot as plt
-from matplotlib.collections import PatchCollection
-from matplotlib.patches import Patch
-from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 import numpy as np
 import pandas as pd
 import scipy
 import shapely
+from alphashape.optimizealpha import _testalpha
 from descartes import PolygonPatch
+from matplotlib.collections import PatchCollection
+from matplotlib.patches import Patch
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 from sklearn.cluster import DBSCAN, KMeans
 from sklearn.metrics import silhouette_score
-
 
 SEED = 0
 if len(sys.argv) == 2:
@@ -258,7 +257,10 @@ def coverage_scatterplot():
         ax.scatter(
             df["0"],
             df["1"],
-            marker=".", zorder=gen, alpha=0.5, facecolor=colour,
+            marker=".",
+            zorder=gen,
+            alpha=0.5,
+            facecolor=colour,
             edgecolor="None",
         )
 
@@ -269,7 +271,7 @@ def coverage_scatterplot():
         ax,
         width="80%",
         height="5%",
-        loc='lower left',
+        loc="lower left",
         bbox_to_anchor=(0.1, 0.95, 1, 1),
         bbox_transform=ax.transAxes,
         borderpad=0,
@@ -286,9 +288,7 @@ def coverage_scatterplot():
     ax.set_aspect("equal")
 
     plt.tight_layout(rect=(0, 0, 1, 1))
-    plt.savefig(
-        IMAGES / "Fig15.pdf", transparent=True
-    )
+    plt.savefig(IMAGES / "Fig15.pdf", transparent=True)
 
 
 if __name__ == "__main__":
