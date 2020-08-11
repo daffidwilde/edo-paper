@@ -15,7 +15,7 @@
     \node[fill=cyan!15, minimum width=6cm, rounded corners] at (1, 3.5)
         {\(U(1.1, 3.2) \qquad Po(1.2) \qquad N(0.5, 1.2)\)};
 
-    \draw[decorate, decoration={brace, amplitude=10pt}] (4.5, 3.9) -- (4.5, 1.4)
+    \draw[decorate, decoration={brace, amplitude=10pt}] (5, 3.9) -- (5, 1.4)
         node[midway, right=20pt] {\Large An individual};
 
 
@@ -107,7 +107,7 @@
     \node[fill=cyan!15, minimum width=6cm, rounded corners] at (11, -8)
         {\(U(1.1, 3.2) \qquad Po(1.2) \qquad N(0.5, 1.2)\)};
 
-    \node (info-plus) at (14.65, -8) {\Large\(+\)};
+    \node (info-plus) at (14.8, -8) {\Large\(+\)};
     \node (col-plus) at (14.5, -9.25) {\huge\(+\)};
 
     \path (17, -10) pic {fullcolumn=4};
@@ -161,58 +161,34 @@
         (delete-col.east) to [out=0, in=270] (col-remove.south);
 
 
-    % Mutate column parameters
-    \draw[->, black, ultra thick]
-        (3, -13) to [out=280, in=190]
-        node[left=80pt, below=30pt, pos=0.2] {\Large%
-            \begin{tabular}{c}
-                Resample each parameter\\
-                from the corresponding limits\\
-                with probability \(p_m\)
-            \end{tabular}
-        } (7, -16);
-
-    \path (10, -17) pic {fullcolumn=4}
-          (12, -17) pic {fullcolumn=4}
-          (14, -17) pic {fullcolumn=4};
-
-    \node[fill=cyan!15, minimum width=6cm, rounded corners] at (11, -15)
-        {\(%
-            U(1.1, \textbf{\textcolor{cyan}{2.6}})
-            \qquad Po(1.2) \qquad
-            N(\textbf{\textcolor{cyan}{0.2, 2.3}})
-        \)};
-
-
     % Mutate values
     \draw[->, black, ultra thick]
-        (14, -14) to [out=30, in=130]
-        node[right=90pt, above, pos=0.75] {\Large%
+        (4, -13) to [out=300, in=190]
+        node[left=50pt, below, pos=0.5] {\Large%
             \begin{tabular}{c}
                 Resample each value from\\
                 the corresponding distribution\\
                 with probability \(p_m\)
             \end{tabular}
-        } (20, -15);
+        } (11, -14.5);
 
+    \fill[cyan!30] (13, -14.3) rectangle (17, -13.95);
 
-    \fill[cyan!30] (19, -17.3) rectangle (23, -16.95);
-
-    \fill[cyan!30] (21, -18) rectangle (23, -17.3);
+    \fill[cyan!30] (15, -15) rectangle (17, -14.3);
     
-    \fill[cyan!30] (23, -16.95) rectangle (25, -16.6);
-    \fill[cyan!30] (23, -17.65) rectangle (25, -17.3);
+    \fill[cyan!30] (17, -13.95) rectangle (19, -13.6);
+    \fill[cyan!30] (17, -14.65) rectangle (19, -14.3);
 
-    \path (21, -18) pic {fullcolumn=4}
-          (23, -18) pic {fullcolumn=4}
-          (25, -18) pic {fullcolumn=4};
+    \path (15, -15) pic {fullcolumn=4}
+          (17, -15) pic {fullcolumn=4}
+          (19, -15) pic {fullcolumn=4};
 
-    \node[fill=cyan!15, minimum width=6cm, rounded corners] at (22, -16)
+    \node[fill=cyan!15, minimum width=6cm, rounded corners] at (16, -13)
         {\(U(1.1, 3.2) \qquad Po(1.2) \qquad N(0.5, 1.2)\)};
 
     \draw[decorate, decoration={brace, amplitude=10pt}]
-        (18.5, -18.1) -- (18.5, -15.6)
-        node[midway, left=20pt] {\Large%
+        (20, -12.6) -- (20, -15.1)
+        node[midway, right=20pt] {\Large%
             \begin{tabular}{r}
                 A mutated\\
                 individual

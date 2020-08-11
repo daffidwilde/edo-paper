@@ -21,16 +21,6 @@
     \If{\(r < p_m\) and removing a column would not violate \(C\)}{%
         remove a column (and its associated metadata) at random from the dataset
     }
-    \For{each distribution in the metadata}{%
-        \For{each parameter of the distribution}{%
-            sample a random number \(r \in [0, 1]\)\;
-            \If{\(r < p_m\)}{%
-                sample a new value from within the distribution parameter
-                limits\;
-                update the parameter value with this new value
-            }
-        }
-    }
     \For{each entry in the dataset}{%
         sample a random number \(r \in [0, 1]\)\;
         \If{\(r < p_m\)}{%
