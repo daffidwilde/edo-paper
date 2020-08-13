@@ -11,5 +11,5 @@ dependencies:
     - alphashape
     - descartes==1.1.0
     - edo==0.3.5
-    - edolab==0.0.4
+    - edolab==0.0.5
     - shapely>=1.2
