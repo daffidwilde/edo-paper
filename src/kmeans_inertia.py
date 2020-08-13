@@ -31,6 +31,7 @@ mutation_prob = common.mutation_prob
 
 distributions = common.distributions
 
+root = common.root
 
 __all__ = [
     "size",

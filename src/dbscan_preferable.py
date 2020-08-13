@@ -45,6 +45,7 @@ maximise = True
 
 distributions = common.distributions
 
+root = common.root
 
 __all__ = [
     "size",

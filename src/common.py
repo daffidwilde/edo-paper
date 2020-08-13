@@ -23,3 +23,5 @@ mutation_prob = 0.01
 
 Uniform.param_limits["bounds"] = [0, 1]
 distributions = [Uniform]
+
+root = "../data/"
