@@ -17,7 +17,7 @@ def scale_dataframe(individual):
 size = 100
 row_limits = [50, 100]
 col_limits = [2, 2]
-max_iter = 10
+max_iter = 100
 best_prop = 0.1
 mutation_prob = 0.01
 
