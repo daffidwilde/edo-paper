@@ -6,7 +6,7 @@ from sklearn.metrics import silhouette_score
 import common
 
 
-def fitness(individual, n_clusters=3, eps=0.1, min_samples=5, n_seeds=5):
+def fitness(individual, n_clusters=3, eps=0.14, min_samples=5, n_seeds=5):
     """ Cluster the data with DBSCAN using `eps` and `min_samples`, and into
     `n_clusters` parts with k-means across `n_seeds` runs. Find the difference
     in their silhouette scores and return the largest. """
