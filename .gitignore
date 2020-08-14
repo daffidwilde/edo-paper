@@ -1,10 +1,13 @@
 ## Temporary files
 *.swp
 *.ipynb_checkpoints/
+*pyc*
 
 ## Data
 data/
+new_data/
 !data/README.md
+!new_data/README.md
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
