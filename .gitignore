@@ -4,10 +4,8 @@
 *pyc*
 
 ## Data
-data/
-new_data/
-!data/README.md
-!new_data/README.md
+*data*
+!*data/README.md
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
