@@ -6,10 +6,21 @@
 
 \begin{tikzpicture}
 
-    \fill[gray!15, rounded corners] (0, 0) node[left=45pt, above=20pt] {%
-        \color{black} Old population} rectangle (7, 2);
-    \fill[rounded corners, gray!5] (0, -4) node[left=45pt, above=20pt] {%
-        \color{black} New population} rectangle (7, -2);
+    \fill[gray!15, rounded corners] (0, 0) node[xshift=-3em, above=0.5em] {%
+        \color{black}
+        \begin{tabular}{c}
+            Old\\
+            population
+        \end{tabular}
+    } rectangle (7, 2);
+
+    \fill[rounded corners, gray!15] (0, -4) node[xshift=-3em, above=0.5em] {%
+        \color{black}
+        \begin{tabular}{c}
+            New\\
+            population
+        \end{tabular}
+    } rectangle (7, -2);
 
     \fill[pattern=north east lines, pattern color=orange]
         (2, 0) --
